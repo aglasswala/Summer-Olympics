@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
-import Appbar from './components/appbar/appbar'
+import React, { Component } from 'react'
+import Register from './components/Register/register'
 
 class App extends Component {
+
   render() {
+
     return (
       <div>
-        <Appbar />
+        <Register />
       </div>
     );
   }
