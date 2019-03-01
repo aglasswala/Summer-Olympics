@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import "./registerStyles.css";
 import Button from './Button';
 import register from './register';
 class Registerbox extends Component{
