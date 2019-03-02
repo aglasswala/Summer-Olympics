@@ -8,7 +8,6 @@ class Register extends Component {
     render() {
         return (
             <div>
-                <Route path="/login" component={LoginPage} />
                 <Registerbox />
                 <Link to="/login">Login</Link>
             </div>
