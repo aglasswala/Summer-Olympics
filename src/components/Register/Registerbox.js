@@ -31,7 +31,7 @@ class Registerbox extends Component{
     }
     onSubmitSignIn = () => {
         console.log(register.firstName)
-        fetch('http://localhost:3001/users', {
+        fetch('http://localhost:3000/users', {
             method: 'post',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -42,7 +42,11 @@ class Registerbox extends Component{
                 pass: this.state.pass
             })
         })
-            .then(response => console.log("it's posted"))
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch(err => {
+                console.log(err);
+            })
     }
     render(){
         return(

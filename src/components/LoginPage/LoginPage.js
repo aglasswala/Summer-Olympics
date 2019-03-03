@@ -24,10 +24,25 @@ class LoginPage extends Component {
     }
 
     submit = (email, password) => {
-        fetch("http://localhost:3000")
-            .then(response => {
-                console.log(response)
+        fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type:': 'application/json'
+            },
+            body: JSON.stringify({
+                email: "sdfas",
+                password: "password"
             })
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+        })
+        .catch(err => {
+            console.log(err);
+        })
+            
     }
 
     render() {

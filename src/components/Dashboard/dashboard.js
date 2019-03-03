@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import Sidebar from '../Sidebar/sidebar'
 import image from '../images/sidebar-2.jpg'
 import { withStyles } from '@material-ui/core'
+import { Switch, Route } from 'react-router-dom'
+import LoginPage from '../LoginPage/LoginPage';
 
 const styles = {
     wrapper: {
@@ -37,6 +38,7 @@ const styles = {
             opacity: ".8"
         }
     },
+    
 }
 
 
@@ -46,15 +48,7 @@ class Dashboard extends Component {
         const { classes } = this.props
         return (
             <div className={classes.wrapper}>
-                <div className={classes.sidebarWrapper}>
-                    <Sidebar
-                    />
-
-                </div>
-                <div
-                    className={classes.background}
-                    style={{ backgroundImage: "url(" + image + ")" }}
-                />
+                <h1> Hello </h1>
             </div>
         )
     }

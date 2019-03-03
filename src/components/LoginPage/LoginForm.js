@@ -33,7 +33,6 @@ class LoginForm extends Component {
     state = {
         email: "",
         password: "",
-        loading: false,
         errors: {
             email: "",
             password: ""
@@ -41,7 +40,7 @@ class LoginForm extends Component {
     }
 
     onEmailChange = (event) => {
-        this.setState({ email: event.target.value })
+        this.setState({email: event.target.value })
     }
 
     onPasswordChange = (event) => {
@@ -50,19 +49,23 @@ class LoginForm extends Component {
 
     onSubmit = () => {
         const { email, password } = this.state
+        
         this.props.submit(email, password)
     }
 
     render() {
-        const { email, password } = this.state
+        
         const { classes } = this.props
+        console.log(this.state)
         return (
-            <form className={classes.form}>
+            <form 
+                className={classes.form}
+            >
                 <span className={classes.wrapper}>
                     <TextField
                         label="Email Address"
                         className={classes.textField}
-                        value={email}
+                        value={ this.state.email }
                         fullWidth
                         onChange={this.onEmailChange}
                         margin="normal"
@@ -73,7 +76,7 @@ class LoginForm extends Component {
                         label="Password"
                         className={classes.textField}
                         type="password"
-                        value={password}
+                        value={this.state.password}
                         fullWidth
                         onChange={this.onPasswordChange}
                         margin="normal"
@@ -81,8 +84,8 @@ class LoginForm extends Component {
                 </span>
                 <span className={classes.wrapper}>
                     <Button
-                        onClick={this.onSubmit}
                         className={classes.button}
+                        onClick={this.onSubmit}
                     >
                         Submit
                     </Button>
