@@ -24,31 +24,30 @@ class LoginPage extends Component {
     }
 
     submit = (email, password) => {
-        fetch('http://localhost:3000/login', {
-            method: 'POST',
+        fetch('http://localhost:3001/login', {
+            method: 'post',
             headers: {
-                'Accept': 'application/json',
-                'Content-Type:': 'application/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                email: "sdfas",
-                password: "password"
+                email,
+                password
             })
         })
-        .then(response => response.json())
-        .then(result => {
-            console.log(result)
-        })
-        .catch(err => {
-            console.log(err);
-        })
-            
+            .then(response => response.json())
+            .then(result => {
+                console.log(result)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
     }
 
     render() {
         const { classes } = this.props
         return (
-            <Grid 
+            <Grid
                 container
                 direction="row"
                 justify="center"
@@ -59,7 +58,7 @@ class LoginPage extends Component {
                         <Typography variant="display1" className={classes.headerSignin}>
                             Sign In
                         </Typography>
-                        <LoginForm 
+                        <LoginForm
                             submit={this.submit}
                         />
                     </Paper>
