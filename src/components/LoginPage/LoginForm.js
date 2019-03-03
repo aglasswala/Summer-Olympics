@@ -56,7 +56,6 @@ class LoginForm extends Component {
     render() {
         
         const { classes } = this.props
-        console.log(this.state)
         return (
             <form 
                 className={classes.form}

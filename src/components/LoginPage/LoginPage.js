@@ -24,7 +24,7 @@ class LoginPage extends Component {
     }
 
     submit = (email, password) => {
-        fetch('http://localhost:3001/login', {
+        fetch('http://localhost:3000/login', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,6 +37,7 @@ class LoginPage extends Component {
             .then(response => response.json())
             .then(result => {
                 console.log(result)
+                console.log(this.props.isLoggedin)
             })
             .catch(err => {
                 console.log(err);
@@ -46,6 +47,7 @@ class LoginPage extends Component {
 
     render() {
         const { classes } = this.props
+        console.log(this.props)
         return (
             <Grid
                 container
