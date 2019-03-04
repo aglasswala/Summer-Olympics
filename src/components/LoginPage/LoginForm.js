@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextField, Button, InputLabel, Input } from '@material-ui/core'
+import { TextField, Button, InputLabel, Input, FormControl } from '@material-ui/core'
 import validator from 'validator'
 import { withStyles } from '@material-ui/core'
 
@@ -73,32 +73,37 @@ class LoginForm extends Component {
         return (
             <form 
                 className={classes.form}
-                onSubmit={this.onSubmit}
+                onSubmit={e => this.onSubmit(e)}
             >
                 <span className={classes.wrapper}>
-                    <TextField
-                        label="Email Address"
-                        className={classes.textField}
-                        value={ this.state.email }
-                        fullWidth
-                        required
-                        error={this.state.invalidEmail}
-                        helperText={this.state.errors.email}
-                        onChange={this.onEmailChange}
-                        margin="normal"
-                    />
+                    <FormControl margin="normal" fullWidth required>
+                            <InputLabel> Email Address </InputLabel>
+                            <Input 
+                                id="email" 
+                                name="email" 
+                                value={this.state.email}
+                                type="text"
+                                autoComplete="email" 
+                                autoFocus
+                                onChange={this.onEmailChange}
+                                className={classes.textField}
+                            />
+                    </FormControl>
                 </span>
                 <span className={classes.wrapper}>
-                    <TextField
-                        label="Password"
-                        className={classes.textField}
-                        type="password"
-                        required
-                        value={this.state.password}
-                        fullWidth
-                        onChange={this.onPasswordChange}
-                        margin="normal"
-                    />
+                    <FormControl margin="normal" fullWidth required>
+                            <InputLabel htmlFor="password"> Password </InputLabel>
+                            <Input 
+                                id="password" 
+                                name="password" 
+                                value={this.state.password}
+                                type="password"
+                                autoComplete="password" 
+                                autoFocus
+                                onChange={this.onPasswordChange}
+                                className={classes.textField}
+                            />
+                    </FormControl>
                 </span>
                 <span className={classes.wrapper}>
                     <Button

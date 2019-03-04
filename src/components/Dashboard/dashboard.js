@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core'
+import { getJwt } from '../../helpers/jwt'
 
 const styles = {
     wrapper: {
@@ -40,6 +41,27 @@ const styles = {
 
 
 class Dashboard extends Component {
+
+    state = {
+        user: undefined
+    }
+
+    componentDidMount() {
+        const jwt = getJwt()
+        if(!jwt) {
+            this.props.history.push('/login')
+        }
+        fetch('http://localhost:3001/getUser', {
+            headers: {
+                Authentication: `Bearer ${jwt}`
+            }
+        })
+        .then(response => response.json())
+        .then(res => res.setState({user: res.user}))
+        .catch(err => {
+            console.log(err);
+        })
+    }
 
     render() {
         const { classes } = this.props

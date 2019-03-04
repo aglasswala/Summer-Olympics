@@ -34,9 +34,11 @@ class LoginPage extends Component {
                 password
             })
         })
+            .then(response => response.json())
             .then(result => {
+                localStorage.setItem('cool-jwt', result);
                 this.props.changeSignin(true)
-                this.props.history.push("/dashboard");
+                this.props.history.push('/dashboard')
             })
             .catch(err => {
                 console.log(err);
