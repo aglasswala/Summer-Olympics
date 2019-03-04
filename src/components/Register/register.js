@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import Registerbox from './Registerbox';
-import { Link, Route } from 'react-router-dom'
-import LoginPage from '../LoginPage/LoginForm'
 
 class Register extends Component {
 
@@ -9,7 +7,6 @@ class Register extends Component {
         return (
             <div>
                 <Registerbox />
-                <Link to="/login">Login</Link>
             </div>
         );
     }

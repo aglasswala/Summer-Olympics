@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-import image from '../images/sidebar-2.jpg'
 import { withStyles } from '@material-ui/core'
-import { Switch, Route } from 'react-router-dom'
-import LoginPage from '../LoginPage/LoginPage';
 
 const styles = {
     wrapper: {

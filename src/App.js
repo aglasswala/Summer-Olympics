@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import LoginPage from './components/LoginPage/LoginPage'
 import Register from './components/Register/register'
-import { Route } from 'react-router-dom'
+import Dashboard from './components/Dashboard/dashboard'
+import { Route, Switch, Redirect } from 'react-router-dom'
+
 
 
 class App extends Component {
@@ -10,13 +12,23 @@ class App extends Component {
     isLoggedIn: false
   }
 
+  changeSignin = (login) => {
+    this.setState({ isLoggedIn: login})
+  }
+
   render() {
-    const { isLoggedIn } = this.state
     return (
       <div>
-        <Route path='/' exact render={(routeProps) => {
-          <LoginPage {...routeProps}  />
-        }} />
+        <Switch>
+          <Route exact path="/" component={Register} />
+          <Route path="/login" render={(props) => (
+            <LoginPage {...props} changeSignin={this.changeSignin} />
+          )} />
+          <Route path="/dashboard" render={() => (
+            this.state.isLoggedIn ? ( <Dashboard /> ) : (<Redirect to="/" />)
+          )} />
+          <Route component={Register} />
+        </Switch>
       </div>
     );
   }
