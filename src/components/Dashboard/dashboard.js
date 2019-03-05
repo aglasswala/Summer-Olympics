@@ -47,18 +47,18 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        // const jwt = getJwt()
-        // if(!jwt) {
-        //     this.props.history.push('/login')
-        // }
-        fetch('http://localhost:3001/getUser')
+        const jwt = getJwt()
+        if(!jwt) {
+            this.props.history.push('/login')
+        }
+        fetch('http://localhost:3001/getUser', {
+            headers:{
+                'Authorization': 'Bearer ' + getJwt() 
+            } 
+        })
         .then(response => response.json())
-        .then(result => {
-            console.log(result)
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        .then(data => console.log(data))
+
     }
 
     render() {
