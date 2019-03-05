@@ -1,22 +1,15 @@
 import React, { Component } from 'react'
 import LoginPage from './components/LoginPage/LoginPage'
-import Register from './components/Register/register'
+import Register from './components/Register/Register'
 import Dashboard from './components/Dashboard/dashboard'
 import { Route, Switch, Redirect } from 'react-router-dom'
-
+import { getJwt } from './helpers/jwt'
 
 
 class App extends Component {
 
-  state = {
-    isLoggedIn: false
-  }
-
-  changeSignin = (login) => {
-    this.setState({ isLoggedIn: login})
-  }
-
   render() {
+    const jwt = getJwt()
     return (
       <div>
         <Switch>
@@ -25,7 +18,7 @@ class App extends Component {
             <LoginPage {...props} changeSignin={this.changeSignin} />
           )} />
           <Route path="/dashboard" render={() => (
-            this.state.isLoggedIn ? ( <Dashboard /> ) : (<Redirect to="/" />)
+            jwt ? ( <Dashboard /> ) : (<Redirect to="/" />)
           )} />
           <Route component={Register} />
         </Switch>
