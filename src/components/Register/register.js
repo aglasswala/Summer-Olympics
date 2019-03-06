@@ -26,20 +26,29 @@ class Register extends Component {
           justify="center"
           alignItems="center"
         >
-          <Grid item sm={12} md={6} lg={4}>
+          <Grid item sm={12} md={6} lg={6}>
              <Paper className={classes.paper}>
                 <Grid
                   container
-                  direction="column"
+                  direction="row"
                 > 
-                  <Grid item>
+                  <Grid item sm={6}>
                       <Typography
-                        variant="display2"
+                        variant="h5"
                         className={classes.title}
                       >
-                        HELLO
+                        this is where content will go
                       </Typography>
-                      <RegisterForm />
+                      
+                  </Grid>
+                  <Grid item sm={6}>
+                    <Typography
+                      variant="h5"
+                      className={classes.title}
+                    >
+                      Sign up now
+                    </Typography>
+                    <RegisterForm />
                   </Grid>
                 </Grid>
              </Paper>

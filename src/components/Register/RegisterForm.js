@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { TextField, Button, InputLabel, Input, FormControl } from '@material-ui/core'
+import { TextField, Button, InputLabel, Input, FormControl, Grid } from '@material-ui/core'
 import validator from 'validator'
 import { withStyles } from '@material-ui/core'
 
@@ -7,7 +7,7 @@ const styles = {
     wrapper: {
         display: "inline-block",
         position: "relative",
-        padding: "8.85px 13px",
+        padding: "8.85px 13px"
     },
     form: {
         display: "flex",
@@ -15,7 +15,6 @@ const styles = {
         alignItems: "stretch"
     },
     textField: {
-        width: "100%",
         boxSizing: "border-box",
         fontWeight: "300",
         textOverflow: "ellipsis",
@@ -39,6 +38,41 @@ class RegisterForm extends Component {
             <form 
                 className={classes.form}
             >
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                    <Grid item xs={12} sm={12} md={6} >
+                        <span className={classes.wrapper}>
+                            <FormControl margin="normal"  required>
+                                    <InputLabel> First Name </InputLabel>
+                                    <Input 
+                                        id="first_name" 
+                                        name="firstName" 
+                                        type="text"
+                                        autoFocus
+                                        className={classes.textField}
+                                    />
+                            </FormControl>
+                        </span>
+                    </Grid>
+                    <Grid item xs={12}  sm={6}>
+                        <span className={classes.wrapper}>
+                            <FormControl margin="normal" fullWidth required>
+                                    <InputLabel> Last Name </InputLabel>
+                                    <Input 
+                                        id="last_name" 
+                                        name="lastName" 
+                                        type="text"
+                                        autoFocus
+                                        className={classes.textField}
+                                    />
+                            </FormControl>
+                        </span>
+                    </Grid>
+                </Grid>
                 <span className={classes.wrapper}>
                     <FormControl margin="normal" fullWidth required>
                             <InputLabel> Email Address </InputLabel>
