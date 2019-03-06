@@ -51,13 +51,19 @@ class Dashboard extends Component {
         if(!jwt) {
             this.props.history.push('/login')
         }
-        fetch('http://localhost:3001/getUser', {
-            headers:{
-                'Authorization': 'Bearer ' + getJwt() 
-            } 
+        fetch('http://localhost:3000/getUser', {
+            headers: {
+                "x-access-token": getJwt() 
+            }
         })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+            this.setState({
+                user: data
+            })
+            console.log(this.state)
+        })
+        .catch(err => console.log(err))
 
     }
 
