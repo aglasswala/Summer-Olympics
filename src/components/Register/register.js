@@ -31,8 +31,10 @@ class Register extends Component {
                 <Grid
                   container
                   direction="row"
+                  alignItems="center"
+                  justify="center"
                 > 
-                  <Grid item sm={6}>
+                  <Grid item xs={12} sm={6} md={6} lg={6}>
                       <Typography
                         variant="h5"
                         className={classes.title}
@@ -41,7 +43,7 @@ class Register extends Component {
                       </Typography>
                       
                   </Grid>
-                  <Grid item sm={6}>
+                  <Grid item xs={12} sm={6} md={6} lg={6}>
                     <Typography
                       variant="h5"
                       className={classes.title}

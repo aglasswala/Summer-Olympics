@@ -9,6 +9,11 @@ const styles = {
         position: "relative",
         padding: "8.85px 13px"
     },
+    smallText: {
+        display: "inline-block",
+        position: "relative",
+        padding: "8.85px 13px"
+    },
     form: {
         display: "flex",
         flexDirection: "column",
@@ -44,9 +49,9 @@ class RegisterForm extends Component {
                   justify="center"
                   alignItems="center"
                 >
-                    <Grid item xs={12} sm={12} md={6} >
-                        <span className={classes.wrapper}>
-                            <FormControl margin="normal"  required>
+                    <Grid item xs={12} sm={12} md={6} lg={6}>
+                        <span className={classes.smallText}>
+                            <FormControl margin="normal" fullWidth required>
                                     <InputLabel> First Name </InputLabel>
                                     <Input 
                                         id="first_name" 
@@ -58,8 +63,8 @@ class RegisterForm extends Component {
                             </FormControl>
                         </span>
                     </Grid>
-                    <Grid item xs={12}  sm={6}>
-                        <span className={classes.wrapper}>
+                    <Grid item xs={12} sm={12} md={6} lg={6}>
+                        <span className={classes.smallText}>
                             <FormControl margin="normal" fullWidth required>
                                     <InputLabel> Last Name </InputLabel>
                                     <Input 

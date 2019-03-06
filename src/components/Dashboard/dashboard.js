@@ -1,43 +1,9 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core'
-import { getJwt } from '../../helpers/jwt'
 
-const styles = {
-    wrapper: {
-        position: "relative",
-        top: 0,
-        height: "100vh"
-    },
-    sidebarWrapper: {
-        position: "relative",
-        height: "calc(100vh - 75px)",
-        overflow: "auto",
-        width: "260px",
-        zIndex: "4",
-    },
-    background: {
-        position: "absolute",
-        zIndex: "1",
-        height: "100%",
-        width: "100%",
-        display: "block",
-        top: "0",
-        left: "0",
-        backgroundSize: "cover",
-        backgroundPosition: "center center",
-        "&:after": {
-            position: "absolute",
-            zIndex: "3",
-            width: "100%",
-            height: "100%",
-            content: '""',
-            display: "block",
-            background: "#000",
-            opacity: ".8"
-        }
-    },
-    
-}
+import { getJwt } from '../../helpers/jwt'
+import dashboardStyles from '../../styles/components/dashboard/dashboardStyles'
+import apiCalls from '../../api/apiCalls'
 
 
 class Dashboard extends Component {
@@ -51,6 +17,8 @@ class Dashboard extends Component {
         if(!jwt) {
             this.props.history.push('/login')
         }
+        // const a = apiCalls.getUserById()
+        //     console.log(a)
         fetch('http://localhost:3001/getUserById', {
             headers: {
                 "x-access-token": getJwt() 
@@ -77,4 +45,4 @@ class Dashboard extends Component {
     }
 }
 
-export default withStyles(styles)(Dashboard)
+export default withStyles(dashboardStyles)(Dashboard)
