@@ -51,7 +51,7 @@ class Dashboard extends Component {
         if(!jwt) {
             this.props.history.push('/login')
         }
-        fetch('http://localhost:3000/getUser', {
+        fetch('http://localhost:3001/getUserById', {
             headers: {
                 "x-access-token": getJwt() 
             }

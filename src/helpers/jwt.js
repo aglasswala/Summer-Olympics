@@ -1,3 +1,5 @@
-export const getJwt = () => {
-  return localStorage.getItem("cool-jwt")
+module.exports = {
+  getJwt: () => {
+    return localStorage.getItem("cool-jwt")
+  },
 }
