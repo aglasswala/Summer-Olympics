@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import LoginPage from './components/LoginPage/LoginPage'
-import Register from './components/Register/register'
+import Register from './components/Register/Register'
 import Dashboard from './components/Dashboard/dashboard'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { getJwt } from './helpers/jwt'

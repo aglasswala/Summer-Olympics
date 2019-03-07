@@ -16,6 +16,43 @@ const styles = {
 
 class Register extends Component {
 
+  state = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      street: "",
+      city: "",
+      zip: "",
+      state: "",
+      phoneNumber: "",
+      age: ""
+  }
+
+  submit = (firstName, lastName, email, password) => {
+      fetch('http://localhost:3001/register', {
+          method: 'post',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              firstName,
+              lastName,
+              email,
+              password
+          })
+      })
+          .then(response => response.json())
+          .then(result => {
+              localStorage.setItem('cool-jwt', result.userToken);
+              this.props.history.push('/dashboard')
+          })
+          .catch(err => {
+              console.log(err);
+          })
+
+  }
+
   render() {
     const { classes } = this.props
     return (
@@ -50,7 +87,9 @@ class Register extends Component {
                     >
                       Sign up now
                     </Typography>
-                    <RegisterForm />
+                    <RegisterForm 
+                      submit={this.submit}
+                    />
                   </Grid>
                 </Grid>
              </Paper>

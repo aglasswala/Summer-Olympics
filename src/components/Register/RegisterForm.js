@@ -36,12 +36,34 @@ const styles = {
 
 class RegisterForm extends Component {
 
+    state = {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        street: "",
+        city: "",
+        zip: "",
+        state: "",
+        phoneNumber: "",
+        age: ""
+    }
+
+    onChange = (e) => this.setState({[e.target.name]: e.target.value})
+
+    onSubmit = (event) => {
+        event.preventDefault();
+        const { firstName, lastName, email, password } = this.state
+        this.props.submit( firstName, lastName, email, password )
+    }
+
     render() {
-        
-        const { classes } = this.props
+        console.log(this.state)
+        const { classes } = this.props  
         return (
             <form 
                 className={classes.form}
+                onSubmit={this.submit}
             >
                 <Grid
                   container
@@ -58,6 +80,7 @@ class RegisterForm extends Component {
                                         name="firstName" 
                                         type="text"
                                         autoFocus
+                                        onChange={this.onChange}
                                         className={classes.textField}
                                     />
                             </FormControl>
@@ -72,6 +95,7 @@ class RegisterForm extends Component {
                                         name="lastName" 
                                         type="text"
                                         autoFocus
+                                        onChange={this.onChange}
                                         className={classes.textField}
                                     />
                             </FormControl>
@@ -87,6 +111,7 @@ class RegisterForm extends Component {
                                 type="text"
                                 autoComplete="email" 
                                 autoFocus
+                                onChange={this.onChange}
                                 className={classes.textField}
                             />
                     </FormControl>
@@ -100,6 +125,7 @@ class RegisterForm extends Component {
                                 type="password"
                                 autoComplete="password" 
                                 autoFocus
+                                onChange={this.onChange}
                                 className={classes.textField}
                             />
                     </FormControl>
