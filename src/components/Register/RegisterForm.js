@@ -59,9 +59,9 @@ class RegisterForm extends Component {
     }
 
     render() {
-        const { classes } = this.props  
+        const { classes } = this.props
         return (
-            <form 
+            <form
                 className={classes.form}
                 onSubmit={(e) => this.onSubmit(e)}
             >
@@ -119,7 +119,7 @@ class RegisterForm extends Component {
                 <span className={classes.wrapper}>
                     <FormControl margin="normal" fullWidth required>
                             <InputLabel htmlFor="password"> Password </InputLabel>
-                            <Input 
+                            <Input
                                 id="password" 
                                 name="password" 
                                 type="password"

@@ -55,20 +55,7 @@ class LoginForm extends Component {
         this.props.submit(email, password)
     }
 
-    // Need to fix 
-    validate = (email, password) => {
-        const errors = {}
-        if(!validator.isEmail(email)) {
-            this.setState({errors: {email: "Invalid Email"}})
-            this.setState({invalidEmail: true});
-        }
-        if(password.length <= 3){
-            this.setState({errors: {password: "Password must be over 4 characters"}})
-        }
-    }
-
     render() {
-        
         const { classes } = this.props
         return (
             <form 

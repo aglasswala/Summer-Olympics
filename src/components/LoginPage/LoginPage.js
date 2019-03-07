@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core'
 import { Grid, Paper, Typography } from '@material-ui/core'
+import apiCalls from '../../api/apiCalls'
 
 import LoginForm from './LoginForm'
 
@@ -24,17 +25,7 @@ class LoginPage extends Component {
     }
 
     submit = (email, password) => {
-        fetch('http://localhost:3001/login', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email,
-                password
-            })
-        })
-            .then(response => response.json())
+        apiCalls.login(email, password)
             .then(result => {
                 localStorage.setItem('cool-jwt', result.userToken);
                 this.props.history.push('/dashboard')

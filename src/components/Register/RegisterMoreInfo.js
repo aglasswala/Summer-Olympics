@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
 class RegisterMoreInfo extends Component {
+
+
   render() {
     return (
       <div>
