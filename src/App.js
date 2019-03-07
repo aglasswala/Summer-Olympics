@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import LoginPage from './components/LoginPage/LoginPage'
-import Register from './components/Register/Register'
+import Register from './components/Register/register'
 import Dashboard from './components/Dashboard/dashboard'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { getJwt } from './helpers/jwt'
+import eventsPage from './components/subComponents/eventsPage'
 
 
 class App extends Component {
@@ -14,13 +15,11 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path="/" component={Register} />
-          <Route path="/login" render={(props) => (
-            <LoginPage {...props} changeSignin={this.changeSignin} />
-          )} />
-          <Route path="/dashboard" render={() => (
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/dashboard" render={() => (
             jwt ? ( <Dashboard /> ) : (<Redirect to="/" />)
           )} />
-          <Route component={Register} />
+          <Route exact component={Register} />
         </Switch>
       </div>
     );
