@@ -1,32 +1,57 @@
 import React, { Component } from 'react'
-import LoginPage from './components/LoginPage/LoginPage'
-import Register from './components/Register/Register'
-import Dashboard from './components/Dashboard/dashboard'
-import { Route, Switch, Redirect } from 'react-router-dom'
-import { getJwt } from './helpers/jwt'
-import eventsPage from './components/subComponents/eventsPage'
-import RegisterMoreInfo from './components/Register/RegisterMoreInfo'
+import { withStyles } from '@material-ui/core'
+import { Route, Switch } from 'react-router-dom'
 
+import Sidebar from './Component/Sidebar/Sidebar'
+import Header from './Component/Header/Header'
+
+const dashboardStyles = theme => ({
+    wrapper: {
+        position: "relative",
+        top: "0",
+        height: "100vh",
+    },
+    mainPanel: {
+        overflow: "auto",
+        position: "relative",
+        float: "right",
+        transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)",
+        maxHeight: "100%",
+        width: "100%",
+        overflowScroller: "touch"
+    },
+
+})
+
+const switchRoutes = (
+    <Switch>
+        <Route exact path='/' render={() => <h1> First Route </h1>} />
+        <Route exact path='/two' render={() => <h1> Second Route </h1>} />
+        <Route exact path='/three' render={() => <h1> Third Route </h1>} />
+    </Switch>
+)
 
 class App extends Component {
+    state = {
+        mobileOpen: false
+    }
 
-  render() {
-    const jwt = getJwt()
-    return (
-      <div>
-        <Switch>
-          <Route exact path="/" component={Register} />
-          <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/dashboard" render={() => (
-            jwt ? ( <Dashboard /> ) : (<Redirect to="/" />)
-          )} />
-          <Route exact path="/register/moreinfo" component={RegisterMoreInfo} />
-          <Route exact component={Register} />
-        </Switch>
-      </div>
-      
-    );
-  }
+    render() {
+        const { classes } = this.props
+        return (
+            <div className={classes.wrapper}>
+                <Sidebar />
+                <div className={classes.mainPanel}>
+                    <Header />
+                    <div className={classes.content}>
+                        <div className={classes.container}>
+                            {switchRoutes}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        )
+    }
 }
 
-export default App;
+export default withStyles(dashboardStyles)(App);
