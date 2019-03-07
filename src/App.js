@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard/dashboard'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { getJwt } from './helpers/jwt'
 import eventsPage from './components/subComponents/eventsPage'
+import RegisterMoreInfo from './components/Register/RegisterMoreInfo'
 
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
           <Route exact path="/dashboard" render={() => (
             jwt ? ( <Dashboard /> ) : (<Redirect to="/" />)
           )} />
+          <Route exact path="/register/moreinfo" component={RegisterMoreInfo} />
           <Route exact component={Register} />
         </Switch>
       </div>

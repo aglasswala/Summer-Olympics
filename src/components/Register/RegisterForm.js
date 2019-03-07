@@ -54,16 +54,16 @@ class RegisterForm extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         const { firstName, lastName, email, password } = this.state
+        // TODO Validate
         this.props.submit( firstName, lastName, email, password )
     }
 
     render() {
-        console.log(this.state)
         const { classes } = this.props  
         return (
             <form 
                 className={classes.form}
-                onSubmit={this.submit}
+                onSubmit={(e) => this.onSubmit(e)}
             >
                 <Grid
                   container
