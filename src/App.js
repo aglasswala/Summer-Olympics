@@ -24,6 +24,7 @@ class App extends Component {
           <Route exact component={Register} />
         </Switch>
       </div>
+      
     );
   }
 }
