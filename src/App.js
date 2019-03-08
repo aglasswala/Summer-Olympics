@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 
 import Sidebar from './Component/Sidebar/Sidebar'
 import Header from './Component/Header/Header'
+import dashboardRoutes from './routes/dashboardRoutes.jsx'
 
 const dashboardStyles = theme => ({
     wrapper: {
@@ -40,7 +41,9 @@ class App extends Component {
         const { classes } = this.props
         return (
             <div className={classes.wrapper}>
-                <Sidebar />
+                <Sidebar 
+                    routes={dashboardRoutes}
+                />
                 <div className={classes.mainPanel}>
                     <Header />
                     <div className={classes.content}>
