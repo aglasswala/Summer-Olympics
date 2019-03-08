@@ -48,10 +48,8 @@ const switchRoutes = (
     </Switch>
 )
 
+
 class App extends Component {
-    state = {
-        mobileOpen: false
-    }
 
     render() {
         const { classes } = this.props
@@ -77,4 +75,4 @@ class App extends Component {
     }
 }
 
-export default withStyles(dashboardStyles)(App);
+export default App;
