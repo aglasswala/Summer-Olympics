@@ -76,10 +76,83 @@ const sidebarStyles = theme => ({
         transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
       }
     },
+    logo: {
+        position: "relative",
+        padding: "15px 15px",
+        zIndex: "4",
+        "&:after": {
+            content: '""',
+            position: "absolute",
+            bottom: "0",
+            height: "1px",
+            right: "15px",
+            width: "calc(100% - 30px)",
+            backgroundColor: "rgba(180, 180, 180, 0.3)"
+        }
+    },
+    logoLink: {
+        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        fontWeight: "300",
+        lineHeight: "1.5em",
+        textTransform: "uppercase",
+        padding: "5px 0",
+        display: "block",
+        fontSize: "18px",
+        textAlign: "left",
+        fontWeight: "400",
+        lineHeight: "30px",
+        textDecoration: "none",
+        backgroundColor: "transparent",
+        "&,&:hover": {
+          color: "#FFFFFF"
+        }
+    },
+    logoImage: {
+      width: "30px",
+      display: "inline-block",
+      maxHeight: "30px",
+      marginLeft: "10px",
+      marginRight: "15px"
+    },
+    img: {
+      width: "35px",
+      top: "22px",
+      position: "absolute",
+      verticalAlign: "middle",
+      border: "0"
+    },
+    background: {
+      position: "absolute",
+      zIndex: "1",
+      height: "100%",
+      width: "100%",
+      display: "block",
+      top: "0",
+      left: "0",
+      backgroundSize: "cover",
+      backgroundPosition: "center center",
+      "&:after": {
+        position: "absolute",
+        zIndex: "3",
+        width: "100%",
+        height: "100%",
+        content: '""',
+        display: "block",
+        background: "#000",
+        opacity: ".8"
+      }
+    },
+    sidebarWrapper: {
+        position: "relative",
+        height: "calc(100% - 75px)",
+        overflow: "auto",
+        width: "260px",
+        zIndex: "4"
+    }
 })
 
 const Sidebar = ({...props}) => {
-    const { classes, routes } = props
+    const { classes, routes, logo, image } = props
 
     const links = (
         <List className={classes.list}> 
@@ -126,9 +199,11 @@ const Sidebar = ({...props}) => {
                     }}
                 >
                     {brand}
-                    <div className={classes.sidebarWrapper}>
-                        {links}
-                    </div>
+                    <div className={classes.sidebarWrapper}>{links}</div>
+                    <div
+                        className={classes.background}
+                        style={{ backgroundImage: "url(" + image + ")" }}
+                    />
                 </Drawer>
             </Hidden>
         </div>
