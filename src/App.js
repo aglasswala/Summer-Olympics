@@ -75,4 +75,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default withStyles(dashboardStyles)(App);

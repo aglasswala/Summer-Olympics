@@ -79,7 +79,7 @@ class Event extends Component { v
         const { classes } = this.props
         return (
             <Grid container className={classes.gridContainer}>
-                <Grid item className={classes.gridItem}>
+                <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
                         <div className={classes.cardHeader}>
                             <h4 className={classes.cardTitleWhite}>Simple Table</h4>
@@ -89,7 +89,7 @@ class Event extends Component { v
                         </div>
                         <div className={classes.cardBody}>
                             <EventTable 
-                                tableHead={["Sport", "Time", "Location"]}
+                                tableHead={["Name", "Country", "City", "Salary"]}
                                 tableData={[
                                   ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
                                   ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
