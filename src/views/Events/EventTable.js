@@ -40,7 +40,6 @@ const tableStyles = theme => ({
 
 const EventTable = ({ ...props }) => {
     const { classes, tableHead, tableData } = props
-    console.log(props)
     return (
         <div className={classes.tableResponsive}>
             <Table className={classes.table}>

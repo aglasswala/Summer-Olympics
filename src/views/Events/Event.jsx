@@ -74,7 +74,25 @@ const styles = {
     }
 }
 
-class Event extends Component { v
+class Event extends Component { 
+
+    state = {
+        tableData: [ " No events so far! "]
+    }
+
+    componentDidMount() {
+        fetch("http://localhost:3001/events")
+        .then(response => response.json())
+        .then(data => {
+            console.log(data)
+            this.setState({tableData: data})
+            console.log(this.state)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     render() {
         const { classes } = this.props
         return (
