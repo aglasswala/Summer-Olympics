@@ -85,8 +85,6 @@ class Event extends Component {
         .then(response => response.json())
         .then(data => {
             console.log(data)
-            this.setState({tableData: data})
-            console.log(this.state)
         })
         .catch(err => {
             console.log(err)
