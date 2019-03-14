@@ -4,6 +4,9 @@ import { Route, Switch } from 'react-router-dom'
 import LoginPage from '../LoginPage/LoginPage'
 import Register from '../Register/register'
 import TitlePage from './TitlePage'
+import BackgroundSlider from 'react-background-slider'
+import image1 from '../../images/rio1.png'
+import image2 from '../../images/sidebar-2.jpg'
 
 const homepageStyles = theme => ({
     drawerPaper: {
@@ -48,6 +51,9 @@ const HomePage = ({...props}) => {
     const { classes } = props
     return (
         <div>
+        <BackgroundSlider
+            images={[image1, image2 ]}
+            duration={4} transition={2} />
             <Drawer
                 anchor="left"
                 variant="permanent"
