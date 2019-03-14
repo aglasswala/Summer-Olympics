@@ -1,16 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import Register from './views/Register/register'
-import LoginPage from './views/LoginPage/LoginPage'
+import HomePage from './views/HomePage/HomePage'
 import App from './App'
 
 ReactDOM.render(
     <Router>
       <Switch>
-        <Route exact path='/' component={Register} />
-        <Route exact path='/login' component={LoginPage} />
-        <Route component={App} />
+        <Route exact path='/events' component={App} />
+        <Route component={HomePage} />
       </Switch>
     </Router>
     , document.getElementById('root')
