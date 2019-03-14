@@ -81,10 +81,14 @@ class Event extends Component {
     }
 
     componentDidMount() {
-        fetch("http://localhost:3001/events")
+        fetch("http://localhost:3001/api/events")
         .then(response => response.json())
         .then(data => {
             console.log(data)
+            data = Array.from(data)
+            this.setState({
+              tableData: data
+            })
         })
         .catch(err => {
             console.log(err)
@@ -107,13 +111,13 @@ class Event extends Component {
                             <EventTable 
                                 tableHead={["Name", "Country", "City", "Salary"]}
                                 tableData={[
-                                  ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                                  ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                                  ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                                  ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                                  ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                                  ["Mason Porter", "Chile", "Gloucester", "$78,615"]
-                                ]}
+                                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
+                                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
+                                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
+                                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
+                                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
+                                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
+                              ]}
                             />
                         </div>
                     </div>

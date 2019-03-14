@@ -1,9 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { withStyles } from '@material-ui/core'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
-import Sidebar from './Component/Sidebar/Sidebar'
-import Header from './Component/Header/Header'
+import Sidebar from './Components/Sidebar/Sidebar'
+import LoginPage from './views/LoginPage/LoginPage'
+import Header from './Components/Header/Header'
 import dashboardRoutes from './routes/dashboardRoutes.jsx'
 import logo from './images/reactlogo.png'
 import image from './images/sidebar-2.jpg'
@@ -50,26 +51,49 @@ const switchRoutes = (
 
 class App extends Component {
 
+    state = {
+        isLoggedIn: false
+    }
+
+    changeLoggedIn = () => {
+        this.setState((state,) => ({
+            isLoggedIn: !state.isLoggedIn
+        }))
+    }
+
     render() {
         const { classes } = this.props
+        const { isLoggedIn } = this.state
         return (
-            <div className={classes.wrapper}>
-                <Sidebar 
-                    routes={dashboardRoutes}
-                    logo={logo}
-                    image={image}
-                />
-                <div className={classes.mainPanel}>
-                    <Header 
-                        routes={dashboardRoutes}
-                    />
-                    <div className={classes.content}>
-                        <div className={classes.container}>
-                            {switchRoutes}
+        <div>
+            { isLoggedIn ? 
+                <Fragment>
+                    <div className={classes.wrapper}>
+                        <Sidebar 
+                            routes={dashboardRoutes}
+                            logo={logo}
+                            image={image}
+                        />
+                        <div className={classes.mainPanel}>
+                            <Header 
+                                routes={dashboardRoutes}
+                            />
+                            <div className={classes.content}>
+                                <div className={classes.container}>
+                                    {switchRoutes}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                </Fragment>
+            :
+                <Fragment>
+                    <LoginPage 
+                        changeLoggedIn={this.changeLoggedIn}
+                    />
+                </Fragment>
+            }
+        </div>
         )
     }
 }
