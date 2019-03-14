@@ -37,7 +37,7 @@ class LoginPage extends Component {
             .then(response => response.json())
             .then(result => {
                 localStorage.setItem('cool-jwt', result.userToken);
-                this.props.changeLoggedIn()
+                this.props.history.push('/events')
             })
             .catch(err => {
                 console.log(err);

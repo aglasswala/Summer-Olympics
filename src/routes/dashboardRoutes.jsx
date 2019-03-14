@@ -1,5 +1,4 @@
 import EventsPage from '../views/Events/Event.jsx'
-import TicketPage from '../views/Tickets/Tickets'
 
 const dashboardRoutes = [
     {

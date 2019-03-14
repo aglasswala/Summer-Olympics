@@ -1,14 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import indexRoutes from './routes/index.jsx'
+import Register from './views/Register/register'
+import LoginPage from './views/LoginPage/LoginPage'
+import App from './App'
 
 ReactDOM.render(
     <Router>
       <Switch>
-        {indexRoutes.map((prop, key) => {
-          return <Route path={prop.path} component={prop.component} key={key} />
-        })}
+        <Route exact path='/' component={Register} />
+        <Route exact path='/login' component={LoginPage} />
+        <Route component={App} />
       </Switch>
     </Router>
     , document.getElementById('root')

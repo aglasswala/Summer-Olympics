@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { TextField, Button, InputLabel, Input, FormControl } from '@material-ui/core'
-import validator from 'validator'
+import { Button, InputLabel, Input, FormControl } from '@material-ui/core'
 import { withStyles } from '@material-ui/core'
 
 const styles = {
@@ -53,18 +52,6 @@ class LoginForm extends Component {
         event.preventDefault();
         const { email, password } = this.state
         this.props.submit(email, password)
-    }
-
-    // Need to fix 
-    validate = (email, password) => {
-        const errors = {}
-        if(!validator.isEmail(email)) {
-            this.setState({errors: {email: "Invalid Email"}})
-            this.setState({invalidEmail: true});
-        }
-        if(password.length <= 3){
-            this.setState({errors: {password: "Password must be over 4 characters"}})
-        }
     }
 
     render() {

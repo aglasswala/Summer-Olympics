@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { List, ListItem, ListItemText, Drawer, Hidden } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
 import { withStyles } from '@material-ui/core'
@@ -92,8 +92,6 @@ const sidebarStyles = theme => ({
     },
     logoLink: {
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
-        fontWeight: "300",
-        lineHeight: "1.5em",
         textTransform: "uppercase",
         padding: "5px 0",
         display: "block",

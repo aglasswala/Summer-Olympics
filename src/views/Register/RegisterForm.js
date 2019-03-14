@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { TextField, Button, InputLabel, Input, FormControl, Grid } from '@material-ui/core'
-// import validator from 'validator'
+import { Button, InputLabel, Input, FormControl, Grid } from '@material-ui/core'
 import { withStyles } from '@material-ui/core'
 
 const styles = {
@@ -54,7 +53,7 @@ class RegisterForm extends Component {
     }
 
     render() {
-        const { classes } = this.props  
+        const { classes } = this.props
         return (
             <form 
                 className={classes.form}
