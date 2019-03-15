@@ -80,18 +80,18 @@ class Register extends Component {
           className={classes.form}
           onSubmit={(e) => this.onSubmit(e)}
         >
-          <Grid container direction="column" justify="center" alignItems="stretch">
+          <Grid container direction="column" justify="center" alignItems="stretch" style={{ minHeight: '100vh' }}>
             <Grid item>
               <Typography
-                variant="h3"
+                variant="h5"
                 className={classes.title}
               >
                 Sign up to see more
               </Typography>
             </Grid>
-            <Grid item>
+            <Grid item xs={12} sm={6}>
               <span className={classes.wrapper}>
-                <FormControl fullWidth required>
+                <FormControl required>
                   <InputLabel> First Name </InputLabel>
                   <Input 
                       id="first_name" 
@@ -104,9 +104,9 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <span className={classes.wrapper}>
-                <FormControl fullWidth required>
+                <FormControl required>
                   <InputLabel> Last Name </InputLabel>
                   <Input 
                       id="last_name" 

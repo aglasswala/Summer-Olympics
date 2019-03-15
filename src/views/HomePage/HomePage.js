@@ -52,7 +52,7 @@ const HomePage = ({...props}) => {
     return (
         <div>
         <BackgroundSlider
-            images={[image1, image2 ]}
+            images={[image1, image2]}
             duration={4} transition={2} />
             <Drawer
                 anchor="left"
