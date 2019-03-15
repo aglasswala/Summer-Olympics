@@ -24,7 +24,7 @@ class LoginPage extends Component {
     }
 
     submit = (email, password) => {
-        fetch('http://localhost:3001/login', {
+        fetch('http://localhost:3001/api/login', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ class LoginPage extends Component {
             .then(response => response.json())
             .then(result => {
                 localStorage.setItem('cool-jwt', result.userToken);
-                this.props.history.push('/dashboard')
+                this.props.history.push('/events')
             })
             .catch(err => {
                 console.log(err);
@@ -70,4 +70,3 @@ class LoginPage extends Component {
 }
 
 export default withStyles(styles)(LoginPage)
-

@@ -6,6 +6,8 @@
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
     "react": "^16.8.2",
+    "react-background-slider": "^1.2.0",
+    "react-background-slideshow": "^1.0.4",
     "react-dom": "^16.8.2",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
