@@ -62,7 +62,7 @@ class Register extends Component {
     })
     .then(response => response.json()) 
     .then(data => {
-      localStorage.setItem('rioOlympicsJWT', data.userToken)
+      localStorage.setItem('cool-jwt', data.userToken)
       this.props.history.push('/events')
     })
   }

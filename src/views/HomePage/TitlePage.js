@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, ListItem, ListItemText, Grid, Button, withStyles } from '@material-ui/core'
+import { List, ListItem, ListItemText, Grid, Button, withStyles, Typography } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
 
 const titlePageStyles = theme => ({
@@ -22,7 +22,9 @@ const TitlePage = ({ ...props }) => {
                 </Grid>
                 <Grid item>
                     <span className={classes.wrapper}>
-                        Main content will go here ( Basically a couple words on what this application does )
+                        <Typography>
+                            Main content will go here ( Basically a couple words on what this application does )
+                        </Typography>
                     </span>
                 </Grid>
                 <Grid item>
