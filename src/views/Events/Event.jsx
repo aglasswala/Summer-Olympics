@@ -76,17 +76,15 @@ const styles = {
 class Event extends Component { 
 
     state = {
-        tableData: [ " No events so far! "]
+        tableData: [[]]
     }
 
     componentDidMount() {
         fetch("http://localhost:3001/api/events")
         .then(response => response.json())
         .then(data => {
-            console.log(data) 
-            data = Array.from(data)
             this.setState({
-              tableData: data
+                tableData: data
             })
         })
         .catch(err => {
@@ -96,6 +94,7 @@ class Event extends Component {
 
     render() {
         const { classes } = this.props
+        console.log(this.state)
         return (
             <Grid container className={classes.gridContainer}>
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
@@ -108,15 +107,8 @@ class Event extends Component {
                         </div>
                         <div className={classes.cardBody}>
                             <EventTable 
-                                tableHead={["Name", "Country", "City", "Salary"]}
-                                tableData={[
-                                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
-                              ]}
+                                tableHead={["Event", "Stadium", "City", "Time", "Attendees"]}
+                                tableData={this.state.tableData}
                             />
                         </div>
                     </div>
