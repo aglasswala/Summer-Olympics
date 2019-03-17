@@ -63,7 +63,7 @@ class Register extends Component {
     .then(response => response.json()) 
     .then(data => {
       localStorage.setItem('cool-jwt', data.userToken)
-      this.props.history.push('/events')
+      this.props.history.push('/dashboard')
     })
   }
 

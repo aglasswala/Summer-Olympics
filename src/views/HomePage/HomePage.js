@@ -18,33 +18,13 @@ const homepageStyles = theme => ({
       zIndex: "1",
       boxShadow:
         "0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)",
-      width: 500,
+      width: 700,
       [theme.breakpoints.up("md")]: {
-        width: 500,
+        width: 700,
         position: "fixed",
         height: "100%"
       },
-      [theme.breakpoints.down("sm")]: {
-        width: 500,
-        boxShadow:
-          "0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)",
-        position: "fixed",
-        display: "block",
-        top: "0",
-        height: "100vh",
-        right: "0",
-        left: "auto",
-        zIndex: "1032",
-        visibility: "visible",
-        overflowY: "visible",
-        borderTop: "none",
-        textAlign: "left",
-        paddingRight: "0px",
-        paddingLeft: "0",
-        transform: `translate3d(500px, 0, 0)`,
-        transition: "all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
-      }
-    },
+    }
 })
 
 const HomePage = ({...props}) => {
@@ -62,11 +42,11 @@ const HomePage = ({...props}) => {
                     paper: classes.drawerPaper
                 }}
             >
-                <Switch>
-                    <Route exact path="/login" component={LoginPage} />
-                    <Route exact path="/register" component={Register} />
-                    <Route exact path="/" component={TitlePage} />
-                </Switch>
+              <Switch>
+                <Route exact path="/login" component={LoginPage} />
+                <Route exact path="/register" component={Register} />
+                <Route component={TitlePage} />
+              </Switch>
             </Drawer>
         </div>
     )

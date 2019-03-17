@@ -1,13 +1,19 @@
-import EventsPage from '../views/Events/Event.jsx'
+import EventsPage from '../Components/Events/Event.jsx'
 
 const dashboardRoutes = [
     {
-        path: "/events",
+        path: "/dashboard",
         sidebarName: "Events",
         navbarName: "Checkout all the events",
         component: EventsPage
     },
-    { redirect: true, path: "/", to: "/events", navbarName: "Redirect" }
+    {
+        path: "/tickets",
+        sidebarName: "Tickets`",
+        navbarName: "Checkout all the tickets",
+        component: EventsPage
+    },
+    { redirect: true, path: "/", to: "/dashboard", navbarName: "Redirect" }
 ]
 
 export default dashboardRoutes

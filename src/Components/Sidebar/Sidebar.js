@@ -150,31 +150,8 @@ const sidebarStyles = theme => ({
 })
 
 const Sidebar = ({...props}) => {
-    const { classes, routes, logo, image } = props
-
-    const links = (
-        <List className={classes.list}> 
-            {routes.map((prop, key) => {
-                return (
-                  <NavLink
-                    to={prop.path}
-                    className={classes.item}
-                    activeClassName="active"
-                    key={key}
-                  >
-                    <ListItem button className={classes.itemLink}>
-                      <ListItemText
-                        primary={prop.sidebarName}
-                        className={classes.itemText}
-                        disableTypography={true}
-                      />
-                    </ListItem>
-                  </NavLink>
-                )
-            })}
-        </List>
-    )
-
+    const { classes, logo, image } = props
+    
     const brand = (
         <div className={classes.logo}>
           <a href="https://google.com" className={classes.logoLink}>
@@ -197,7 +174,38 @@ const Sidebar = ({...props}) => {
                     }}
                 >
                     {brand}
-                    <div className={classes.sidebarWrapper}>{links}</div>
+                    <div className={classes.sidebarWrapper}>
+                      <List className={classes.list}> 
+                        <NavLink
+                          to={"/dashboard"}
+                          exact
+                          className={classes.item}
+                          activeClassName="active"
+                        >
+                          <ListItem button className={classes.itemLink}>
+                            <ListItemText
+                              primary={"Events"}
+                              className={classes.itemText}
+                              disableTypography={true}
+                            />
+                          </ListItem>
+                        </NavLink>
+                        <NavLink
+                          to={"/dashboard/tickets"}
+                          exact
+                          className={classes.item}
+                          activeClassName="active"
+                        >
+                          <ListItem button className={classes.itemLink}>
+                            <ListItemText
+                              primary={"Tickets"}
+                              className={classes.itemText}
+                              disableTypography={true}
+                            />
+                          </ListItem>
+                        </NavLink>
+                      </List>
+                    </div>
                     <div
                         className={classes.background}
                         style={{ backgroundImage: "url(" + image + ")" }}

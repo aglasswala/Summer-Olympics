@@ -7,7 +7,7 @@ import LoginForm from './LoginForm'
 const styles = {
     paper: {
         background: "white",
-        marginTop: "15vh"
+        marginTop: "25vh"
     },
     headerSignin: {
         textAlign: "center",
@@ -37,7 +37,7 @@ class LoginPage extends Component {
             .then(response => response.json())
             .then(result => {
                 localStorage.setItem('cool-jwt', result.userToken);
-                this.props.history.push('/events')
+                this.props.history.push('/dashboard')
             })
             .catch(err => {
                 console.log(err);
@@ -54,7 +54,7 @@ class LoginPage extends Component {
                 justify="center"
                 alignItems="center"
             >
-                <Grid item xs sm={8} md={6} lg={4}>
+                <Grid item xs sm={8} md={8} lg={8}>
                     <Paper className={classes.paper}>
                         <Typography variant="display1" className={classes.headerSignin}>
                             Sign In
