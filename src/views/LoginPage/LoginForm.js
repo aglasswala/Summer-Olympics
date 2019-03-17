@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Button, InputLabel, Input, FormControl } from '@material-ui/core'
+import { Button, InputLabel, Input, FormControl, FormHelperText } from '@material-ui/core'
+import Validator from 'validator'
 import { withStyles } from '@material-ui/core'
 
 const styles = {
@@ -33,11 +34,7 @@ class LoginForm extends Component {
     state = {
         email: "",
         password: "",
-        errors: {
-            email: "",
-            password: ""
-        },
-        invalidEmail: false
+        errors: {}
     }
 
     onEmailChange = (event) => {
@@ -51,19 +48,30 @@ class LoginForm extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         const { email, password } = this.state
-        this.props.submit(email, password)
+        const errors = this.validate(email, password)
+        this.setState({ errors })
+        if(Object.keys(this.state.errors).length === 0) {
+            this.props.submit(email, password)
+        }
+    }
+
+    validate = (email, password) => {
+        const errors = {}
+        if(!Validator.isEmail(email)) errors.email = "Invalid Email";
+        if(!password) errors.password = "Can't be blank";
+        return errors
     }
 
     render() {
         
         const { classes } = this.props
         return (
-            <form 
+            <form
                 className={classes.form}
                 onSubmit={e => this.onSubmit(e)}
             >
                 <span className={classes.wrapper}>
-                    <FormControl margin="normal" fullWidth required>
+                    <FormControl margin="normal" fullWidth error={!!this.state.errors.email} required>
                             <InputLabel> Email Address </InputLabel>
                             <Input 
                                 id="email" 
@@ -75,18 +83,18 @@ class LoginForm extends Component {
                                 onChange={this.onEmailChange}
                                 className={classes.textField}
                             />
+                            {this.state.errors.email ? <FormHelperText>Invalid Email</FormHelperText> : null}
                     </FormControl>
                 </span>
                 <span className={classes.wrapper}>
-                    <FormControl margin="normal" fullWidth required>
+                    <FormControl margin="normal" fullWidth error={!!this.state.errors.password} required>
                             <InputLabel htmlFor="password"> Password </InputLabel>
                             <Input 
                                 id="password" 
                                 name="password" 
                                 value={this.state.password}
                                 type="password"
-                                autoComplete="password" 
-                                autoFocus
+                                autoComplete="password"
                                 onChange={this.onPasswordChange}
                                 className={classes.textField}
                             />
