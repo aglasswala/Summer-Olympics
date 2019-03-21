@@ -5,13 +5,8 @@ import HomePage from './views/HomePage/HomePage'
 
 class App extends Component {
 
-    state = {
-        isAuthenticated: false
-    }
-
     componentDidMount() {
         if(localStorage.getItem('cool-jwt')) {
-            this.setState({ isAuthenticated: true })
             this.props.history.push('/dashboard')
         }
     }
