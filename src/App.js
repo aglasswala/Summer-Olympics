@@ -12,6 +12,7 @@ class App extends Component {
     componentDidMount() {
         const userToken = localStorage.getItem('cool-jwt')
         if(userToken) {
+            this.setState({ isAuthenticated: true })
             this.props.history.push('/dashboard')
         }
     }

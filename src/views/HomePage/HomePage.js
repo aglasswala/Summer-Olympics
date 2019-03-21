@@ -31,7 +31,7 @@ const HomePage = ({...props}) => {
     const { classes } = props
     return (
         <div>
-        <BackgroundSlider
+          <BackgroundSlider
             images={[image1, image2]}
             duration={4} transition={2} />
             <Drawer

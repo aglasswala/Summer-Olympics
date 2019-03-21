@@ -93,7 +93,6 @@ class Event extends Component {
     }
 
     render() {
-        console.log(this.props)
         const { classes } = this.props
         return (
             <Grid container className={classes.gridContainer}>
