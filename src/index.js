@@ -10,6 +10,10 @@ import App from './App'
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
+// if (localStorage.cool-jwt) {
+//   store.dispatch(userLoggedIn(user));
+// }
+
 
 ReactDOM.render(
     <Router>

@@ -34,7 +34,7 @@ class LoginPage extends Component {
         })
             .then(response => response.json())
             .then(result => {
-                this.props.userLoggedIn(result.user)
+                this.props.userLoggedIn(result.email)
                 localStorage.setItem('cool-jwt', result.userToken)
                 if(result.userToken) {
                     this.props.history.push('/dashboard')
@@ -75,6 +75,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   userLoggedIn: (user) => dispatch(userLoggedIn(user))
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LoginPage));
