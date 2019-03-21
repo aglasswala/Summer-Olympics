@@ -5,6 +5,17 @@ import HomePage from './views/HomePage/HomePage'
 
 class App extends Component {
 
+    state = {
+        isAuthenticated: false
+    }
+
+    componentDidMount() {
+        const userToken = localStorage.getItem('cool-jwt')
+        if(userToken) {
+            this.props.history.push('/dashboard')
+        }
+    }
+
     render() {
         return (
             <div>
