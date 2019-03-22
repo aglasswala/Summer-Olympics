@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Dashboard from './views/DashboardPage/Dashboard'
 import HomePage from './views/HomePage/HomePage'
+import UserRoute from './routes/UserRoute'
 
 class App extends Component {
 
     componentDidMount() {
-        if(localStorage.getItem('cool-jwt')) {
+        if (localStorage.getItem('cool-jwt')) {
             this.props.history.push('/dashboard')
         }
     }
@@ -15,7 +16,7 @@ class App extends Component {
         return (
             <div>
                 <Switch>
-                    <Route path="/dashboard" component={Dashboard} />
+                    <UserRoute exact path="/dashboard" component={Dashboard} />
                     <Route component={HomePage} />
                 </Switch>
             </div>
