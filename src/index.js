@@ -10,9 +10,11 @@ import App from './App'
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
-// if (localStorage.cool-jwt) {
-//   store.dispatch(userLoggedIn(user));
-// }
+if (localStorage.getItem("cool-jwt")) {
+  console.log(localStorage.getItem("cool-jwt"))
+
+  // store.dispatch(userLoggedIn(user));
+}
 
 
 ReactDOM.render(
