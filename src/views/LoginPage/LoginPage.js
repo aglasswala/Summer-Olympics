@@ -36,8 +36,6 @@ class LoginPage extends Component {
             .then(result => {
                 this.props.userLoggedIn(result)
                 localStorage.setItem('cool-jwt', result.userToken)
-            })
-            .then(result => {
                 this.props.history.push('/dashboard')
             })
             .catch(err => {

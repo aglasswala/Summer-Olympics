@@ -6,17 +6,17 @@ import UserRoute from './routes/UserRoute'
 
 class App extends Component {
 
-    componentDidMount() {
-        if (localStorage.getItem('cool-jwt')) {
-            this.props.history.push('/dashboard')
-        }
-    }
+    // componentDidMount() {
+    //     if (localStorage.getItem('cool-jwt')) {
+    //         this.props.history.push('/dashboard')
+    //     }
+    // }
 
     render() {
         return (
             <div>
                 <Switch>
-                    <UserRoute exact path="/dashboard" component={Dashboard} />
+                    <Route path="/dashboard" component={Dashboard} />
                     <Route component={HomePage} />
                 </Switch>
             </div>

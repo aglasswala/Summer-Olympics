@@ -13,7 +13,20 @@ import App from './App'
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 if (localStorage.getItem("cool-jwt")) {
-  console.log(localStorage.getItem("cool-jwt"))
+  const payload = decode(localStorage.getItem("cool-jwt"))
+  console.log(payload.id)
+  fetch('http://localhost:3001/api/getUser', {
+    method: 'post',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        id: payload.id
+    })
+  })
+  .then(response => response.json())
+  .then(result => store.dispatch(userLoggedIn(result)))
+  .catch(err => console.log(err))
 }
 
 ReactDOM.render(
