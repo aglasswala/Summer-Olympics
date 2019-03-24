@@ -6,11 +6,11 @@ import UserRoute from './routes/UserRoute'
 
 class App extends Component {
 
-    // componentDidMount() {
-    //     if (localStorage.getItem('cool-jwt')) {
-    //         this.props.history.push('/dashboard')
-    //     }
-    // }
+    componentDidMount() {
+        if (localStorage.getItem('cool-jwt')) {
+            this.props.history.push('/dashboard')
+        }
+    }
 
     render() {
         return (

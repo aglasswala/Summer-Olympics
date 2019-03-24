@@ -149,9 +149,10 @@ const sidebarStyles = theme => ({
     }
 })
 
+
 const Sidebar = ({...props}) => {
     const { classes, logo, image } = props
-    
+
     const brand = (
         <div className={classes.logo}>
           <a href="https://google.com" className={classes.logoLink}>
