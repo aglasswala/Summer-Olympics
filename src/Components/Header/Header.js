@@ -2,6 +2,7 @@ import React from 'react'
 
 import { AppBar, Toolbar, Typography } from '@material-ui/core'
 import { withStyles } from '@material-ui/core'
+import { connect } from 'react-redux'
 
 const headerStyles = theme => ({
     appBar: {
@@ -65,7 +66,7 @@ const Header = ({ ...props }) => {
             <Toolbar className={classes.container}>
                 <div className={classes.flex}>
                     <Typography className={classes.title}>
-                        {makeBrand()}
+                        {props.userType}
                     </Typography>
                 </div>
             </Toolbar>
@@ -73,4 +74,11 @@ const Header = ({ ...props }) => {
     )
 }
 
-export default withStyles(headerStyles)(Header)
+function mapStateToProps(state) {
+    console.log(state.user.userType)
+    return {
+        userType: state.user.userType
+    }
+}
+
+export default connect(mapStateToProps)(withStyles(headerStyles)(Header))

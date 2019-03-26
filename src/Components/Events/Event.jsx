@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles, Grid } from '@material-ui/core'
+import { connect } from 'react-redux'
 import EventTable from './EventTable'
 
 const styles = {
@@ -117,4 +118,10 @@ class Event extends Component {
     }
 }
 
-export default withStyles(styles)(Event)
+function mapStateToProps(state) {
+    return {
+        userType: state.user.userType
+    }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(Event))

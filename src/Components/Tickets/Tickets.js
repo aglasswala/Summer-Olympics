@@ -1,12 +1,19 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-const Tickets = () => {
-    
+const Tickets = ({...props}) => {
     return (
         <div>
-            <h1> HELLO from tickets </h1>
+            {props.user.tickets ? props.user.tickets.map((ticket, key) => <h1 key={key}>{ticket}</h1>) : null}
         </div>
     )
 }
 
-export default Tickets
+function mapStateToProps(state) {
+  console.log(state)
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(Tickets)

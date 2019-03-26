@@ -1,6 +1,8 @@
-import React, { Component } from 'react'
-import { withStyles } from '@material-ui/core'
-import { Grid, Paper, Typography } from '@material-ui/core'
+import React, { Component } from 'react';
+import { withStyles } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { userLoggedIn } from '../../actions/user';
+import { Grid, Paper, Typography } from '@material-ui/core';
 
 import LoginForm from './LoginForm'
 
@@ -18,10 +20,6 @@ const styles = {
 
 
 class LoginPage extends Component {
-    state = {
-        email: "",
-        password: "",
-    }
 
     submit = (email, password) => {
         fetch('http://localhost:3001/api/login', {
@@ -36,20 +34,17 @@ class LoginPage extends Component {
         })
             .then(response => response.json())
             .then(result => {
-                console.log(result)
+                this.props.userLoggedIn(result.user)
                 localStorage.setItem('cool-jwt', result.userToken)
-                if(result.userToken) {
-                    this.props.history.push('/dashboard')
-                }
+                this.props.history.push('/dashboard')
             })
             .catch(err => {
                 console.log(err);
             })
-
     }
-
     render() {
         const { classes } = this.props
+
         return (
             <Grid
                 container
@@ -72,4 +67,13 @@ class LoginPage extends Component {
     }
 }
 
-export default withStyles(styles)(LoginPage)
+const mapStateToProps = state => ({
+    ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+    userLoggedIn: (user) => dispatch(userLoggedIn(user))
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LoginPage));
