@@ -14,7 +14,6 @@ const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk
 
 if (localStorage.getItem("cool-jwt")) {
   const payload = decode(localStorage.getItem("cool-jwt"))
-  console.log(payload.id)
   fetch('http://localhost:3001/api/getUser', {
     method: 'post',
     headers: {
