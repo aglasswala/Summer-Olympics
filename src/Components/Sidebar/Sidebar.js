@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, ListItem, ListItemText, Drawer, Hidden } from '@material-ui/core'
+import { List, ListItem, ListItemText, Drawer, Hidden, Button } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
 import { withStyles } from '@material-ui/core'
 
@@ -200,6 +200,20 @@ const Sidebar = ({...props}) => {
                           <ListItem button className={classes.itemLink}>
                             <ListItemText
                               primary={"Tickets"}
+                              className={classes.itemText}
+                              disableTypography={true}
+                            />
+                          </ListItem>
+                        </NavLink>
+                        <NavLink
+                          to={"/"}
+                          exact
+                          className={classes.item}
+                          activeClassName="active"
+                        >
+                          <ListItem button className={classes.itemLink} onClick={() => localStorage.removeItem("cool-jwt")}>
+                            <ListItemText
+                              primary={"Logout"}
                               className={classes.itemText}
                               disableTypography={true}
                             />

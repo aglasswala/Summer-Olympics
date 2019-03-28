@@ -73,7 +73,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     userLoggedIn: (user) => dispatch(userLoggedIn(user))
-
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LoginPage));

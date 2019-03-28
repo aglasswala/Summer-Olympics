@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { withStyles, Grid } from '@material-ui/core'
+import { getEvents } from '../../actions/events'
+import CreateEvent from './CreateEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
 
@@ -84,8 +86,9 @@ class Event extends Component {
         fetch("http://localhost:3001/api/events")
         .then(response => response.json())
         .then(data => {
+            this.props.getEvents(data)
             this.setState({
-                tableData: data
+                tableData: this.props.events
             })
         })
         .catch(err => {
@@ -97,6 +100,7 @@ class Event extends Component {
         const { classes } = this.props
         return (
             <Grid container className={classes.gridContainer}>
+                {this.props.userType !== "public" ? <CreateEvent /> : null}
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
                         <div className={classes.cardHeader}>
@@ -118,10 +122,15 @@ class Event extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapDispatchToProps = dispatch => ({
+    getEvents: (events) => dispatch(getEvents(events))
+});
+
+const mapStateToProps = state => {
     return {
+        events: state.events,
         userType: state.user.userType
     }
-}
+};
 
-export default connect(mapStateToProps)(withStyles(styles)(Event))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Event))

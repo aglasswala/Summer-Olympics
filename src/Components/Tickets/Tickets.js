@@ -10,7 +10,6 @@ const Tickets = ({...props}) => {
 }
 
 function mapStateToProps(state) {
-  console.log(state)
   return {
     user: state.user
   }

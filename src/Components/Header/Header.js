@@ -75,7 +75,6 @@ const Header = ({ ...props }) => {
 }
 
 function mapStateToProps(state) {
-    console.log(state.user.userType)
     return {
         userType: state.user.userType
     }
