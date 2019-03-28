@@ -98,9 +98,12 @@ class Event extends Component {
 
     render() {
         const { classes } = this.props
+
         return (
             <Grid container className={classes.gridContainer}>
-                {this.props.userType !== "public" ? <CreateEvent /> : null}
+                <Grid item className={classes.gridItem}>
+                    {this.props.userType !== "public" ? <CreateEvent /> : null}
+                </Grid>
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
                         <div className={classes.cardHeader}>
