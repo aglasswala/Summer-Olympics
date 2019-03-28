@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, ListItem, ListItemText, Drawer, Hidden, Button } from '@material-ui/core'
+import { List, ListItem, ListItemText, Drawer, Hidden } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
 import { withStyles } from '@material-ui/core'
 

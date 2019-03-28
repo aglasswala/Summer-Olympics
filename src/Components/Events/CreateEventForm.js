@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Typography, FormControl, Input, InputLabel, Button } from '@material-ui/core'
+import { Grid, FormControl, Input, InputLabel, Button } from '@material-ui/core'
 
 class CreateEventForm extends Component {
   render() {

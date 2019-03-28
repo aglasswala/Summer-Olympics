@@ -49,18 +49,6 @@ const headerStyles = theme => ({
 
 const Header = ({ ...props }) => {
     const { classes } = props
-
-    const makeBrand = () => {
-        let name = 'Events'
-        props.routes.map((prop, key) => {
-            if(prop.path === window.location.pathname ) {
-                name = prop.navbarName
-            }
-            return null
-        });
-        return name
-    }
-
     return (
         <AppBar className={classes.appBar}>
             <Toolbar className={classes.container}>

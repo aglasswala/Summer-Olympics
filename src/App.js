@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Dashboard from './views/DashboardPage/Dashboard'
 import HomePage from './views/HomePage/HomePage'
-import UserRoute from './routes/UserRoute'
 
 class App extends Component {
 

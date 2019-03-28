@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, withStyles } from '@material-ui/core'
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, withStyles } from '@material-ui/core'
 import CreateEventForm from './CreateEventForm'
 
 const createEventStyles = {
@@ -23,7 +23,6 @@ class CreateEvent extends Component {
 
 
   render() {
-    const { classes } = this.props
     return (
       <div>
         <Button onClick={this.handleClickOpen}> 
