@@ -12,12 +12,11 @@ class CreateEventForm extends Component {
             <Grid item>
               <span>
                 <FormControl required>
-                  <InputLabel> First Name </InputLabel>
+                  <InputLabel> Name of Event </InputLabel>
                   <Input 
-                      id="first_name" 
-                      name="firstName"
+                      id="nameEvent" 
+                      name="nameEvent"
                       type="text"
-                      autoComplete="first name"
                       autoFocus
                   />
                 </FormControl>
@@ -26,13 +25,9 @@ class CreateEventForm extends Component {
             <Grid>
               <span>
                 <FormControl required>
-                  <InputLabel> Last Name </InputLabel>
                   <Input 
-                      id="last_name" 
-                      name="lastName" 
-                      type="string"
-                      autoComplete="last name"
-                      autoFocus
+                      id="time"
+                      type="Date"
                   />
                 </FormControl>
               </span>
@@ -40,41 +35,32 @@ class CreateEventForm extends Component {
             <Grid item>
               <span>
                 <FormControl fullWidth required>
-                  <InputLabel> Email </InputLabel>
+                  <InputLabel> Stadium </InputLabel>
                   <Input 
-                      id="email" 
-                      name="email" 
+                      name="Stadium" 
                       type="text"
-                      autoComplete="email"
-                      autoFocus
                   />
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item>
               <span>
                 <FormControl fullWidth required>
-                  <InputLabel> Password </InputLabel>
-                  <Input 
-                      id="password" 
-                      name="password" 
-                      type="password"
-                      autoComplete="password"
-                      autoFocus
+                  <InputLabel> Location </InputLabel>
+                  <Input
+                      name="Location" 
+                      type="text"
                   />
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item>
               <span>
                 <FormControl fullWidth required>
-                  <InputLabel> Confirm Password </InputLabel>
-                  <Input 
-                      id="conPassword" 
-                      name="conPassword" 
-                      type="password"
-                      autoComplete="password"
-                      autoFocus
+                  <InputLabel> Type </InputLabel>
+                  <Input  
+                      name="Type" 
+                      type="text"
                   />
                 </FormControl>
               </span>
@@ -88,7 +74,6 @@ class CreateEventForm extends Component {
                       name="street" 
                       type="text"
                       autoComplete="street"
-                      autoFocus
                   />
                 </FormControl>
               </span>
