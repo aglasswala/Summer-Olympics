@@ -5,7 +5,6 @@ import { Route, Switch } from 'react-router-dom'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import Event from '../../Components/Events/Event'
 import Tickets from '../../Components/Tickets/Tickets'
-import Header from '../../Components/Header/Header'
 import dashboardRoutes from '../../routes/dashboardRoutes.jsx'
 import logo from '../../images/reactlogo.png'
 import image from '../../images/sidebar-2.jpg'
@@ -13,8 +12,7 @@ import image from '../../images/sidebar-2.jpg'
 const dashboardStyles = theme => ({
     wrapper: {
         position: "relative",
-        top: "0",
-        height: "100vh",
+        top: "0"
     },
     mainPanel: {
         [theme.breakpoints.up("md")]: {
@@ -28,7 +26,7 @@ const dashboardStyles = theme => ({
         width: "100%"
     },
     content: {
-        marginTop: "70px",
+        marginTop: "20px",
         minHeight: "calc(100vh - 123px)"
     },
     container: {
@@ -52,9 +50,6 @@ class Dashboard extends Component {
                     image={image}
                 />
                 <div className={classes.mainPanel}>
-                    <Header 
-                        routes={dashboardRoutes}
-                    />
                     <div className={classes.content}>
                         <div className={classes.container}>
                             <Switch>
