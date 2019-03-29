@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Grid, Typography, FormControl, InputLabel, Input, Button } from '@material-ui/core'
+import { connect } from 'react-redux'
+import { userLoggedIn } from '../../actions/user'
 import { withStyles } from '@material-ui/core'
 
 const styles = theme => ({
@@ -62,6 +64,8 @@ class Register extends Component {
     })
     .then(response => response.json()) 
     .then(data => {
+      console.log(this.props) 
+      this.props.userLoggedIn(data.user)
       localStorage.setItem('cool-jwt', data.token)
       this.props.history.push('/dashboard')
     })
@@ -238,4 +242,12 @@ class Register extends Component {
   }
 }
 
-export default withStyles(styles)(Register)
+const mapStateToProps = state => ({
+    ...state
+});
+
+const mapDispatchToProps = dispatch => ({
+    userLoggedIn: (user) => dispatch(userLoggedIn(user))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Register))

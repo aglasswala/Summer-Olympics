@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withStyles, Grid } from '@material-ui/core'
 import { getEvents } from '../../actions/events'
 import CreateEvent from './CreateEvent'
+import ViewAthleteEvent from './ViewAthleteEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
 
@@ -73,6 +74,9 @@ const styles = {
         padding: "0.9375rem 20px",
         flex: "1 1 auto",
         position: "relative"
+    },
+    buttons: {
+        display: "inline-block"
     }
 }
 
@@ -103,6 +107,9 @@ class Event extends Component {
             <Grid container className={classes.gridContainer}>
                 <Grid item className={classes.gridItem}>
                     {this.props.userType !== "public" ? <CreateEvent /> : null}
+                </Grid>
+                <Grid item className={classes.gridItem}>
+                    {this.props.userType === "athlete" ? <ViewAthleteEvent /> : null}
                 </Grid>
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>

@@ -24,7 +24,9 @@ if (localStorage.getItem("cool-jwt")) {
     })
   })
   .then(response => response.json())
-  .then(result => store.dispatch(userLoggedIn(result)))
+  .then(result => {
+    store.dispatch(userLoggedIn(result))
+  })
   .catch(err => console.log(err))
 }
 
