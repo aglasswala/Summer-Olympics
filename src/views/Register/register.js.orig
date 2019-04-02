@@ -1,0 +1,248 @@
+import React, { Component } from 'react'
+import { Grid, Typography, FormControl, InputLabel, Input, Button } from '@material-ui/core'
+import { withStyles } from '@material-ui/core'
+
+const styles = theme => ({
+  wrapper: {
+    display: "block",
+    position: "relative",
+    padding: "8.85px 13px"
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch",
+    widht: "100%"
+  },
+  textField: {
+    boxSizing: "border-box",
+    fontWeight: "300",
+    textOverflow: "ellipsis",
+    transition: ".4s all",
+    width: "100%"
+  },
+  title: {
+    padding: 20
+  }
+})
+
+class Register extends Component {
+
+  state = {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      street: "",
+      city: "",
+      zip: "",
+      state: ""
+    }
+
+  
+    handleChange =(event) => {
+        const {name, value} = event.target
+        this.setState({
+          [name] : value
+        })
+        console.log(value)
+    }
+
+  onSubmit = (e) => {
+    e.preventDefault()
+    const { firstName, lastName, email, password, street, city, zip, state } = this.state
+    fetch('http://localhost:3001/api/register', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            firstName,
+            lastName,
+            email,
+            password,
+            street,
+            city,
+            zip,
+            state
+        })
+    })
+    .then(response => response.json()) 
+    .then(data => {
+      localStorage.setItem('cool-jwt', data.token)
+      this.props.history.push('/dashboard')
+    })
+  }
+
+
+  // TODO:
+  // 1. put first and last name on the same line
+  // 2. put address and city and zip on the same line
+
+  render() {
+    const { classes } = this.props
+    return (
+      <div>
+        <form
+          className={classes.form}
+          onSubmit={(e) => this.onSubmit(e)}
+        >
+          <Grid container direction="column" justify="center" alignItems="stretch" style={{ minHeight: '100vh' }}>
+            <Grid item>
+              <Typography
+                variant="h5"
+                className={classes.title}
+              >
+                Sign up to see more
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <span className={classes.wrapper}>
+                <FormControl required>
+                  <InputLabel> First Name </InputLabel>
+                  <Input 
+                      id="first_name" 
+                      name="firstName"
+                      type="text"
+                      autoComplete="first name"
+                      autoFocus
+                      onChange={this.handleChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <span className={classes.wrapper}>
+                <FormControl required>
+                  <InputLabel> Last Name </InputLabel>
+                  <Input 
+                      id="last_name" 
+                      name="lastName" 
+                      type="string"
+                      autoComplete="last name"
+                      autoFocus
+                      onChange={this.handleChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <FormControl fullWidth required>
+                  <InputLabel> Email </InputLabel>
+                  <Input 
+                      id="email" 
+                      name="email" 
+                      type="text"
+                      autoComplete="email"
+                      autoFocus
+                      onChange={this.handleChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <FormControl fullWidth required>
+                  <InputLabel> Password </InputLabel>
+                  <Input 
+                      id="password" 
+                      name="password" 
+                      type="password"
+                      autoComplete="password"
+                      autoFocus
+                      onChange={this.handleChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <FormControl fullWidth required>
+                  <InputLabel> Confirm Password </InputLabel>
+                  <Input 
+                      id="conPassword" 
+                      name="conPassword" 
+                      type="password"
+                      autoComplete="password"
+                      autoFocus
+                      onChange={this.handleChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <FormControl fullWidth required>
+                  <InputLabel> Street </InputLabel>
+                  <Input 
+                      id="street" 
+                      name="street" 
+                      type="text"
+                      autoComplete="street"
+                      autoFocus
+                      onChange={this.handleChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <FormControl fullWidth required>
+                  <InputLabel> City </InputLabel>
+                  <Input 
+                      id="city" 
+                      name="city" 
+                      type="text"
+                      autoComplete="city"
+                      autoFocus
+                      onChange={this.handleChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <FormControl fullWidth required>
+                  <InputLabel> State </InputLabel>
+                  <Input 
+                      id="state" 
+                      name="state" 
+                      type="text"
+                      autoComplete="state"
+                      autoFocus
+                      onChange={this.handleChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <FormControl fullWidth required>
+                  <InputLabel> Zip </InputLabel>
+                  <Input 
+                      id="zip" 
+                      name="zip" 
+                      type="number"
+                      autoComplete="zip"
+                      autoFocus
+                      onChange={this.handleChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <Button type="submit" className={classes.textField} style={{height: "50px"}}>
+                  Submit
+                </Button>
+              </span>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    )
+  }
+}
+
+export default withStyles(styles)(Register)
