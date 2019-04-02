@@ -1,8 +1,20 @@
 import React, { Component } from 'react'
-import { Grid, FormControl, Input, InputLabel, Button } from '@material-ui/core'
+import { Grid, FormControl, Input, InputLabel, Button, TextField } from '@material-ui/core'
 
 class CreateEventForm extends Component {
+
+  state = {
+    nameOfEvent: "",
+    time: "",
+    stadium: "",
+    location: "",
+    type: ""
+  }
+
+  onChange = (e) => this.setState({[e.target.name]: e.target.value})
+
   render() {
+    console.log(this.state)
     return (
       <div>
         <form
@@ -14,9 +26,10 @@ class CreateEventForm extends Component {
                 <FormControl required>
                   <InputLabel> Name of Event </InputLabel>
                   <Input 
-                      id="nameEvent" 
-                      name="nameEvent"
+                      id="nameOfEvent" 
+                      name="nameOfEvent"
                       type="text"
+                      onChange={this.onChange}
                       autoFocus
                   />
                 </FormControl>
@@ -27,7 +40,9 @@ class CreateEventForm extends Component {
                 <FormControl required>
                   <Input 
                       id="time"
-                      type="Date"
+                      name="time"
+                      type="time"
+                      onChange={this.onChange}
                   />
                 </FormControl>
               </span>
@@ -35,11 +50,13 @@ class CreateEventForm extends Component {
             <Grid item>
               <span>
                 <FormControl fullWidth required>
-                  <InputLabel> Stadium </InputLabel>
-                  <Input 
-                      name="Stadium" 
-                      type="text"
-                  />
+                  <TextField
+                    select
+                    label="Stadium"
+                    value={this.state.stadium}
+                  >
+
+                  </TextField>
                 </FormControl>
               </span>
             </Grid>
