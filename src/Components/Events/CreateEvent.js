@@ -10,7 +10,7 @@ const createEventStyles = {
 
 class CreateEvent extends Component {
   state = {
-    open: false,
+    open: false
   };
 
   handleClickOpen = () => {
@@ -21,11 +21,10 @@ class CreateEvent extends Component {
     this.setState({ open: false });
   };
 
-
   render() {
     return (
       <div>
-        <Button onClick={this.handleClickOpen}> 
+        <Button onClick={this.handleClickOpen}>
           Create Event
         </Button>
         <Dialog

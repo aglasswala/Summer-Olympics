@@ -1,5 +1,38 @@
 import React, { Component } from 'react'
-import { Grid, FormControl, Input, InputLabel, Button, TextField } from '@material-ui/core'
+import { Button, TextField } from '@material-ui/core'
+import { connect } from 'react-redux'
+import MenuItem from '@material-ui/core/MenuItem';
+import CompetitionForm from './CreateEventForms/CompetitionForm'
+import CeremonyForm from './CreateEventForms/CeremonyForm'
+import { withStyles } from '@material-ui/core'
+
+const createEventFormStyles = theme => ({
+  wrapper: {
+    display: "inline-block",
+    position: "relative",
+    padding: "8.85px 13px"
+  },
+  textField: {
+    width: "100%",
+    boxSizing: "border-box",
+    fontWeight: "300",
+    textOverflow: "ellipsis"
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch"
+  },
+  button: {
+    position: "relative",
+    width: "100%",
+    borderRadius: "3px",
+    boxSizing: "border-box",
+    marginTop: "20px"
+  }
+})
+
+const labelOptions = ["Competition", "Medal Ceremony", "Autograph Session"]
 
 class CreateEventForm extends Component {
 
@@ -13,142 +46,67 @@ class CreateEventForm extends Component {
 
   onChange = (e) => this.setState({[e.target.name]: e.target.value})
 
+  onTypeChange = (name) => (event) => {
+    this.setState({ [name]: event.target.value })
+  }
+
   render() {
-    console.log(this.state)
+    const { classes } =  this.props
     return (
       <div>
         <form
-          style={{width: "500px"}}
+          className={classes.form}
+          style={{width: "400px"}}
         >
-          <Grid container direction="column" justify="center" alignItems="stretch">
-            <Grid item>
-              <span>
-                <FormControl required>
-                  <InputLabel> Name of Event </InputLabel>
-                  <Input 
-                      id="nameOfEvent" 
-                      name="nameOfEvent"
-                      type="text"
-                      onChange={this.onChange}
-                      autoFocus
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid>
-              <span>
-                <FormControl required>
-                  <Input 
-                      id="time"
-                      name="time"
-                      type="time"
-                      onChange={this.onChange}
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item>
-              <span>
-                <FormControl fullWidth required>
-                  <TextField
-                    select
-                    label="Stadium"
-                    value={this.state.stadium}
-                  >
+          <span className={classes.wrapper}>
+            <TextField
+              label="Event Name"
+              className={classes.textField}
+            />
+          </span>
+          <span className={classes.wrapper}>
+            <TextField
+              label="Event Name"
+              id="type"
+              select
+              className={classes.textField}
+              value={this.state.type}
+              onChange={this.onTypeChange("type")}
+              margin="normal"
+            >
+                { this.props.userType === "athlete" ?
+                    labelOptions.map((label, key) => (
+                      <MenuItem key={key} value={label}>
+                        {label}
+                      </MenuItem>
+                    ))
+                  :
+                  <MenuItem value={"Autograph Session"}>
+                    Autograph Session
+                  </MenuItem>
+                }
+            </TextField>
+          </span>
 
-                  </TextField>
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item>
-              <span>
-                <FormControl fullWidth required>
-                  <InputLabel> Location </InputLabel>
-                  <Input
-                      name="Location" 
-                      type="text"
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item>
-              <span>
-                <FormControl fullWidth required>
-                  <InputLabel> Type </InputLabel>
-                  <Input  
-                      name="Type" 
-                      type="text"
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item xs={12}>
-              <span>
-                <FormControl fullWidth required>
-                  <InputLabel> Street </InputLabel>
-                  <Input 
-                      id="street" 
-                      name="street" 
-                      type="text"
-                      autoComplete="street"
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item xs={12}>
-              <span>
-                <FormControl fullWidth required>
-                  <InputLabel> City </InputLabel>
-                  <Input 
-                      id="city" 
-                      name="city" 
-                      type="text"
-                      autoComplete="city"
-                      autoFocus
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item xs={12}>
-              <span>
-                <FormControl fullWidth required>
-                  <InputLabel> State </InputLabel>
-                  <Input 
-                      id="state" 
-                      name="state" 
-                      type="text"
-                      autoComplete="state"
-                      autoFocus
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item xs={12}>
-              <span>
-                <FormControl fullWidth required>
-                  <InputLabel> Zip </InputLabel>
-                  <Input 
-                      id="zip" 
-                      name="zip" 
-                      type="number"
-                      autoComplete="zip"
-                      autoFocus
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item xs={12}>
-              <span>
-                <Button type="submit" style={{height: "50px"}}>
-                  Submit
-                </Button>
-              </span>
-            </Grid>
-          </Grid>
+          {this.state.type === "Competition" ? <CompetitionForm /> : null}
+          {this.state.type === "Medal Ceremony" ? <CeremonyForm /> : null}
+          {this.state.type === "Autograph Session" ? <h1> OH YEAH Auth </h1> : null}
+
+          <span className={classes.wrapper}>
+            <Button className={classes.button}>
+              Submit
+            </Button>
+          </span>
         </form>
       </div>
     )
   }
 }
 
-export default CreateEventForm
+function mapStateToProps(state) {
+  return {
+    userType: state.user.userType
+  }
+}
+
+export default connect(mapStateToProps, null)(withStyles(createEventFormStyles)(CreateEventForm))
