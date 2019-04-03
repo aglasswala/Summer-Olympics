@@ -46,21 +46,22 @@ class CompetitionForm extends Component {
     });
   };
 
+  // Might need to change time picker to hour intervals 
+
   render() {
     const { classes } = this.props
-    console.log(this.state)
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <span className={classes.wrapper}>
           <TimePicker
             margin="normal"
-            label="Time picker"
+            label="What time?"
             value={this.state.time}
             onChange={this.onTimeChange}
           />
           <DatePicker
             margin="normal"
-            label="Date picker"
+            label="What date?"
             value={this.state.date}
             onChange={this.onTimeChange}
           />

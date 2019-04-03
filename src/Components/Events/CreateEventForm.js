@@ -65,11 +65,12 @@ class CreateEventForm extends Component {
               onChange={this.onChange}
               label="Event Name"
               className={classes.textField}
+              required
             />
           </span>
           <span className={classes.wrapper}>
             <TextField
-              label="Event Name"
+              label="What type of event?"
               id="type"
               select
               className={classes.textField}
@@ -96,7 +97,7 @@ class CreateEventForm extends Component {
             {this.state.type === "Autograph Session" ? <AutographForm /> : null}
 
           <span className={classes.wrapper}>
-            <Button className={classes.button}>
+            <Button type="submit" className={classes.button}>
               Submit
             </Button>
           </span>
