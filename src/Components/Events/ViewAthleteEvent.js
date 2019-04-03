@@ -47,7 +47,7 @@ class ViewAthleteEvent extends Component {
           <DialogTitle> {"View my Events"}</DialogTitle>
           <DialogContent>
             {this.props.registeredEvents.map((event, key) => (
-              <ExpansionPanel>
+              <ExpansionPanel key={key}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>{event}</Typography>
                 </ExpansionPanelSummary>
