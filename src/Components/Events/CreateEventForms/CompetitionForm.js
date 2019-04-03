@@ -50,7 +50,6 @@ class CompetitionForm extends Component {
             className={classes.textField}
           />
         </span>
-
       </form>
     )
   }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import MenuItem from '@material-ui/core/MenuItem';
 import CompetitionForm from './CreateEventForms/CompetitionForm'
 import CeremonyForm from './CreateEventForms/CeremonyForm'
+import AutographForm from './CreateEventForms/AutographForm'
 import { withStyles } from '@material-ui/core'
 
 const createEventFormStyles = theme => ({
@@ -51,7 +52,7 @@ class CreateEventForm extends Component {
   }
 
   render() {
-    const { classes } =  this.props
+    const { classes } = this.props
     return (
       <div>
         <form
@@ -60,6 +61,8 @@ class CreateEventForm extends Component {
         >
           <span className={classes.wrapper}>
             <TextField
+              id="nameOfEvent"
+              onChange={this.onChange}
               label="Event Name"
               className={classes.textField}
             />
@@ -74,7 +77,7 @@ class CreateEventForm extends Component {
               onChange={this.onTypeChange("type")}
               margin="normal"
             >
-                { this.props.userType === "athlete" ?
+                { this.props.userType !== "athlete" ?
                     labelOptions.map((label, key) => (
                       <MenuItem key={key} value={label}>
                         {label}
@@ -88,9 +91,9 @@ class CreateEventForm extends Component {
             </TextField>
           </span>
 
-          {this.state.type === "Competition" ? <CompetitionForm /> : null}
-          {this.state.type === "Medal Ceremony" ? <CeremonyForm /> : null}
-          {this.state.type === "Autograph Session" ? <h1> OH YEAH Auth </h1> : null}
+            {this.state.type === "Competition" ? <CompetitionForm /> : null}
+            {this.state.type === "Medal Ceremony" ? <CeremonyForm /> : null}
+            {this.state.type === "Autograph Session" ? <AutographForm /> : null}
 
           <span className={classes.wrapper}>
             <Button className={classes.button}>

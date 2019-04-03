@@ -138,7 +138,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
     return {
-        events: state.events,
+        events: state.events.output,
         userType: state.user.userType
     }
 };
