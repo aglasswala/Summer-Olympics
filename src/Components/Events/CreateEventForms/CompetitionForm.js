@@ -86,6 +86,8 @@ class CompetitionForm extends Component {
               </MenuItem>
             ))}
           </TextField>
+        </span>
+        <span className={classes.wrapper}>
           <DatePicker
             margin="normal"
             label="What date?"
