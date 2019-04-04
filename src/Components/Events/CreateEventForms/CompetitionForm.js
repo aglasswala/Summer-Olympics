@@ -24,13 +24,32 @@ const competitionFormstyles = {
 }
 
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
-
 const locations = ["Barra da Tijuca,  Rio de Janeiro, Brazil", "Barra Olympic Park in Rio de Janeiro, Brazil", "Deodoro, Rio de Janeiro, Brazil"]
+const timeSlots = [
+          "8:30 AM",
+          "9:00 AM",
+          "9:30 AM",
+          "10:00 AM",
+          "10:30 AM",
+          "11:00 AM",
+          "11:30 AM",
+          "12:00 PM",
+          "12:30 PM",
+          "1:00 PM",
+          "1:30 PM",
+          "2:00 PM",
+          "2:30 PM",
+          "3:00 PM",
+          "3:30 PM",
+          "4:00 PM",
+          "4:30 PM",
+          "5:00 PM"
+]
 
 class CompetitionForm extends Component {
 
   state = {
-    time: new Date(),
+    time: "",
     stadium: "",
     location: "",
     date: new Date()
@@ -53,16 +72,25 @@ class CompetitionForm extends Component {
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <span className={classes.wrapper}>
-          <TimePicker
+          <TextField
             margin="normal"
             label="What time?"
+            select
+            className={classes.textField}
             value={this.state.time}
-            onChange={this.onTimeChange}
-          />
+            onChange={this.handleChange("time")}
+          >
+            {timeSlots.map((time, key) => (
+              <MenuItem key={key} value={time}>
+                {time}
+              </MenuItem>
+            ))}
+          </TextField>
           <DatePicker
             margin="normal"
             label="What date?"
             value={this.state.date}
+            className={classes.textField}
             onChange={this.onTimeChange}
           />
         </span>
