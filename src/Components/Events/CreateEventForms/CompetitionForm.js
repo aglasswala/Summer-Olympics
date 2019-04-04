@@ -117,7 +117,6 @@ class CompetitionForm extends Component {
 
   render() {
     const { classes } = this.props
-    console.log(this.props)
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <span className={classes.wrapper}>

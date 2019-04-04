@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withStyles, TextField } from '@material-ui/core'
+import { withStyles, TextField, Button } from '@material-ui/core'
 
 const ceremonyFormStyles = {
   wrapper: {
@@ -17,6 +17,13 @@ const ceremonyFormStyles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "stretch"
+  },
+  button: {
+    position: "relative",
+    width: "100%",
+    borderRadius: "3px",
+    boxSizing: "border-box",
+    marginTop: "20px"
   }
 }
 
@@ -25,7 +32,7 @@ class CeremonyForm extends Component {
   render() {
     const { classes } = this.props
     return (
-      <form className={classes.form}>
+      <div>
         <span className={classes.wrapper}>
           <TextField 
             label="Ceremony Form"
@@ -50,7 +57,12 @@ class CeremonyForm extends Component {
             className={classes.textField}
           />
         </span>
-      </form>
+        <span className={classes.wrapper}>
+          <Button onClick={this.submit} className={classes.button}>
+            Submit
+          </Button>
+        </span>
+      </div>
     )
   }
 }

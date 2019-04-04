@@ -83,7 +83,9 @@ const styles = {
 class Event extends Component { 
 
     state = {
-        tableData: [[]]
+        compEvents: [[]],
+        awardEvents: [[]],
+        autoEvents: [[]]
     }
 
     refresh = () => {
@@ -92,7 +94,9 @@ class Event extends Component {
         .then(data => {
             this.props.getEvents(data)
             this.setState({
-                tableData: this.props.events
+                compEvents: data.compEvents,
+                awardEvents: data.awardEvents,
+                autoEvents: data.autoEvents
             })
         })
         .catch(err => {
@@ -107,7 +111,6 @@ class Event extends Component {
 
     render() {
         const { classes } = this.props
-
         return (
             <Grid container className={classes.gridContainer}>
                 <Grid item className={classes.gridItem}>
@@ -126,8 +129,40 @@ class Event extends Component {
                         </div>
                         <div className={classes.cardBody}>
                             <EventTable 
-                                tableHead={["Type" ,"Event", "Stadium", "City", "Time", "Attendees"]}
-                                tableData={this.state.tableData}
+                                tableHead={["Event", "Stadium", "City", "Time", "Attendees"]}
+                                tableData={this.state.compEvents}
+                            />
+                        </div>
+                    </div>
+                </Grid>
+                <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
+                    <div className={classes.card}>
+                        <div className={classes.cardHeader}>
+                            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
+                            <p className={classes.cardCategoryWhite}>
+                              Here is a subtitle for this table
+                            </p>
+                        </div>
+                        <div className={classes.cardBody}>
+                            <EventTable 
+                                tableHead={["Event", "Stadium", "City", "Time", "Attendees"]}
+                                tableData={this.state.awardEvents}
+                            />
+                        </div>
+                    </div>
+                </Grid>
+                <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
+                    <div className={classes.card}>
+                        <div className={classes.cardHeader}>
+                            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
+                            <p className={classes.cardCategoryWhite}>
+                              Here is a subtitle for this table
+                            </p>
+                        </div>
+                        <div className={classes.cardBody}>
+                            <EventTable 
+                                tableHead={["Event", "Stadium", "City", "Time", "Attendees"]}
+                                tableData={this.state.autoEvents}
                             />
                         </div>
                     </div>
@@ -143,7 +178,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => {
     return {
-        events: state.events.output,
+        events: state.events,
         userType: state.user.userType
     }
 };
