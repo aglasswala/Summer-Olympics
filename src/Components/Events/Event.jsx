@@ -86,7 +86,7 @@ class Event extends Component {
         tableData: [[]]
     }
 
-    componentDidMount() {
+    refresh = () => {
         fetch("http://localhost:3001/api/events")
         .then(response => response.json())
         .then(data => {
@@ -98,6 +98,11 @@ class Event extends Component {
         .catch(err => {
             console.log(err)
         })
+    }
+
+    componentDidMount() {
+        this.refresh()
+        setInterval(this.refresh, 2000)
     }
 
     render() {
@@ -121,7 +126,7 @@ class Event extends Component {
                         </div>
                         <div className={classes.cardBody}>
                             <EventTable 
-                                tableHead={["Event", "Stadium", "City", "Time", "Attendees"]}
+                                tableHead={["Type" ,"Event", "Stadium", "City", "Time", "Attendees"]}
                                 tableData={this.state.tableData}
                             />
                         </div>

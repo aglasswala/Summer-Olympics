@@ -33,7 +33,7 @@ class CreateEvent extends Component {
         >
           <DialogTitle> {"Create an event"}</DialogTitle>
           <DialogContent>
-            <CreateEventForm />
+            <CreateEventForm handleClose={this.handleClose} />
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">

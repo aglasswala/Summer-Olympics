@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, TextField } from '@material-ui/core'
+import { TextField } from '@material-ui/core'
 import { connect } from 'react-redux'
 import MenuItem from '@material-ui/core/MenuItem';
 import CompetitionForm from './CreateEventForms/CompetitionForm'
@@ -39,10 +39,7 @@ class CreateEventForm extends Component {
 
   state = {
     nameOfEvent: "",
-    time: "",
-    stadium: "",
-    location: "",
-    type: ""
+    type: "",
   }
 
   onChange = (e) => this.setState({[e.target.name]: e.target.value})
@@ -62,7 +59,7 @@ class CreateEventForm extends Component {
           <span className={classes.wrapper}>
             <TextField
               id="nameOfEvent"
-              onChange={this.onChange}
+              onChange={this.onTypeChange("nameOfEvent")}
               label="Event Name"
               className={classes.textField}
               required
@@ -92,15 +89,10 @@ class CreateEventForm extends Component {
             </TextField>
           </span>
 
-            {this.state.type === "Competition" ? <CompetitionForm /> : null}
-            {this.state.type === "Medal Ceremony" ? <CeremonyForm /> : null}
-            {this.state.type === "Autograph Session" ? <AutographForm /> : null}
+            {this.state.type === "Competition" ? <CompetitionForm {...this.state} handleClose={this.props.handleClose} /> : null}
+            {this.state.type === "Medal Ceremony" ? <CeremonyForm {...this.state} /> : null}
+            {this.state.type === "Autograph Session" ? <AutographForm {...this.state} /> : null}
 
-          <span className={classes.wrapper}>
-            <Button type="submit" className={classes.button}>
-              Submit
-            </Button>
-          </span>
         </form>
       </div>
     )

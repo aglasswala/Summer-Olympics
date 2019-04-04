@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { withStyles, TextField } from '@material-ui/core'
+import { withStyles, TextField, Select, Input, InputLabel, FormControl, Button } from '@material-ui/core'
+import { connect } from 'react-redux'
 import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, TimePicker, DatePicker } from 'material-ui-pickers';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const competitionFormstyles = {
@@ -20,6 +21,13 @@ const competitionFormstyles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "stretch"
+  },
+  button: {
+    position: "relative",
+    width: "100%",
+    borderRadius: "3px",
+    boxSizing: "border-box",
+    marginTop: "20px"
   }
 }
 
@@ -49,10 +57,13 @@ const timeSlots = [
 class CompetitionForm extends Component {
 
   state = {
+    nameOfEvent: "",
     time: "",
     stadium: "",
     location: "",
-    date: new Date()
+    date: new Date(),
+    registeredAthletes: [],
+    allAthletes: []
   }
 
   onTimeChange = (date) => {
@@ -65,10 +76,48 @@ class CompetitionForm extends Component {
     });
   };
 
-  // Might need to change time picker to hour intervals 
+  componentDidMount() {
+    fetch("http://localhost:3001/api/getAthletes")
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          allAthletes: data.athletes,
+          nameOfEvent: this.props.nameOfEvent
+        })
+      })
+      .catch(err => console.log(err))
+  }
+
+  submit = (event) => {
+    event.preventDefault();
+    const { nameOfEvent, time, stadium, location, date, registeredAthletes } = this.state
+    fetch('http://localhost:3001/api/createCompetitionEvent', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            nameOfEvent,
+            time,
+            stadium, 
+            location,
+            date,
+            registeredAthletes,
+            createdBy: this.props.userId
+        })
+    })
+        .then(response => response.json())
+        .then(result => {
+            this.props.handleClose();
+        })
+        .catch(err => {
+            console.log(err);
+        })
+  }
 
   render() {
     const { classes } = this.props
+    console.log(this.props)
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <span className={classes.wrapper}>
@@ -76,6 +125,7 @@ class CompetitionForm extends Component {
             margin="normal"
             label="What time?"
             select
+            required
             className={classes.textField}
             value={this.state.time}
             onChange={this.handleChange("time")}
@@ -91,6 +141,7 @@ class CompetitionForm extends Component {
           <DatePicker
             margin="normal"
             label="What date?"
+            required
             value={this.state.date}
             className={classes.textField}
             onChange={this.onTimeChange}
@@ -100,6 +151,7 @@ class CompetitionForm extends Component {
           <TextField 
             id="stadium"
             label="Stadium"
+            required
             className={classes.textField}
             select
             value={this.state.stadium}
@@ -119,6 +171,7 @@ class CompetitionForm extends Component {
             label="Location"
             className={classes.textField}
             select
+            required
             value={this.state.location}
             onChange={this.handleChange("location")}
             margin="normal"
@@ -130,9 +183,38 @@ class CompetitionForm extends Component {
             ))}
           </TextField>
         </span>
+        <span className={classes.wrapper}>
+        <FormControl className={classes.textField}>
+          <InputLabel htmlFor="select-multiple">Name</InputLabel>
+            <Select
+              multiple
+              value={this.state.registeredAthletes}
+              onChange={this.handleChange("registeredAthletes")}
+              input={<Input id="select-multiple" />}
+              className={classes.textField}
+            >
+              {this.state.allAthletes.map((athlete, key) => (
+                <MenuItem key={key} value={athlete}>
+                  {athlete.firstName + " " + athlete.lastName}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </span>
+        <span className={classes.wrapper}>
+          <Button onClick={this.submit} className={classes.button}>
+            Submit
+          </Button>
+        </span>
       </MuiPickersUtilsProvider>
     )
   }
 }
 
-export default withStyles(competitionFormstyles)(CompetitionForm)
+function mapStateToProps(state) {
+  return {
+    userId: state.user._id
+  }
+}
+
+export default connect(mapStateToProps, null)(withStyles(competitionFormstyles)(CompetitionForm))
