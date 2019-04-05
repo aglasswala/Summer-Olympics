@@ -10,7 +10,7 @@ const Tickets = ({...props}) => {
     return (
         <div>
             {props.user.tickets ? props.user.tickets.map((ticket, key) => (
-              <ExpansionPanel>
+              <ExpansionPanel key={key}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>{ticket}</Typography>
                 </ExpansionPanelSummary>

@@ -122,9 +122,9 @@ class Event extends Component {
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
                         <div className={classes.cardHeader}>
-                            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
+                            <h4 className={classes.cardTitleWhite}>Competition Events</h4>
                             <p className={classes.cardCategoryWhite}>
-                              Here is a subtitle for this table
+                              Here's all competition events
                             </p>
                         </div>
                         <div className={classes.cardBody}>
@@ -138,9 +138,9 @@ class Event extends Component {
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
                         <div className={classes.cardHeader}>
-                            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
+                            <h4 className={classes.cardTitleWhite}>Award Ceremonies</h4>
                             <p className={classes.cardCategoryWhite}>
-                              Here is a subtitle for this table
+                              Here's all the awards ceremonies on going
                             </p>
                         </div>
                         <div className={classes.cardBody}>
@@ -154,9 +154,9 @@ class Event extends Component {
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
                         <div className={classes.cardHeader}>
-                            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
+                            <h4 className={classes.cardTitleWhite}>Autograph sessions</h4>
                             <p className={classes.cardCategoryWhite}>
-                              Here is a subtitle for this table
+                              Check out what athletes are signing autographs
                             </p>
                         </div>
                         <div className={classes.cardBody}>
