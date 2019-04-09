@@ -38,14 +38,16 @@ class Register extends Component {
       street: "",
       city: "",
       zip: "",
-      state: ""
+      state: "",
+      phoneNumber: "",
+      countryOfOrigin: ""
     }
 
   onChange = (e) => this.setState({[e.target.name]: e.target.value})
 
   onSubmit = (e) => {
     e.preventDefault()
-    const { firstName, lastName, email, password, street, city, zip, state } = this.state
+    const { firstName, lastName, email, password, street, city, zip, state, phoneNumber, countryOfOrigin } = this.state
     fetch('http://localhost:3001/api/register', {
         method: 'post',
         headers: {
@@ -59,12 +61,14 @@ class Register extends Component {
             street,
             city,
             zip,
-            state
+            state,
+            phoneNumber,
+            countryOfOrigin
         })
     })
     .then(response => response.json()) 
     .then(data => {
-      console.log(this.props) 
+      console.log(data)
       this.props.userLoggedIn(data.user)
       localStorage.setItem('cool-jwt', data.token)
       this.props.history.push('/dashboard')
@@ -102,7 +106,6 @@ class Register extends Component {
                       name="firstName"
                       type="text"
                       autoComplete="first name"
-                      autoFocus
                       onChange={this.onChange}
                   />
                 </FormControl>
@@ -117,7 +120,6 @@ class Register extends Component {
                       name="lastName" 
                       type="string"
                       autoComplete="last name"
-                      autoFocus
                       onChange={this.onChange}
                   />
                 </FormControl>
@@ -145,21 +147,6 @@ class Register extends Component {
                   <Input 
                       id="password" 
                       name="password" 
-                      type="password"
-                      autoComplete="password"
-                      autoFocus
-                      onChange={this.onChange}
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item xs={12}>
-              <span className={classes.wrapper}>
-                <FormControl fullWidth required>
-                  <InputLabel> Confirm Password </InputLabel>
-                  <Input 
-                      id="conPassword" 
-                      name="conPassword" 
                       type="password"
                       autoComplete="password"
                       autoFocus
@@ -220,9 +207,33 @@ class Register extends Component {
                   <Input 
                       id="zip" 
                       name="zip" 
-                      type="number"
-                      autoComplete="zip"
-                      autoFocus
+                      type="text"
+                      onChange={this.onChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <FormControl fullWidth required>
+                  <InputLabel> Phone Number </InputLabel>
+                  <Input 
+                      id="phoneNumber" 
+                      name="phoneNumber" 
+                      type="text"
+                      onChange={this.onChange}
+                  />
+                </FormControl>
+              </span>
+            </Grid>
+            <Grid item xs={12}>
+              <span className={classes.wrapper}>
+                <FormControl fullWidth required>
+                  <InputLabel> Country oF Origin </InputLabel>
+                  <Input 
+                      id="countryOfOrigin" 
+                      name="countryOfOrigin" 
+                      type="text"
                       onChange={this.onChange}
                   />
                 </FormControl>

@@ -35,14 +35,6 @@ class CreateEvent extends Component {
           <DialogContent>
             <CreateEventForm handleClose={this.handleClose} />
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
         </Dialog>
       </div>
     )
