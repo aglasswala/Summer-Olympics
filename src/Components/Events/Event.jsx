@@ -93,7 +93,6 @@ class Event extends Component {
         .then(response => response.json())
         .then(data => {
             this.props.getEvents(data)
-            console.log(data.compEvents)
             this.setState({
                 compEvents: data.compEvents,
                 awardEvents: data.awardEvents,
