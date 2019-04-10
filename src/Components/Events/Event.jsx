@@ -106,7 +106,7 @@ class Event extends Component {
 
     componentDidMount() {
         this.refresh()
-        setInterval(this.refresh, 2000)
+        setInterval(this.refresh, 2000) // this causes a memory leak
     }
 
     render() {
@@ -114,10 +114,10 @@ class Event extends Component {
         return (
             <Grid container className={classes.gridContainer}>
                 <Grid item className={classes.gridItem}>
-                    {this.props.userType !== "public" ? <CreateEvent /> : null}
+                    {this.props.usertype !== 1 ? <CreateEvent /> : null}
                 </Grid>
                 <Grid item className={classes.gridItem}>
-                    {this.props.userType === "athlete" ? <ViewAthleteEvent /> : null}
+                    {this.props.usertype === 2 ? <ViewAthleteEvent /> : null}
                 </Grid>
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
@@ -179,7 +179,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
     return {
         events: state.events,
-        userType: state.user.userType
+        usertype: state.user.usertype
     }
 };
 
