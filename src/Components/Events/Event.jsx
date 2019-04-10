@@ -93,6 +93,7 @@ class Event extends Component {
         .then(response => response.json())
         .then(data => {
             this.props.getEvents(data)
+            console.log(data.compEvents)
             this.setState({
                 compEvents: data.compEvents,
                 awardEvents: data.awardEvents,
@@ -106,7 +107,7 @@ class Event extends Component {
 
     componentDidMount() {
         this.refresh()
-        setInterval(this.refresh, 2000) // this causes a memory leak
+        // setInterval(this.refresh, 2000) // this causes a memory leak
     }
 
     render() {
@@ -117,7 +118,7 @@ class Event extends Component {
                     {this.props.usertype !== 1 ? <CreateEvent /> : null}
                 </Grid>
                 <Grid item className={classes.gridItem}>
-                    {this.props.usertype === 2 ? <ViewAthleteEvent /> : null}
+                    {this.props.usertype === 2 ? "<ViewAthleteEvent /> ": null}
                 </Grid>
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
@@ -129,7 +130,7 @@ class Event extends Component {
                         </div>
                         <div className={classes.cardBody}>
                             <EventTable 
-                                tableHead={["Event", "Stadium", "City", "Time", "Attendees"]}
+                                tableHead={["Event", "Stadium", "Time", "Date"]}
                                 tableData={this.state.compEvents}
                             />
                         </div>
@@ -145,7 +146,7 @@ class Event extends Component {
                         </div>
                         <div className={classes.cardBody}>
                             <EventTable 
-                                tableHead={["Event", "Stadium", "City", "Time", "Attendees"]}
+                                tableHead={["Event", "Stadium", "Time", "Date"]}
                                 tableData={this.state.awardEvents}
                             />
                         </div>
