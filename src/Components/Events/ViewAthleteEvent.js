@@ -31,9 +31,8 @@ class ViewAthleteEvent extends Component {
     })
     .then(response => response.json())
     .then(result => {
-      console.log(result)
       this.setState({
-        registeredEvents: result
+        registeredEvents: result.response
       })
     })
     .catch(err => console.log(err))
@@ -48,6 +47,7 @@ class ViewAthleteEvent extends Component {
   };
 
   render() {
+    const { classes } = this.props
     return (
       <div>
         <Button onClick={this.handleClickOpen}> 
@@ -62,12 +62,14 @@ class ViewAthleteEvent extends Component {
             {this.state.registeredEvents.map((event, key) => (
               <ExpansionPanel key={key}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{event}</Typography>
+                  <Typography>{event[0]}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                   <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                    sit amet blandit leo lobortis eget.
+                    Time: {event[2]}
+                  </Typography>
+                  <Typography>
+                    Date: {event[3]}
                   </Typography>
                 </ExpansionPanelDetails>
               </ExpansionPanel>
