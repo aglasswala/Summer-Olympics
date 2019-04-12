@@ -21,25 +21,11 @@ const styles = theme => ({
         padding: 20,
         margin: 10
     },
-    icon: {
-      fontSize: 20,
-    },
-    iconVariant: {
-      opacity: 0.9,
-      marginRight: theme.spacing.unit,
-    },
-    message: {
-      display: 'flex',
-      alignItems: 'center',
-    },
 })
 
 const styles1 = theme => ({
   error: {
     backgroundColor: theme.palette.error.dark,
-  },
-  info: {
-    backgroundColor: theme.palette.primary.dark,
   },
   icon: {
     fontSize: 20,

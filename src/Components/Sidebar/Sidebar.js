@@ -1,5 +1,6 @@
 import React from 'react'
 import { List, ListItem, ListItemText, Drawer, Hidden } from '@material-ui/core'
+import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { withStyles } from '@material-ui/core'
 
@@ -149,6 +150,11 @@ const sidebarStyles = theme => ({
     }
 })
 
+const logoutUser = () => {
+  localStorage.removeItem("cool-jwt")
+  this.props.userLoggedOut()
+}
+
 
 const Sidebar = ({...props}) => {
     const { classes, logo, image } = props
@@ -243,7 +249,15 @@ const Sidebar = ({...props}) => {
             </Hidden>
         </div>
     )
-    
 }
 
-export default withStyles(sidebarStyles)(Sidebar)
+const mapStateToProps = state => ({
+    ...state
+});
+
+// const mapDispatchToProps = dispatch => ({
+//     userLoggedOut: () => dispatch(userLoggedOut())
+// });
+
+
+export default connect(mapStateToProps, null)(withStyles(sidebarStyles)(Sidebar))

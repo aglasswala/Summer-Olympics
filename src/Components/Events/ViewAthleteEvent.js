@@ -74,14 +74,6 @@ class ViewAthleteEvent extends Component {
               </ExpansionPanel>
             ))}
           </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Disagree
-            </Button>
-            <Button onClick={this.handleClose} color="primary" autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
         </Dialog>
       </div>
     )
