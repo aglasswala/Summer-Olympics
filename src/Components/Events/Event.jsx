@@ -92,7 +92,6 @@ class Event extends Component {
         fetch("http://localhost:3001/api/events")
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             this.props.getEvents(data)
             this.setState({
                 compEvents: data.compEvents,
