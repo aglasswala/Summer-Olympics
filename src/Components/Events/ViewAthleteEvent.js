@@ -16,7 +16,28 @@ const viewAthleteEventStyles = {
 class ViewAthleteEvent extends Component {
   state = {
     open: false,
+    registeredEvents: [[]]
   };
+
+  componentDidMount() {
+    fetch('http://localhost:3001/api/getAthleteEvents', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: this.props.userid
+      })
+    })
+    .then(response => response.json())
+    .then(result => {
+      console.log(result)
+      this.setState({
+        registeredEvents: result
+      })
+    })
+    .catch(err => console.log(err))
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -26,15 +47,7 @@ class ViewAthleteEvent extends Component {
     this.setState({ open: false });
   };
 
-  getEventsById = (events) => {
-    // Create function that returns an array of all events with given id's
-
-    // let filteredEvents = events.filter(event => event.)
-  }
-
-
   render() {
-    console.log(this.props)
     return (
       <div>
         <Button onClick={this.handleClickOpen}> 
@@ -46,7 +59,7 @@ class ViewAthleteEvent extends Component {
         >
           <DialogTitle> {"View my Events"}</DialogTitle>
           <DialogContent>
-            {this.props.registeredEvents.map((event, key) => (
+            {this.state.registeredEvents.map((event, key) => (
               <ExpansionPanel key={key}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>{event}</Typography>
@@ -76,7 +89,7 @@ class ViewAthleteEvent extends Component {
 
 function mapStateToProps(state) {
   return {
-    registeredEvents: state.user.registeredEvents
+    userid: state.user.userid
   }
 }
 
