@@ -6,7 +6,7 @@ import ViewAthleteEvent from './ViewAthleteEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
 
-const styles = {
+const styles = theme => ({
     gridContainer: {
         margin: "0 -15px !important",
         width: "unset"
@@ -39,7 +39,7 @@ const styles = {
           borderRadius: "calc(.25rem - 1px) calc(.25rem - 1px) 0 0"
         },
         color: "#FFFFFF",
-        background: "linear-gradient(60deg, #ab47bc, #8e24aa)",
+        background: theme.palette.primary.main,
         boxShadow:
           "0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2)"
     },
@@ -78,7 +78,7 @@ const styles = {
     buttons: {
         display: "inline-block"
     }
-}
+})
 
 class Event extends Component { 
 

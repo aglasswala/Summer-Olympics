@@ -6,7 +6,7 @@ import Register from '../Register/register'
 import TitlePage from './TitlePage'
 import BackgroundSlider from 'react-background-slider'
 import image1 from '../../images/rio1.png'
-import image2 from '../../images/sidebar-2.jpg'
+import image2 from '../../images/rio1.jpg'
 
 const homepageStyles = theme => ({
     drawerPaper: {

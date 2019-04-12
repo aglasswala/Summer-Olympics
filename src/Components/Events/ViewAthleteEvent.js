@@ -47,7 +47,6 @@ class ViewAthleteEvent extends Component {
   };
 
   render() {
-    const { classes } = this.props
     return (
       <div>
         <Button onClick={this.handleClickOpen}> 

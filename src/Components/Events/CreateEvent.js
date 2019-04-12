@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, withStyles } from '@material-ui/core'
+import { Button, Dialog, DialogTitle, DialogContent, withStyles } from '@material-ui/core'
 import CreateEventForm from './CreateEventForm'
 
 const createEventStyles = {

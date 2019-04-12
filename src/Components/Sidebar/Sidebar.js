@@ -159,7 +159,7 @@ const Sidebar = ({...props}) => {
             <div className={classes.logoImage}>
               <img src={logo} alt="logo" className={classes.img} />
             </div>
-            Summer Olympics
+            Rio Olympics 2020
           </a>
         </div>
     )
@@ -200,6 +200,20 @@ const Sidebar = ({...props}) => {
                           <ListItem button className={classes.itemLink}>
                             <ListItemText
                               primary={"Tickets"}
+                              className={classes.itemText}
+                              disableTypography={true}
+                            />
+                          </ListItem>
+                        </NavLink>
+                        <NavLink
+                          to={"/dashboard/tickets"}
+                          exact
+                          className={classes.item}
+                          activeClassName="active"
+                        >
+                          <ListItem button className={classes.itemLink}>
+                            <ListItemText
+                              primary={"User Profile"}
                               className={classes.itemText}
                               disableTypography={true}
                             />

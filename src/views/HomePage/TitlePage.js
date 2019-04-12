@@ -1,7 +1,6 @@
 import React from 'react'
 import { Grid, Button, withStyles, Typography, IconButton, Toolbar, AppBar } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
-import PropTypes from 'prop-types';
 import MenuIcon from '@material-ui/icons/Menu';
 
 const titlePageStyles = theme => ({
