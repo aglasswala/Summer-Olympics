@@ -3,12 +3,12 @@ import { Grid, Button, withStyles, Typography, IconButton, Toolbar, AppBar } fro
 import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types';
 import MenuIcon from '@material-ui/icons/Menu';
+
 const titlePageStyles = theme => ({
     wrapper: {
         display: "inline-block",
         position: "relative",
-        padding: "8.85px 13px",
-        
+        padding: "8.85px 13px"
     },
     root: {
         flexGrow: 1,
@@ -42,7 +42,7 @@ const TitlePage = ({ ...props }) => {
                 </NavLink>
                 </Toolbar>
             </AppBar>
-            <Grid container direction="column" justify="center" alignItems="center" style={{ minHeight: '100vh' }}>
+            <Grid container direction="column" justify="center" alignItems="center" style={{ minHeight: 'calc(100vh - 64px)' }}>
                 <Grid item>
                     <span className={classes.wrapper}>
                         Brand goes here with Rio Logo
