@@ -5,8 +5,7 @@ import LoginPage from '../LoginPage/LoginPage'
 import Register from '../Register/register'
 import TitlePage from './TitlePage'
 import BackgroundSlider from 'react-background-slider'
-import image1 from '../../images/rio1.png'
-import image2 from '../../images/sidebar-2.jpg'
+import image1 from '../../images/titlepage-1.jpg'
 
 const homepageStyles = theme => ({
     drawerPaper: {
@@ -31,7 +30,8 @@ const HomePage = ({...props}) => {
     const { classes } = props
     return (
         <div>
-          <BackgroundSlider
+        
+          {/* <BackgroundSlider
             images={[image1, image2]}
             duration={4} transition={2} />
             <Drawer
@@ -41,13 +41,13 @@ const HomePage = ({...props}) => {
                 classes={{
                     paper: classes.drawerPaper
                 }}
-            >
-              <Switch>
+            > */}
+              <Switch >
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/register" component={Register} />
                 <Route component={TitlePage} />
               </Switch>
-            </Drawer>
+            {/* </Drawer> */}
         </div>
     )
 }

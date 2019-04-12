@@ -14,7 +14,7 @@ const styles = theme => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "stretch",
-    widht: "100%"
+    width: "100%"
   },
   textField: {
     boxSizing: "border-box",
@@ -87,18 +87,18 @@ class Register extends Component {
           className={classes.form}
           onSubmit={(e) => this.onSubmit(e)}
         >
-          <Grid container direction="column" justify="center" alignItems="stretch" style={{ minHeight: '100vh' }}>
+          <Grid container direction="row" justify="center" alignItems="stretch" style={{ minHeight: '100vh' }}>
             <Grid item>
               <Typography
                 variant="h5"
                 className={classes.title}
               >
-                Sign up to see more
+                Register Now To Attend The Summer Olympics 2019
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={6} sm={6}>
               <span className={classes.wrapper}>
-                <FormControl required>
+                <FormControl fullWidth required>
                   <InputLabel> First Name </InputLabel>
                   <Input 
                       id="first_name" 
@@ -110,9 +110,9 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={6} sm={6}>
               <span className={classes.wrapper}>
-                <FormControl required>
+                <FormControl fullWidth required>
                   <InputLabel> Last Name </InputLabel>
                   <Input 
                       id="last_name" 
@@ -124,7 +124,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
                   <InputLabel> Email </InputLabel>
@@ -139,7 +139,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
                   <InputLabel> Password </InputLabel>
@@ -154,7 +154,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
                   <InputLabel> Street </InputLabel>
@@ -169,7 +169,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
                   <InputLabel> City </InputLabel>
@@ -184,7 +184,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
                   <InputLabel> State </InputLabel>
@@ -199,7 +199,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
                   <InputLabel> Zip </InputLabel>
@@ -212,7 +212,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
                   <InputLabel> Phone Number </InputLabel>
@@ -225,7 +225,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
                   <InputLabel> Country oF Origin </InputLabel>
@@ -238,7 +238,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <span className={classes.wrapper}>
                 <Button type="submit" className={classes.textField} style={{height: "50px"}}>
                   Submit
