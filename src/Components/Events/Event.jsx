@@ -161,7 +161,7 @@ class Event extends Component {
                         </div>
                         <div className={classes.cardBody}>
                             <EventTable 
-                                tableHead={["Event", "Stadium", "City", "Time", "Attendees"]}
+                                tableHead={["Name Of Athlete", "Stadium", "Time", "Date"]}
                                 tableData={this.state.autoEvents}
                             />
                         </div>
