@@ -151,8 +151,8 @@ const sidebarStyles = theme => ({
 })
 
 const logoutUser = () => {
-  localStorage.removeItem("cool-jwt")
-  this.props.userLoggedOut()
+  localStorage.clear();
+  window.location.href = '/';
 }
 
 
@@ -231,7 +231,7 @@ const Sidebar = ({...props}) => {
                           className={classes.item}
                           activeClassName="active"
                         >
-                          <ListItem button className={classes.itemLink} onClick={() => localStorage.removeItem("cool-jwt")}>
+                          <ListItem button className={classes.itemLink} onClick={logoutUser}>
                             <ListItemText
                               primary={"Logout"}
                               className={classes.itemText}
