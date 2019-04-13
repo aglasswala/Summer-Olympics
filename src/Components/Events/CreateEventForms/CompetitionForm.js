@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import MenuItem from '@material-ui/core/MenuItem';
+import { fi } from 'date-fns/esm/locale';
 
 const competitionFormstyles = {
   wrapper: {
@@ -29,6 +30,38 @@ const competitionFormstyles = {
     boxSizing: "border-box",
     marginTop: "20px"
   }
+}
+const fixingTime = (time) => {
+  let checktime = parseInt(time);
+    if (checktime < 12 && time.includes("AM")) {
+      return checktime+":00:00";
+    } else if (checktime === 12) {
+      return checktime = checktime.toString() + ":00:00";
+    } else {
+      checktime += 12;
+      checktime = checktime.toString() + ":00:00";
+      return checktime;
+    }
+}
+
+const fixingDate = (date) => {
+  let newMonth;
+  let newDay;
+  let newYear = date.getFullYear().toString();
+  
+  if(date.getMonth() < 10){
+    newMonth = "0"+ date.getMonth().toString();
+  } else {
+    newMonth = date.getMonth().toString();
+  }
+  if(date.getDate() < 10){
+    newDay = "0"+ date.getDate().toString();
+  } else {
+    newDay = date.getDate().toString();
+  }
+
+  return (newYear+"-"+newMonth+"-"+newDay);
+
 }
 
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
@@ -81,6 +114,12 @@ class CompetitionForm extends Component {
   submit = (event) => {
     event.preventDefault();
     const { sportname, time, venue, date, registeredAthletes } = this.state
+    
+    //Edit here time. 
+    const newTime = fixingTime(time);
+    console.log(newTime);
+    const newDate = fixingDate(date);
+    console.log(newDate);
     fetch('http://localhost:3001/api/createCompetitionEvent', {
         method: 'post',
         headers: {
@@ -88,9 +127,9 @@ class CompetitionForm extends Component {
         },
         body: JSON.stringify({
             sportname,
-            time,
+            newTime,
             venue,
-            date,
+            newDate,
             registeredAthletes,
             createdBy: this.props.userId
         })
