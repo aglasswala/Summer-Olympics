@@ -1,20 +1,47 @@
 import React from 'react'
-import { Grid, Button, withStyles, Typography } from '@material-ui/core'
+import { Grid, Button, withStyles, Typography, IconButton, Toolbar, AppBar } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
+import MenuIcon from '@material-ui/icons/Menu';
 
 const titlePageStyles = theme => ({
     wrapper: {
         display: "inline-block",
         position: "relative",
-        padding: "8.85px 13px",
-    }
+        padding: "8.85px 13px"
+    },
+    root: {
+        flexGrow: 1,
+      },
+      grow: {
+        flexGrow: 1,
+      },
+      menuButton: {
+        marginLeft: -12,
+        marginRight: 20,
+      },
 })
 
 const TitlePage = ({ ...props }) => {
     const { classes } = props
     return (
         <div>
-            <Grid container direction="column" justify="center" alignItems="center" style={{ minHeight: '100vh' }}>
+            <AppBar position="static">
+                <Toolbar>
+                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" color="inherit" className={classes.grow}>
+                    News
+                </Typography>
+                <NavLink
+                        to='/login'
+                        style = {{textDecoration: "none"}}
+                >
+                    <Button style = {{color: "#FFFFFF", textDecoration: "none"}}>Login</Button>
+                </NavLink>
+                </Toolbar>
+            </AppBar>
+            <Grid container direction="column" justify="center" alignItems="center" style={{ minHeight: 'calc(100vh - 64px)' }}>
                 <Grid item>
                     <span className={classes.wrapper}>
                         Brand goes here with Rio Logo
@@ -37,19 +64,11 @@ const TitlePage = ({ ...props }) => {
                             </Button>
                         </span>
                     </NavLink>
-                    <NavLink
-                        to='/login'
-                    >
-                        <span className={classes.wrapper}>
-                            <Button>
-                                Login
-                            </Button>
-                        </span>
-                    </NavLink>
                 </Grid>
             </Grid>
         </div>
     )
 }
+
 
 export default withStyles(titlePageStyles)(TitlePage)

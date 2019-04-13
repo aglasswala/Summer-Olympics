@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { withStyles, Grid } from '@material-ui/core'
+import { getEvents } from '../../actions/events'
+import CreateEvent from './CreateEvent'
+import ViewAthleteEvent from './ViewAthleteEvent'
+import { connect } from 'react-redux'
 import EventTable from './EventTable'
 
-const styles = {
+const styles = theme => ({
     gridContainer: {
         margin: "0 -15px !important",
         width: "unset"
@@ -35,7 +39,7 @@ const styles = {
           borderRadius: "calc(.25rem - 1px) calc(.25rem - 1px) 0 0"
         },
         color: "#FFFFFF",
-        background: "linear-gradient(60deg, #ab47bc, #8e24aa)",
+        background: theme.palette.primary.main,
         boxShadow:
           "0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2)"
     },
@@ -70,21 +74,29 @@ const styles = {
         padding: "0.9375rem 20px",
         flex: "1 1 auto",
         position: "relative"
+    },
+    buttons: {
+        display: "inline-block"
     }
-}
+})
 
 class Event extends Component { 
 
     state = {
-        tableData: [[]]
+        compEvents: [[]],
+        awardEvents: [[]],
+        autoEvents: [[]]
     }
 
-    componentDidMount() {
+    refresh = () => {
         fetch("http://localhost:3001/api/events")
         .then(response => response.json())
         .then(data => {
+            this.props.getEvents(data)
             this.setState({
-                tableData: data
+                compEvents: data.compEvents,
+                awardEvents: data.awardEvents,
+                autoEvents: data.autoEvents
             })
         })
         .catch(err => {
@@ -92,22 +104,65 @@ class Event extends Component {
         })
     }
 
+    componentDidMount() {
+        this.refresh()
+        // setInterval(this.refresh, 2000) // this causes a memory leak
+    }
+
     render() {
         const { classes } = this.props
         return (
             <Grid container className={classes.gridContainer}>
+                <Grid item className={classes.gridItem}>
+                    {this.props.usertype !== 1 ? <CreateEvent /> : null}
+                </Grid>
+                <Grid item className={classes.gridItem}>
+                    {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
+                </Grid>
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
                         <div className={classes.cardHeader}>
-                            <h4 className={classes.cardTitleWhite}>Simple Table</h4>
+                            <h4 className={classes.cardTitleWhite}>Competition Events</h4>
                             <p className={classes.cardCategoryWhite}>
-                              Here is a subtitle for this table
+                              Here's all competition events
+                            </p>
+                        </div>
+                        <div className={classes.cardBody}>
+                            <EventTable 
+                                tableHead={["Event", "Stadium", "Time", "Date"]}
+                                tableData={this.state.compEvents}
+                            />
+                        </div>
+                    </div>
+                </Grid>
+                <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
+                    <div className={classes.card}>
+                        <div className={classes.cardHeader}>
+                            <h4 className={classes.cardTitleWhite}>Award Ceremonies</h4>
+                            <p className={classes.cardCategoryWhite}>
+                              Here's all the awards ceremonies on going
+                            </p>
+                        </div>
+                        <div className={classes.cardBody}>
+                            <EventTable 
+                                tableHead={["Event", "Stadium", "Time", "Date"]}
+                                tableData={this.state.awardEvents}
+                            />
+                        </div>
+                    </div>
+                </Grid>
+                <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
+                    <div className={classes.card}>
+                        <div className={classes.cardHeader}>
+                            <h4 className={classes.cardTitleWhite}>Autograph sessions</h4>
+                            <p className={classes.cardCategoryWhite}>
+                              Check out what athletes are signing autographs
                             </p>
                         </div>
                         <div className={classes.cardBody}>
                             <EventTable 
                                 tableHead={["Event", "Stadium", "City", "Time", "Attendees"]}
-                                tableData={this.state.tableData}
+                                tableData={this.state.autoEvents}
                             />
                         </div>
                     </div>
@@ -117,4 +172,15 @@ class Event extends Component {
     }
 }
 
-export default withStyles(styles)(Event)
+const mapDispatchToProps = dispatch => ({
+    getEvents: (events) => dispatch(getEvents(events))
+});
+
+const mapStateToProps = state => {
+    return {
+        events: state.events,
+        usertype: state.user.usertype
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Event))

@@ -37,13 +37,7 @@ class LoginForm extends Component {
         errors: {}
     }
 
-    onEmailChange = (event) => {
-        this.setState({email: event.target.value })
-    }
-
-    onPasswordChange = (event) => {
-        this.setState({ password: event.target.value })
-    }
+   onChange = (e) => this.setState({[e.target.name]: e.target.value})
 
     onSubmit = (event) => {
         event.preventDefault();
@@ -80,7 +74,7 @@ class LoginForm extends Component {
                                 type="text"
                                 autoComplete="email" 
                                 autoFocus
-                                onChange={this.onEmailChange}
+                                onChange={this.onChange}
                                 className={classes.textField}
                             />
                             {this.state.errors.email ? <FormHelperText>Invalid Email</FormHelperText> : null}
@@ -95,7 +89,7 @@ class LoginForm extends Component {
                                 value={this.state.password}
                                 type="password"
                                 autoComplete="password"
-                                onChange={this.onPasswordChange}
+                                onChange={this.onChange}
                                 className={classes.textField}
                             />
                     </FormControl>
