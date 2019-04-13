@@ -38,7 +38,6 @@ const labelOptions = ["Competition", "Medal Ceremony", "Autograph Session"]
 class CreateEventForm extends Component {
 
   state = {
-    nameOfEvent: "",
     type: "",
   }
 
@@ -56,15 +55,6 @@ class CreateEventForm extends Component {
           className={classes.form}
           style={{width: "400px"}}
         >
-          <span className={classes.wrapper}>
-            <TextField
-              id="nameOfEvent"
-              onChange={this.onTypeChange("nameOfEvent")}
-              label="Event Name"
-              className={classes.textField}
-              required
-            />
-          </span>
           <span className={classes.wrapper}>
             <TextField
               label="What type of event?"
@@ -89,7 +79,7 @@ class CreateEventForm extends Component {
             </TextField>
           </span>
 
-            {this.state.type === "Competition" ? <CompetitionForm {...this.state} handleClose={this.props.handleClose} /> : null}
+            {this.state.type === "Competition" ? <CompetitionForm handleClose={this.props.handleClose} /> : null}
             {this.state.type === "Medal Ceremony" ? <CeremonyForm {...this.state} /> : null}
             {this.state.type === "Autograph Session" ? <AutographForm {...this.state} /> : null}
 
