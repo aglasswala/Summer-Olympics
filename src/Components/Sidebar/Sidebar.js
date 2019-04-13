@@ -151,8 +151,8 @@ const sidebarStyles = theme => ({
 })
 
 const logoutUser = () => {
-  localStorage.removeItem("cool-jwt")
-  this.props.userLoggedOut()
+  localStorage.removeItem("cool-jwt");
+  window.location.href = '/';
 }
 
 
@@ -225,20 +225,13 @@ const Sidebar = ({...props}) => {
                             />
                           </ListItem>
                         </NavLink>
-                        <NavLink
-                          to={"/"}
-                          exact
-                          className={classes.item}
-                          activeClassName="active"
-                        >
-                          <ListItem button className={classes.itemLink} onClick={() => localStorage.removeItem("cool-jwt")}>
-                            <ListItemText
-                              primary={"Logout"}
-                              className={classes.itemText}
-                              disableTypography={true}
-                            />
-                          </ListItem>
-                        </NavLink>
+                        <ListItem button className={classes.itemLink} onClick={logoutUser}>
+                          <ListItemText
+                            primary={"Logout"}
+                            className={classes.itemText}
+                            disableTypography={true}
+                          />
+                        </ListItem>
                       </List>
                     </div>
                     <div
