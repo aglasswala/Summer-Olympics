@@ -65,7 +65,7 @@ class CreateEventForm extends Component {
               onChange={this.onTypeChange("type")}
               margin="normal"
             >
-                { this.props.userType !== "athlete" ?
+                { this.props.userType !== 2 ?
                     labelOptions.map((label, key) => (
                       <MenuItem key={key} value={label}>
                         {label}
