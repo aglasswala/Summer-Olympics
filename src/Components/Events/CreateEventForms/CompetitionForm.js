@@ -32,7 +32,6 @@ const competitionFormstyles = {
 }
 
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
-const locations = ["Barra da Tijuca,  Rio de Janeiro, Brazil", "Barra Olympic Park in Rio de Janeiro, Brazil", "Deodoro, Rio de Janeiro, Brazil"]
 const timeSlots = [
           "8:00 AM",
           "9:00 AM",
@@ -49,10 +48,9 @@ const timeSlots = [
 class CompetitionForm extends Component {
 
   state = {
-    nameOfEvent: "",
+    sportname: "",
     time: "",
-    stadium: "",
-    location: "",
+    venue: "",
     date: new Date(),
     registeredAthletes: [],
     allAthletes: []
@@ -72,9 +70,9 @@ class CompetitionForm extends Component {
     fetch("http://localhost:3001/api/getAthletes")
       .then(response => response.json())
       .then(data => {
+        console.log(data)
         this.setState({
-          allAthletes: data.athletes,
-          nameOfEvent: this.props.nameOfEvent
+          allAthletes: data.athletes
         })
       })
       .catch(err => console.log(err))
@@ -82,17 +80,16 @@ class CompetitionForm extends Component {
 
   submit = (event) => {
     event.preventDefault();
-    const { nameOfEvent, time, stadium, location, date, registeredAthletes } = this.state
+    const { sportname, time, venue, date, registeredAthletes } = this.state
     fetch('http://localhost:3001/api/createCompetitionEvent', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            nameOfEvent,
+            sportname,
             time,
-            stadium, 
-            location,
+            venue,
             date,
             registeredAthletes,
             createdBy: this.props.userId
@@ -109,8 +106,18 @@ class CompetitionForm extends Component {
 
   render() {
     const { classes } = this.props
+    console.log(this.state)
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <span className={classes.wrapper}>
+          <TextField
+            id="sportname"
+            onChange={this.handleChange("sportname")}
+            label="Event Name"
+            className={classes.textField}
+            required
+          />
+        </span>
         <span className={classes.wrapper}>
           <TextField
             margin="normal"
@@ -139,13 +146,13 @@ class CompetitionForm extends Component {
         </span>
         <span className={classes.wrapper}>
           <TextField 
-            id="stadium"
-            label="Stadium"
+            id="venue"
+            label="Venue"
             required
             className={classes.textField}
             select
-            value={this.state.stadium}
-            onChange={this.handleChange("stadium")}
+            value={this.state.venue}
+            onChange={this.handleChange("venue")}
             margin="normal"
           >
             {stadiums.map((stadium, key) => (
@@ -156,26 +163,8 @@ class CompetitionForm extends Component {
           </TextField>
         </span>
         <span className={classes.wrapper}>
-          <TextField 
-            id="location"
-            label="Location"
-            className={classes.textField}
-            select
-            required
-            value={this.state.location}
-            onChange={this.handleChange("location")}
-            margin="normal"
-          >
-            {locations.map((location, key) => (
-              <MenuItem key={key} value={location}>
-                {location}
-              </MenuItem>
-            ))}
-          </TextField>
-        </span>
-        <span className={classes.wrapper}>
         <FormControl className={classes.textField}>
-          <InputLabel htmlFor="select-multiple">Name</InputLabel>
+          <InputLabel htmlFor="select-multiple">What athletes are participating?</InputLabel>
             <Select
               multiple
               value={this.state.registeredAthletes}
@@ -185,7 +174,7 @@ class CompetitionForm extends Component {
             >
               {this.state.allAthletes.map((athlete, key) => (
                 <MenuItem key={key} value={athlete}>
-                  {athlete.firstName + " " + athlete.lastName}
+                  {athlete.fname + " " + athlete.lname}
                 </MenuItem>
               ))}
             </Select>
