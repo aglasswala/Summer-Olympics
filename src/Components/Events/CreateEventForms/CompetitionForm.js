@@ -120,6 +120,8 @@ class CompetitionForm extends Component {
     console.log(newTime);
     const newDate = fixingDate(date);
     console.log(newDate);
+    // Make sure to delete console logs if u are done checking
+
     fetch('http://localhost:3001/api/createCompetitionEvent', {
         method: 'post',
         headers: {
