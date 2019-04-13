@@ -151,7 +151,7 @@ const sidebarStyles = theme => ({
 })
 
 const logoutUser = () => {
-  localStorage.clear();
+  localStorage.removeItem("cool-jwt");
   window.location.href = '/';
 }
 
