@@ -32,7 +32,6 @@ const competitionFormstyles = {
 }
 
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
-const locations = ["Barra da Tijuca,  Rio de Janeiro, Brazil", "Barra Olympic Park in Rio de Janeiro, Brazil", "Deodoro, Rio de Janeiro, Brazil"]
 const timeSlots = [
           "8:00 AM",
           "9:00 AM",
@@ -165,7 +164,7 @@ class CompetitionForm extends Component {
         </span>
         <span className={classes.wrapper}>
         <FormControl className={classes.textField}>
-          <InputLabel htmlFor="select-multiple">Name</InputLabel>
+          <InputLabel htmlFor="select-multiple">What athletes are participating?</InputLabel>
             <Select
               multiple
               value={this.state.registeredAthletes}
