@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import MenuItem from '@material-ui/core/MenuItem';
-import { fi } from 'date-fns/esm/locale';
 
 const competitionFormstyles = {
   wrapper: {
@@ -61,7 +60,6 @@ const fixingDate = (date) => {
   }
 
   return (newYear+"-"+newMonth+"-"+newDay);
-
 }
 
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
@@ -103,7 +101,6 @@ class CompetitionForm extends Component {
     fetch("http://localhost:3001/api/getAthletes")
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         this.setState({
           allAthletes: data.athletes
         })
@@ -117,10 +114,7 @@ class CompetitionForm extends Component {
     
     //Edit here time. 
     const newTime = fixingTime(time);
-    console.log(newTime);
     const newDate = fixingDate(date);
-    console.log(newDate);
-    // Make sure to delete console logs if u are done checking
 
     fetch('http://localhost:3001/api/createCompetitionEvent', {
         method: 'post',
@@ -147,7 +141,6 @@ class CompetitionForm extends Component {
 
   render() {
     const { classes } = this.props
-    console.log(this.state)
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <span className={classes.wrapper}>
@@ -233,7 +226,7 @@ class CompetitionForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    userId: state.user._id
+    userId: state.user.userid
   }
 }
 

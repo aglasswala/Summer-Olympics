@@ -106,7 +106,7 @@ class Event extends Component {
 
     componentDidMount() {
         this.refresh()
-        // setInterval(this.refresh, 2000) // this causes a memory leak
+        setInterval(this.refresh, 2000) // this causes a memory leak
     }
 
     render() {
