@@ -80,7 +80,7 @@ class CreateEventForm extends Component {
           </span>
 
             {this.state.type === "Competition" ? <CompetitionForm handleClose={this.props.handleClose} /> : null}
-            {this.state.type === "Medal Ceremony" ? <CeremonyForm {...this.state} /> : null}
+            {this.state.type === "Medal Ceremony" ? <CeremonyForm handleClose={this.props.handleClose} /> : null}
             {this.state.type === "Autograph Session" ? <AutographForm {...this.state} /> : null}
 
         </form>

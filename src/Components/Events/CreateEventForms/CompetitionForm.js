@@ -107,7 +107,7 @@ class CompetitionForm extends Component {
     });
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     fetch("http://localhost:3001/api/getAthletes")
       .then(response => response.json())
       .then(data => {
