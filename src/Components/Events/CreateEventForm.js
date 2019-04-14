@@ -91,7 +91,7 @@ class CreateEventForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    userType: state.user.userType
+    userType: state.user.usertype
   }
 }
 
