@@ -30,6 +30,7 @@ const competitionFormstyles = {
     marginTop: "20px"
   }
 }
+
 const fixingTime = (time) => {
   let checktime = parseInt(time);
     if (checktime < 12 && time.includes("AM")) {
@@ -53,13 +54,22 @@ const fixingDate = (date) => {
   } else {
     newMonth = date.getMonth().toString();
   }
+
   if(date.getDate() < 10){
     newDay = "0"+ date.getDate().toString();
   } else {
     newDay = date.getDate().toString();
   }
-
   return (newYear+"-"+newMonth+"-"+newDay);
+}
+
+const filteredAthletes = (registeredAthletes, allAthletes) => {
+  let newAthletes = []
+  registeredAthletes.map(registeredAthlete => {
+    const filtered = allAthletes.filter(athlete => athlete.fname === registeredAthlete.fname && athlete.lname === registeredAthlete.lname)
+    return newAthletes.push(filtered[0].userid)
+  })
+  return newAthletes
 }
 
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
@@ -110,11 +120,14 @@ class CompetitionForm extends Component {
 
   submit = (event) => {
     event.preventDefault();
-    const { sportname, time, venue, date, registeredAthletes } = this.state
+    const { sportname, time, venue, date, registeredAthletes, allAthletes } = this.state
     
     //Edit here time. 
     const newTime = fixingTime(time);
     const newDate = fixingDate(date);
+
+    // Need to send athlete userids to the backend
+    const filteredRegisteredAthletes = filteredAthletes(registeredAthletes, allAthletes)
 
     fetch('http://localhost:3001/api/createCompetitionEvent', {
         method: 'post',
@@ -126,7 +139,7 @@ class CompetitionForm extends Component {
             newTime,
             venue,
             newDate,
-            registeredAthletes,
+            filteredRegisteredAthletes,
             createdBy: this.props.userId
         })
     })
