@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -6,10 +6,11 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-const Tickets = ({...props}) => {
+class Tickets extends Component {
+  render() {
     return (
         <div>
-            {props.user.tickets ? props.user.tickets.map((ticket, key) => (
+            {this.props.user.tickets ? this.props.user.tickets.map((ticket, key) => (
               <ExpansionPanel key={key}>
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                   <Typography>{ticket}</Typography>
@@ -24,6 +25,7 @@ const Tickets = ({...props}) => {
             )) : null}
         </div>
     )
+  }
 }
 
 function mapStateToProps(state) {
