@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Dialog, DialogTitle, DialogContent, withStyles } from '@material-ui/core'
+import { Button, Dialog, DialogTitle, DialogContent, withStyles, List, ListItem, ListItemText } from '@material-ui/core'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -64,12 +64,23 @@ class ViewAthleteEvent extends Component {
                   <Typography>{event[0]}</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
-                  <Typography>
-                    Time: {event[2]}
-                  </Typography>
-                  <Typography>
-                    Date: {event[3]}
-                  </Typography>
+                  <List>
+                    <ListItem>
+                      <ListItemText>
+                        Event: {event[0]}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Time: {event[2]}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Date: {event[3]}
+                      </ListItemText>
+                    </ListItem>
+                  </List>
                 </ExpansionPanelDetails>
               </ExpansionPanel>
             ))}
