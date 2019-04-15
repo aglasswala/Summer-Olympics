@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Grid, Typography, FormControl, InputLabel, Input, Button, TextField, DialogTitle } from '@material-ui/core'
+import { Grid, Typography, FormControl, InputLabel, Input, Button, TextField } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { userLoggedIn } from '../../actions/user'
 import { withStyles } from '@material-ui/core'
