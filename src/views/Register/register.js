@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { Grid, Typography, FormControl, InputLabel, Input, Button } from '@material-ui/core'
+import { Grid, Typography, FormControl, InputLabel, Input, Button, TextField, DialogTitle } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { userLoggedIn } from '../../actions/user'
 import { withStyles } from '@material-ui/core'
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 
 const styles = theme => ({
   wrapper: {
@@ -27,6 +29,7 @@ const styles = theme => ({
     padding: 20
   }
 })
+const STATES = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN",'IA',"KS","KY","LA","ME","MD","MA","MI","MN","MS", "MO","MT","NE","NV","NH","NJ","NM","NY","NC", "ND","OH","OK","OR","PA","RI", "SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"]
 
 class Register extends Component {
 
@@ -42,6 +45,8 @@ class Register extends Component {
       phoneNumber: "",
       countryOfOrigin: ""
     }
+
+    
 
   onChange = (e) => this.setState({[e.target.name]: e.target.value})
 
@@ -187,15 +192,25 @@ class Register extends Component {
             <Grid item xs={12}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
-                  <InputLabel> State </InputLabel>
-                  <Input 
+                  <TextField
+                      label = "State"
                       id="state" 
+                      select
                       name="state" 
                       type="text"
                       autoComplete="state"
                       autoFocus
+                      value = {this.state.state}
                       onChange={this.onChange}
-                  />
+                  >
+                  {STATES.map((states, key)=>(
+                    <MenuItem key={key} value={states}>
+                        {states}
+                    </MenuItem>
+                  
+                    ))
+                  }
+                  </TextField>
                 </FormControl>
               </span>
             </Grid>
