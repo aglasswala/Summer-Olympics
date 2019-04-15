@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { userLoggedIn } from '../../actions/user'
 import { withStyles } from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 
 const styles = theme => ({
   wrapper: {
