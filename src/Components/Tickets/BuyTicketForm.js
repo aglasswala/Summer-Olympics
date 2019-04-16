@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withStyles, TextField, Select, Input, InputLabel, FormControl, Button } from '@material-ui/core'
+import { withStyles, TextField, Select, Input, InputLabel, FormControl, Button, DialogTitle, Dialog } from '@material-ui/core'
 import { connect } from 'react-redux'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
@@ -94,7 +94,8 @@ class BuyTicketForm extends Component {
     venue: "",
     date: new Date(),
     registeredAthletes: [],
-    allAthletes: []
+    allAthletes: [],
+    open: false,
   }
 
   onTimeChange = (date) => {
@@ -156,82 +157,85 @@ class BuyTicketForm extends Component {
     const { classes } = this.props
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <span className={classes.wrapper}>
-          <TextField
-            id="sportname"
-            onChange={this.handleChange("sportname")}
-            label="Event Name"
-            className={classes.textField}
-            required
-          />
-        </span>
-        <span className={classes.wrapper}>
-          <TextField
-            margin="normal"
-            label="What time?"
-            select
-            required
-            className={classes.textField}
-            value={this.state.time}
-            onChange={this.handleChange("time")}
-          >
-            {timeSlots.map((time, key) => (
-              <MenuItem key={key} value={time}>
-                {time}
-              </MenuItem>
-            ))}
-          </TextField>
-        </span>
-        <span className={classes.wrapper}>
-          <DatePicker
-            margin="normal"
-            label="What date?"
-            value={this.state.date}
-            className={classes.textField}
-            onChange={this.onTimeChange}
-          />
-        </span>
-        <span className={classes.wrapper}>
-          <TextField 
-            id="venue"
-            label="Venue"
-            required
-            className={classes.textField}
-            select
-            value={this.state.venue}
-            onChange={this.handleChange("venue")}
-            margin="normal"
-          >
-            {stadiums.map((stadium, key) => (
-              <MenuItem key={key} value={stadium}>
-                {stadium}
-              </MenuItem>
-            ))}
-          </TextField>
-        </span>
-        <span className={classes.wrapper}>
-        <FormControl className={classes.textField}>
-          <InputLabel htmlFor="select-multiple">What athletes are participating?</InputLabel>
-            <Select
-              multiple
-              value={this.state.registeredAthletes}
-              onChange={this.handleChange("registeredAthletes")}
-              input={<Input id="select-multiple" />}
+        <Dialog>
+          <DialogTitle>Set backup account</DialogTitle>
+          <span className={classes.wrapper}>
+            <TextField
+              id="sportname"
+              onChange={this.handleChange("sportname")}
+              label="Event Name"
               className={classes.textField}
+              required
+            />
+          </span>
+          <span className={classes.wrapper}>
+            <TextField
+              margin="normal"
+              label="What time?"
+              select
+              required
+              className={classes.textField}
+              value={this.state.time}
+              onChange={this.handleChange("time")}
             >
-              {this.state.allAthletes.map((athlete, key) => (
-                <MenuItem key={key} value={athlete}>
-                  {athlete.fname + " " + athlete.lname}
+              {timeSlots.map((time, key) => (
+                <MenuItem key={key} value={time}>
+                  {time}
                 </MenuItem>
               ))}
-            </Select>
-          </FormControl>
-        </span>
-        <span className={classes.wrapper}>
-          <Button onClick={this.submit} className={classes.button}>
-            Submit
-          </Button>
-        </span>
+            </TextField>
+          </span>
+          <span className={classes.wrapper}>
+            <DatePicker
+              margin="normal"
+              label="What date?"
+              value={this.state.date}
+              className={classes.textField}
+              onChange={this.onTimeChange}
+            />
+          </span>
+          <span className={classes.wrapper}>
+            <TextField 
+              id="venue"
+              label="Venue"
+              required
+              className={classes.textField}
+              select
+              value={this.state.venue}
+              onChange={this.handleChange("venue")}
+              margin="normal"
+            >
+              {stadiums.map((stadium, key) => (
+                <MenuItem key={key} value={stadium}>
+                  {stadium}
+                </MenuItem>
+              ))}
+            </TextField>
+          </span>
+          <span className={classes.wrapper}>
+          <FormControl className={classes.textField}>
+            <InputLabel htmlFor="select-multiple">What athletes are participating?</InputLabel>
+              <Select
+                multiple
+                value={this.state.registeredAthletes}
+                onChange={this.handleChange("registeredAthletes")}
+                input={<Input id="select-multiple" />}
+                className={classes.textField}
+              >
+                {this.state.allAthletes.map((athlete, key) => (
+                  <MenuItem key={key} value={athlete}>
+                    {athlete.fname + " " + athlete.lname}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </span>
+          <span className={classes.wrapper}>
+            <Button onClick={this.submit} className={classes.button}>
+              Submit
+            </Button>
+          </span>
+        </Dialog>
       </MuiPickersUtilsProvider>
     )
   }

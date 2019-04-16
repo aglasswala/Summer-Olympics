@@ -5,8 +5,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
-import { Dialog, DialogTitle, DialogContent } from '@material-ui/core'
-import BuyTicketForm from '../Tickets/BuyTicketForm'
 
 const tableStyles = theme => ({
     tableResponsive: {
@@ -46,7 +44,7 @@ class EventTable extends Component {
       open: false
     };
 
-    handleClickOpen = () => {
+    handleClickOpen = (evt) => {
       this.setState({ open: true });
     };
 
@@ -76,7 +74,7 @@ class EventTable extends Component {
                     <TableBody>
                       {tableData.map((prop, key) => {
                         return (
-                          <TableRow key={key} onClick={this.handleClickOpen}>
+                          <TableRow key={key} onClick={() => this.handleClickOpen(prop)}>
                             {prop.map((prop, key) => {
                               return (
                                 <TableCell className={classes.tableCell} key={key}>
@@ -89,15 +87,6 @@ class EventTable extends Component {
                       })}
                     </TableBody>
                 </Table>
-                <Dialog
-                  open={this.state.open}
-                  onClose={this.handleClose}
-                >
-                  <DialogTitle> {"Buy this ticket"}</DialogTitle>
-                  <DialogContent>
-                    <BuyTicketForm />
-                  </DialogContent>
-                </Dialog>
             </div>
         )
     }

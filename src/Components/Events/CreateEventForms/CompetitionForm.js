@@ -46,11 +46,12 @@ const fixingTime = (time) => {
 
 const fixingDate = (date) => {
   let newMonth;
+  const newDate = date.getMonth() + 1
   let newDay;
   let newYear = date.getFullYear().toString();
   
   if(date.getMonth() < 10){
-    newMonth = "0"+ date.getMonth().toString();
+    newMonth = "0"+ newDate.toString()
   } else {
     newMonth = date.getMonth().toString();
   }

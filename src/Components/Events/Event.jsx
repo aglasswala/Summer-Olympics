@@ -5,6 +5,7 @@ import CreateEvent from './CreateEvent'
 import ViewAthleteEvent from './ViewAthleteEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
+import BuyTicketForm from '../Tickets/BuyTicketForm'
 
 const styles = theme => ({
     gridContainer: {
@@ -88,6 +89,10 @@ class Event extends Component {
         autoEvents: [[]]
     }
 
+    createInteval = () => {
+         setInterval(this.refresh, 2000) // this causes a memory leak
+    }
+
     refresh = () => {
         fetch("http://localhost:3001/api/events")
         .then(response => response.json())
@@ -106,7 +111,7 @@ class Event extends Component {
 
     componentDidMount() {
         this.refresh()
-        setInterval(this.refresh, 2000) // this causes a memory leak
+        this.createInteval()
     }
 
     render() {
@@ -118,6 +123,9 @@ class Event extends Component {
                 </Grid>
                 <Grid item className={classes.gridItem}>
                     {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
+                </Grid>
+                <Grid item className={classes.gridItem}>
+                    <BuyTicketForm />
                 </Grid>
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>
