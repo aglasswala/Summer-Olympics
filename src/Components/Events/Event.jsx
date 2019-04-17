@@ -5,7 +5,7 @@ import CreateEvent from './CreateEvent'
 import ViewAthleteEvent from './ViewAthleteEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
-import BuyTicketForm from '../Tickets/BuyTicketForm'
+import BuyTicket from '../Tickets/BuyTicket'
 
 const styles = theme => ({
     gridContainer: {
@@ -125,7 +125,7 @@ class Event extends Component {
                     {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
                 </Grid>
                 <Grid item className={classes.gridItem}>
-                    <BuyTicketForm />
+                    <BuyTicket />
                 </Grid>
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>

@@ -147,7 +147,6 @@ class CeremonyForm extends Component {
 
   render() {
     const { classes } = this.props
-    console.log(this.state)
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <span className={classes.wrapper}>
