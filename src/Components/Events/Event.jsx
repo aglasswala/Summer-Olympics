@@ -1,11 +1,17 @@
-import React, { Component } from 'react'
-import { withStyles, Grid } from '@material-ui/core'
+import React, { Component, Fragment } from 'react'
+import { withStyles, Grid, Button } from '@material-ui/core'
 import { getEvents } from '../../actions/events'
 import CreateEvent from './CreateEvent'
 import ViewAthleteEvent from './ViewAthleteEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import BuyTicket from '../Tickets/BuyTicket'
+import EditEventForm from './EditEventForms/EditEventForm'
 
 const styles = theme => ({
     gridContainer: {
@@ -86,8 +92,17 @@ class Event extends Component {
     state = {
         compEvents: [[]],
         awardEvents: [[]],
-        autoEvents: [[]]
+        autoEvents: [[]],
+        open: false
     }
+
+    handleClickOpen = () => {
+      this.setState({ open: true });
+    };
+
+    handleClose = () => {
+      this.setState({ open: false });
+    };
 
     createInteval = () => {
          setInterval(this.refresh, 2000) // this causes a memory leak
@@ -117,65 +132,90 @@ class Event extends Component {
     render() {
         const { classes } = this.props
         return (
-            <Grid container className={classes.gridContainer}>
-                <Grid item className={classes.gridItem}>
-                    <BuyTicket />
-                </Grid>
-                <Grid item className={classes.gridItem}>
-                    {this.props.usertype !== 1 ? <CreateEvent /> : null}
-                </Grid>
-                <Grid item className={classes.gridItem}>
-                    {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
-                </Grid>
-                <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
-                    <div className={classes.card}>
-                        <div className={classes.cardHeader}>
-                            <h4 className={classes.cardTitleWhite}>Competition Events</h4>
-                            <p className={classes.cardCategoryWhite}>
-                              Here's all competition events
-                            </p>
+            <Fragment>
+                <Grid container className={classes.gridContainer}>
+                    <Grid item className={classes.gridItem}>
+                        <BuyTicket />
+                    </Grid>
+                    <Grid item className={classes.gridItem}>
+                        {this.props.usertype !== 1 ? <CreateEvent /> : null}
+                    </Grid>
+                    <Grid item className={classes.gridItem}>
+                        {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
+                    </Grid>
+                    <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
+                        <div className={classes.card}>
+                            <div className={classes.cardHeader}>
+                                <Grid
+                                  container
+                                  direction="row"
+                                  justify="space-between"
+                                  alignItems="center"
+                                >
+                                    <Grid item>
+                                        <h4 className={classes.cardTitleWhite}>Competition Events</h4>
+                                        <p className={classes.cardCategoryWhite}>
+                                          Here's all competition events
+                                        </p>
+                                    </Grid>
+                                    {this.props.usertype === 3 ? (
+                                        <Grid item>
+                                            <Button variant="contained" color="secondary" onClick={this.handleClickOpen}> Edit an Event </Button>
+                                        </Grid>
+                                    ) : null}
+                                </Grid>
+                            </div>
+                            <div className={classes.cardBody}>
+                                <EventTable 
+                                    tableHead={["Event", "Stadium", "Time", "Date"]}
+                                    tableData={this.state.compEvents}
+                                />
+                            </div>
                         </div>
-                        <div className={classes.cardBody}>
-                            <EventTable 
-                                tableHead={["Event", "Stadium", "Time", "Date"]}
-                                tableData={this.state.compEvents}
-                            />
+                    </Grid>
+                    <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
+                        <div className={classes.card}>
+                            <div className={classes.cardHeader}>
+                                <h4 className={classes.cardTitleWhite}>Award Ceremonies</h4>
+                                <p className={classes.cardCategoryWhite}>
+                                  Here's all the awards ceremonies on going
+                                </p>
+                            </div>
+                            <div className={classes.cardBody}>
+                                <EventTable 
+                                    tableHead={["Event", "Stadium", "Time", "Date"]}
+                                    tableData={this.state.awardEvents}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    </Grid>
+                    <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
+                        <div className={classes.card}>
+                            <div className={classes.cardHeader}>
+                                <h4 className={classes.cardTitleWhite}>Autograph sessions</h4>
+                                <p className={classes.cardCategoryWhite}>
+                                  Check out what athletes are signing autographs
+                                </p>
+                            </div>
+                            <div className={classes.cardBody}>
+                                <EventTable 
+                                    tableHead={["Name Of Athlete", "Stadium", "Time", "Date"]}
+                                    tableData={this.state.autoEvents}
+                                />
+                            </div>
+                        </div>
+                    </Grid>
                 </Grid>
-                <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
-                    <div className={classes.card}>
-                        <div className={classes.cardHeader}>
-                            <h4 className={classes.cardTitleWhite}>Award Ceremonies</h4>
-                            <p className={classes.cardCategoryWhite}>
-                              Here's all the awards ceremonies on going
-                            </p>
-                        </div>
-                        <div className={classes.cardBody}>
-                            <EventTable 
-                                tableHead={["Event", "Stadium", "Time", "Date"]}
-                                tableData={this.state.awardEvents}
-                            />
-                        </div>
-                    </div>
-                </Grid>
-                <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
-                    <div className={classes.card}>
-                        <div className={classes.cardHeader}>
-                            <h4 className={classes.cardTitleWhite}>Autograph sessions</h4>
-                            <p className={classes.cardCategoryWhite}>
-                              Check out what athletes are signing autographs
-                            </p>
-                        </div>
-                        <div className={classes.cardBody}>
-                            <EventTable 
-                                tableHead={["Name Of Athlete", "Stadium", "Time", "Date"]}
-                                tableData={this.state.autoEvents}
-                            />
-                        </div>
-                    </div>
-                </Grid>
-            </Grid>
+                <Dialog
+                  open={this.state.open}
+                  onClose={this.handleClose}
+                >
+                  <DialogTitle>{"Edit an Event"}</DialogTitle>
+                  <DialogContent>
+                    <EditEventForm />
+                  </DialogContent>
+                </Dialog>
+            </Fragment>
         )
     }
 }
