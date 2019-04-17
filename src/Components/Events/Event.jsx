@@ -119,13 +119,13 @@ class Event extends Component {
         return (
             <Grid container className={classes.gridContainer}>
                 <Grid item className={classes.gridItem}>
+                    <BuyTicket />
+                </Grid>
+                <Grid item className={classes.gridItem}>
                     {this.props.usertype !== 1 ? <CreateEvent /> : null}
                 </Grid>
                 <Grid item className={classes.gridItem}>
                     {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
-                </Grid>
-                <Grid item className={classes.gridItem}>
-                    <BuyTicket />
                 </Grid>
                 <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                     <div className={classes.card}>

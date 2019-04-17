@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from 'react'
-import { withStyles, TextField, Select, Input, InputLabel, FormControl, Button, DialogTitle, Dialog, Typography } from '@material-ui/core'
+import { withStyles, TextField, Button, DialogTitle, Dialog, Typography } from '@material-ui/core'
 import { connect } from 'react-redux'
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import MenuItem from '@material-ui/core/MenuItem';
 
 const buyTicketStyles = {
@@ -31,61 +29,6 @@ const buyTicketStyles = {
   }
 }
 
-const fixingTime = (time) => {
-  let checktime = parseInt(time);
-    if (checktime < 12 && time.includes("AM")) {
-      return checktime+":00:00";
-    } else if (checktime === 12) {
-      return checktime = checktime.toString() + ":00:00";
-    } else {
-      checktime += 12;
-      checktime = checktime.toString() + ":00:00";
-      return checktime;
-    }
-}
-
-const fixingDate = (date) => {
-  let newMonth;
-  let newDay;
-  let newYear = date.getFullYear().toString();
-  
-  if(date.getMonth() < 10){
-    newMonth = "0"+ date.getMonth().toString();
-  } else {
-    newMonth = date.getMonth().toString();
-  }
-
-  if(date.getDate() < 10){
-    newDay = "0"+ date.getDate().toString();
-  } else {
-    newDay = date.getDate().toString();
-  }
-  return (newYear+"-"+newMonth+"-"+newDay);
-}
-
-const filteredAthletes = (registeredAthletes, allAthletes) => {
-  let newAthletes = []
-  registeredAthletes.map(registeredAthlete => {
-    const filtered = allAthletes.filter(athlete => athlete.fname === registeredAthlete.fname && athlete.lname === registeredAthlete.lname)
-    return newAthletes.push(filtered[0].userid)
-  })
-  return newAthletes
-}
-
-const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
-const timeSlots = [
-          "8:00 AM",
-          "9:00 AM",
-          "10:00 AM",
-          "11:00 AM",
-          "12:00 PM",
-          "1:00 PM",
-          "2:00 PM",
-          "3:00 PM",
-          "4:00 PM",
-          "5:00 PM"
-]
-
 class BuyTicket extends Component {
 
   state = {
@@ -94,8 +37,7 @@ class BuyTicket extends Component {
     selectedEvent: {
       sportname: "Select an Event"
     },
-    cost: 30,
-    userId: this.props.userId
+    cost: 30.00
   }
 
   handleClickOpen = () => {
@@ -128,12 +70,33 @@ class BuyTicket extends Component {
       .catch(err => console.log(err))
   }
 
+  submit = () => {
+    const userid = this.props.userId
+    fetch('http://localhost:3001/api/buyTickets', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        event: this.state.selectedEvent.eventid,
+        timestamp: new Date().toLocaleString('en-GB').substring(12),
+        cost: this.state.cost,
+        userid
+      })
+    })
+      .then(response => response.json())
+      .then(result => {
+        this.handleClose()
+      })
+      .catch(err => console.log("ERR "))
+  }
+
   render() {
     const { classes } = this.props
     console.log(this.state)
     console.log(this.props)
     return (
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Fragment>
         <Button 
           onClick={this.handleClickOpen}
           variant="contained"
@@ -176,17 +139,17 @@ class BuyTicket extends Component {
                     value={this.state.cost}
                     onChange={this.handleChange("cost")}
                   >
-                    <MenuItem value={30}>
-                      30
+                    <MenuItem value={30.00}>
+                      $30.00
                     </MenuItem>
                     <MenuItem value={0}>
-                      0
+                      $0
                     </MenuItem>
                   </TextField>
                 </Fragment>
               ) : (
                 <Typography>
-                  Cost: 30
+                  Cost: $30.00
                 </Typography>
               )}
           </span>
@@ -196,7 +159,7 @@ class BuyTicket extends Component {
             </Button>
           </span>
         </Dialog>
-      </MuiPickersUtilsProvider>
+      </Fragment>
     )
   }
 }
