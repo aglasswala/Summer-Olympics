@@ -57,34 +57,42 @@ class ViewAthleteEvent extends Component {
           onClose={this.handleClose}
         >
           <DialogTitle> {"View my Events"}</DialogTitle>
-          <DialogContent>
-            {this.state.registeredEvents.map((event, key) => (
-              <ExpansionPanel key={key}>
-                <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>{event[0]}</Typography>
-                </ExpansionPanelSummary>
-                <ExpansionPanelDetails>
-                  <List>
-                    <ListItem>
-                      <ListItemText>
-                        Event: {event[0]}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Time: {event[2]}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Date: {event[3]}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                </ExpansionPanelDetails>
-              </ExpansionPanel>
-            ))}
-          </DialogContent>
+          {this.state.registeredEvents.length !== 0 ?
+            <DialogContent>
+              {this.state.registeredEvents.map((event, key) => (
+                <ExpansionPanel key={key}>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography>{event[0]}</Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <List>
+                      <ListItem>
+                        <ListItemText>
+                          Event: {event[0]}
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText>
+                          Time: {event[2]}
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText>
+                          Date: {event[3]}
+                        </ListItemText>
+                      </ListItem>
+                    </List>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              ))}
+            </DialogContent>
+          : (
+              <DialogContent>
+                <Typography>
+                  There's no events your registered for, we'll notify you when you do
+                </Typography>
+              </DialogContent>
+            )}
         </Dialog>
       </div>
     )

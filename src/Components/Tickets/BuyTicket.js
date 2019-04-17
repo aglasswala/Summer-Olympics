@@ -93,8 +93,6 @@ class BuyTicket extends Component {
 
   render() {
     const { classes } = this.props
-    console.log(this.state)
-    console.log(this.props)
     return (
       <Fragment>
         <Button 
@@ -154,7 +152,7 @@ class BuyTicket extends Component {
               )}
           </span>
           <span className={classes.wrapper}>
-            <Button onClick={this.submit} className={classes.button}>
+            <Button onClick={this.submit} className={classes.button} color="primary" variant="contained">
               Submit
             </Button>
           </span>

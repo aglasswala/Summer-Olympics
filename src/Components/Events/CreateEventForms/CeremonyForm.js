@@ -264,7 +264,7 @@ class CeremonyForm extends Component {
           </TextField>
         </span>
         <span className={classes.wrapper}>
-          <Button onClick={this.submit} className={classes.button}>
+          <Button onClick={this.submit} className={classes.button} color="primary" variant="contained">
             Submit
           </Button>
         </span>

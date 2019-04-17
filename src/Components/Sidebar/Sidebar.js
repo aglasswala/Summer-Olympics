@@ -18,14 +18,13 @@ const sidebarStyles = theme => ({
         textDecoration: "none",
         "&hover,&:focus,&:visited,&": {
             color: "#FFFFFF"
-        }
+        } 
     },
     itemLink: {
         width: "auto",
         transition: "all 300ms linear",
         margin: "10px 15px 0",
         borderRadius: "3px",
-        color: theme.palette.secondary.main,
         position: "relative",
         display: "block",
         padding: "10px 15px",
