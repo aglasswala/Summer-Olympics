@@ -112,33 +112,25 @@ class CompetitionForm extends Component {
   }
 
   updateTimeSlots = (venue, date, timeSlots) => {
-    fetch('http://localhost:3001/api/getCompEvents')
-      .then(response => response.json())
-      .then(result => {
-        const set = new Set()
-        let newTimes = []
-        result.map(event => {
-          if(event.date.substring(0, 10) === fixingDate(date) && event.venue === venue) {
-            const date = new Date("February 04, 2011 " + event.time);
-            const options = {
-              hour: 'numeric',
-              minute: 'numeric',
-              hour12: true
-            };
-            const timeString = date.toLocaleString('en-US', options);
-            set.add(timeString)
-          }
-        })
-        newTimes = timeSlots.filter(time => !set.has(time))
-        return newTimes
-      })
-      .then(times => {
-        this.setState({
-          times: times
-        })
-      })
-      .catch(err => console.log('Err'))
+    const set = new Set()
+    let newTimes = []
+    this.state.allEvents.map(event => {
+      if(event.date.substring(0, 10) === fixingDate(date) && event.venue === venue) {
+        const date = new Date("February 04, 2011 " + event.time);
+        const options = {
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true
+        };
+        const timeString = date.toLocaleString('en-US', options);
+        return set.add(timeString)
+      }
+      return null
+    })
+    newTimes = timeSlots.filter(time => !set.has(time))
+    return newTimes
   }
+
   onTimeChange = (date) => {
     this.setState({ date: date })
   }
@@ -155,6 +147,15 @@ class CompetitionForm extends Component {
       .then(data => {
         this.setState({
           allAthletes: data.athletes
+        })
+      })
+      .then(() => {
+        return fetch('http://localhost:3001/api/getCompEvents')
+          .then(response => response.json())
+      })
+      .then(events => {
+        this.setState({
+          allEvents: events
         })
       })
       .catch(err => console.log(err))
@@ -196,7 +197,7 @@ class CompetitionForm extends Component {
 
   render() {
     const { classes } = this.props
-    this.updateTimeSlots(this.state.venue, this.state.date, timeSlots)
+    timeSlots = this.updateTimeSlots(this.state.venue, this.state.date, this.state.times)
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <span className={classes.wrapper}>
@@ -245,7 +246,7 @@ class CompetitionForm extends Component {
             value={this.state.time}
             onChange={this.handleChange("time")}
           >
-            {this.state.times.map((time, key) => (
+            {timeSlots.map((time, key) => (
               <MenuItem key={key} value={time}>
                 {time}
               </MenuItem>
