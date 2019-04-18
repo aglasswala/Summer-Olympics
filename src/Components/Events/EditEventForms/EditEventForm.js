@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { withStyles, TextField, Button, MenuItem, FormControl, InputLabel, Select, Input } from '@material-ui/core'
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import { withStyles, TextField, MenuItem } from '@material-ui/core'
 import { connect } from 'react-redux'
 
 const editEventFormStyles = {
@@ -44,38 +42,6 @@ const timeSlots = [
 ]
 
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
-
-const fixingDate = (date) => {
-  let newMonth = date.getMonth() + 1;
-  let newDay;
-  let newYear = date.getFullYear().toString();
-  
-  if(date.getMonth()  + 1 < 10){
-    newMonth = "0"+ newMonth.toString()
-  } else {
-    newMonth = newMonth.toString();
-  }
-  
-  if(date.getDate() < 10){
-    newDay = "0"+ date.getDate().toString();
-  } else {
-    newDay = date.getDate().toString();
-  }
-  return (newYear+"-"+newMonth+"-"+newDay);
-}
-
-const fixingTime = (time) => {
-  let checktime = parseInt(time);
-    if (checktime < 12 && time.includes("AM")) {
-      return checktime+":00:00";
-    } else if (checktime === 12) {
-      return checktime = checktime.toString() + ":00:00";
-    } else {
-      checktime += 12;
-      checktime = checktime.toString() + ":00:00";
-      return checktime;
-    }
-}
 
 const stringToLocal = (result) => {
   let temp = []

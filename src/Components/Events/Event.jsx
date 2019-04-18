@@ -6,9 +6,7 @@ import ViewAthleteEvent from './ViewAthleteEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import BuyTicket from '../Tickets/BuyTicket'
 import EditEventForm from './EditEventForms/EditEventForm'
