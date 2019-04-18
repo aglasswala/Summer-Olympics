@@ -46,16 +46,16 @@ const timeSlots = [
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
 
 const fixingDate = (date) => {
-  let newMonth;
+  let newMonth = date.getMonth() + 1;
   let newDay;
   let newYear = date.getFullYear().toString();
   
-  if(date.getMonth() < 10){
-    newMonth = "0"+ date.getMonth().toString();
+  if(date.getMonth()  + 1 < 10){
+    newMonth = "0"+ newMonth.toString()
   } else {
-    newMonth = date.getMonth().toString();
+    newMonth = newMonth.toString();
   }
-
+  
   if(date.getDate() < 10){
     newDay = "0"+ date.getDate().toString();
   } else {

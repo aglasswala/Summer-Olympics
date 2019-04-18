@@ -54,6 +54,12 @@ const fixingDate = (date) => {
   } else {
     newMonth = newMonth.toString();
   }
+  
+  if(date.getDate() < 10){
+    newDay = "0"+ date.getDate().toString();
+  } else {
+    newDay = date.getDate().toString();
+  }
   return (newYear+"-"+newMonth+"-"+newDay);
 }
 
