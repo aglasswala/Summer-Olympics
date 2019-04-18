@@ -77,6 +77,32 @@ const fixingTime = (time) => {
     }
 }
 
+const stringToLocal = (result) => {
+  let temp = []
+  for(let i = 0; i < result.length; i++) {
+    const newTime = correctTime(result[i].time)
+    temp.push({
+      eventid: result[i].eventid,
+      sportname: result[i].sportname,
+      time: newTime,
+      date: result[i].date,
+      venue: result[i].venue,
+      userid: result[i].userid
+    })
+  }
+  return temp
+}
+
+const correctTime = (time) => {
+  let newTime = time.toLocaleString('en-GB')
+  console.log(newTime)
+  if(parseInt(time) < 10) {
+    console.log(new Date(2020, 4, 5, time.substring(0, 2), time.substring(3, 5), time.substring(6, 8)).toLocaleString('en-GB').substring(10, 14) + time.substring(time.length - 3))
+    return  new Date(2020, 4, 5, time.substring(0, 2), time.substring(3, 5), time.substring(6, 8)).toLocaleString().substring(10, 14) + time.substring(time.length - 3)
+  }
+  return new Date(2020, 4, 5, time.substring(0, 2), time.substring(3, 5), time.substring(6, 8)).toLocaleString().substring(10, 15) + time.substring(time.length - 3)
+}
+
 
 class EditEventForm extends Component {
 
@@ -84,7 +110,7 @@ class EditEventForm extends Component {
     allEvents: [],
     selectedEvent: {
       sportname: "HELLO",
-      time: "12:00",
+      time: "12:00:00",
       date: "2012-04-12",
       venue: "Carioca Arena 5"
     }
@@ -107,6 +133,10 @@ class EditEventForm extends Component {
     fetch('http://localhost:3001/api/getCompEvents')
       .then(response => response.json())
       .then(result => {
+        const newTime = stringToLocal(result)
+        return result
+      })
+      .then(result => {
         this.setState({
           allEvents: result
         })
@@ -122,9 +152,6 @@ class EditEventForm extends Component {
 
   render() {
     const { classes } = this.props
-    console.log(this.state)
-    const newTime = fixingTime(this.state.selectedEvent.time)
-    console.log(newTime)
     return (
       <Fragment>
         <form
@@ -173,7 +200,7 @@ class EditEventForm extends Component {
               required
               className={classes.textField}
               select
-              value={newTime}
+              value={this.state.selectedEvent.time}
               onChange={this.handleSelectedEventChange("time")}
               margin="normal"
             >
