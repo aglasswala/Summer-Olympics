@@ -87,6 +87,9 @@ class CeremonyForm extends Component {
     date: new Date(),
     venue: ""
   }
+  onTimeChange = (date) => {
+    this.setState({ date: date })
+  }
 
   onTimeChange = (date) => {
     this.setState({ date: date })
