@@ -86,6 +86,7 @@ let timeSlots = [
           "5:00 PM"
 ]
 
+
 class CompetitionForm extends Component {
 
   state = {
@@ -94,9 +95,50 @@ class CompetitionForm extends Component {
     venue: "",
     date: new Date(),
     registeredAthletes: [],
-    allAthletes: []
+    allAthletes: [],
+    times:[
+          "8:00 AM",
+          "9:00 AM",
+          "10:00 AM",
+          "11:00 AM",
+          "12:00 PM",
+          "1:00 PM",
+          "2:00 PM",
+          "3:00 PM",
+          "4:00 PM",
+          "5:00 PM"
+    ],
+    allEvents: []
   }
 
+  updateTimeSlots = (venue, date, timeSlots) => {
+    fetch('http://localhost:3001/api/getCompEvents')
+      .then(response => response.json())
+      .then(result => {
+        const set = new Set()
+        let newTimes = []
+        result.map(event => {
+          if(event.date.substring(0, 10) === fixingDate(date) && event.venue === venue) {
+            const date = new Date("February 04, 2011 " + event.time);
+            const options = {
+              hour: 'numeric',
+              minute: 'numeric',
+              hour12: true
+            };
+            const timeString = date.toLocaleString('en-US', options);
+            set.add(timeString)
+          }
+        })
+        newTimes = timeSlots.filter(time => !set.has(time))
+        return newTimes
+      })
+      .then(times => {
+        this.setState({
+          times: times
+        })
+      })
+      .catch(err => console.log('Err'))
+  }
   onTimeChange = (date) => {
     this.setState({ date: date })
   }
@@ -114,25 +156,6 @@ class CompetitionForm extends Component {
         this.setState({
           allAthletes: data.athletes
         })
-      })
-      .then(() => {
-        return fetch('http://localhost:3001/api/getCompEvents')
-          .then(response => response.json())
-      })
-      .then(result => {
-        console.log(result)
-        const set = new Set()
-        result.map(event => {
-          var date = new Date("February 04, 2011 " + event.time);
-          var options = {
-            hour: 'numeric',
-            minute: 'numeric',
-            hour12: true
-          };
-          var timeString = date.toLocaleString('en-US', options);
-          set.add(timeString)
-        })
-        timeSlots = timeSlots.filter(time => !set.has(time))
       })
       .catch(err => console.log(err))
   }
@@ -173,6 +196,7 @@ class CompetitionForm extends Component {
 
   render() {
     const { classes } = this.props
+    this.updateTimeSlots(this.state.venue, this.state.date, timeSlots)
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <span className={classes.wrapper}>
@@ -182,32 +206,6 @@ class CompetitionForm extends Component {
             label="Event Name"
             className={classes.textField}
             required
-          />
-        </span>
-        <span className={classes.wrapper}>
-          <TextField
-            margin="normal"
-            label="What time?"
-            select
-            required
-            className={classes.textField}
-            value={this.state.time}
-            onChange={this.handleChange("time")}
-          >
-            {timeSlots.map((time, key) => (
-              <MenuItem key={key} value={time}>
-                {time}
-              </MenuItem>
-            ))}
-          </TextField>
-        </span>
-        <span className={classes.wrapper}>
-          <DatePicker
-            margin="normal"
-            label="What date?"
-            value={this.state.date}
-            className={classes.textField}
-            onChange={this.onTimeChange}
           />
         </span>
         <span className={classes.wrapper}>
@@ -224,6 +222,32 @@ class CompetitionForm extends Component {
             {stadiums.map((stadium, key) => (
               <MenuItem key={key} value={stadium}>
                 {stadium}
+              </MenuItem>
+            ))}
+          </TextField>
+        </span>
+        <span className={classes.wrapper}>
+          <DatePicker
+            margin="normal"
+            label="What date?"
+            value={this.state.date}
+            className={classes.textField}
+            onChange={this.onTimeChange}
+          />
+        </span>
+        <span className={classes.wrapper}>
+          <TextField
+            margin="normal"
+            label="What time?"
+            select
+            required
+            className={classes.textField}
+            value={this.state.time}
+            onChange={this.handleChange("time")}
+          >
+            {this.state.times.map((time, key) => (
+              <MenuItem key={key} value={time}>
+                {time}
               </MenuItem>
             ))}
           </TextField>
