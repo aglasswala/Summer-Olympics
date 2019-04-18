@@ -80,7 +80,7 @@ const fixingTime = (time) => {
 const stringToLocal = (result) => {
   let temp = []
   for(let i = 0; i < result.length; i++) {
-    const newTime = correctTime(result[i].time)
+    const newTime = correctTime(result[i].time,result[i].date)
     temp.push({
       eventid: result[i].eventid,
       sportname: result[i].sportname,
@@ -93,14 +93,39 @@ const stringToLocal = (result) => {
   return temp
 }
 
-const correctTime = (time) => {
-  let newTime = time.toLocaleString('en-GB')
-  console.log(newTime)
-  if(parseInt(time) < 10) {
-    console.log(new Date(2020, 4, 5, time.substring(0, 2), time.substring(3, 5), time.substring(6, 8)).toLocaleString('en-GB').substring(10, 14) + time.substring(time.length - 3))
-    return  new Date(2020, 4, 5, time.substring(0, 2), time.substring(3, 5), time.substring(6, 8)).toLocaleString().substring(10, 14) + time.substring(time.length - 3)
+const correctTime = (time, date) => {
+
+  let newMonth = date.substring(5, 7);
+  let newDay = date.substring(8, 10);
+  let newYear = date.substring(0, 4);
+  let newTime;
+
+  if(parseInt(time) < 12){
+     newTime = time.toLocaleString('en-GB') + " AM";
   }
-  return new Date(2020, 4, 5, time.substring(0, 2), time.substring(3, 5), time.substring(6, 8)).toLocaleString().substring(10, 15) + time.substring(time.length - 3)
+  else {
+    newTime = time.toLocaleString('en-GB') + " PM";
+  }
+  const datevalue = parseInt(newDay);
+  if(parseInt(time) < 10) {
+    if(datevalue > 9){
+      return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(10, 15) + newTime.substring(8,11))
+    }
+    else {
+      return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(10, 14) + newTime.substring(8,11))
+
+    }
+  }
+ else {
+    if(datevalue > 9) {
+      return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(11, 16) + newTime.substring(8,11))
+    }
+    else {
+      return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(10, 15) + newTime.substring(8,11))
+
+    }  
+
+  }
 }
 
 
