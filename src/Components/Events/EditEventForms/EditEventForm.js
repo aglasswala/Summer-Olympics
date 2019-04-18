@@ -46,11 +46,17 @@ const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olym
 const stringToLocal = (result) => {
   let temp = []
   for(let i = 0; i < result.length; i++) {
-    const newTime = correctTime(result[i].time, result[i].date).trim()
+    const date = new Date("February 04, 2011 " + result[i].time);
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    };
+    const timeString = date.toLocaleString('en-US', options);
     temp.push({
       eventid: result[i].eventid,
       sportname: result[i].sportname,
-      time: newTime,
+      time: timeString,
       date: result[i].date,
       venue: result[i].venue,
       userid: result[i].userid
@@ -124,7 +130,7 @@ class EditEventForm extends Component {
       .then(response => response.json())
       .then(result => {
         const newTime = stringToLocal(result)
-        return result
+        return newTime
       })
       .then(result => {
         this.setState({
@@ -142,6 +148,7 @@ class EditEventForm extends Component {
 
   render() {
     const { classes } = this.props
+    console.log(this.state)
     return (
       <Fragment>
         <form
