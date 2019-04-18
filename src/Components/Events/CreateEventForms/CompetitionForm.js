@@ -73,7 +73,7 @@ const filteredAthletes = (registeredAthletes, allAthletes) => {
 }
 
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
-const timeSlots = [
+let timeSlots = [
           "8:00 AM",
           "9:00 AM",
           "10:00 AM",
@@ -114,6 +114,24 @@ class CompetitionForm extends Component {
         this.setState({
           allAthletes: data.athletes
         })
+      })
+      .then(() => {
+        return fetch('http://localhost:3001/api/getCompEvents')
+          .then(response => response.json())
+      })
+      .then(result => {
+        const set = new Set()
+        result.map(event => {
+          var date = new Date("February 04, 2011 " + event.time);
+          var options = {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+          };
+          var timeString = date.toLocaleString('en-US', options);
+          set.add(timeString)
+        })
+        timeSlots = timeSlots.filter(time => !set.has(time))
       })
       .catch(err => console.log(err))
   }

@@ -95,9 +95,7 @@ const stringToLocal = (result) => {
 
 const correctTime = (time) => {
   let newTime = time.toLocaleString('en-GB')
-  console.log(newTime)
   if(parseInt(time) < 10) {
-    console.log(new Date(2020, 4, 5, time.substring(0, 2), time.substring(3, 5), time.substring(6, 8)).toLocaleString('en-GB').substring(10, 14) + time.substring(time.length - 3))
     return  new Date(2020, 4, 5, time.substring(0, 2), time.substring(3, 5), time.substring(6, 8)).toLocaleString().substring(10, 14) + time.substring(time.length - 3)
   }
   return new Date(2020, 4, 5, time.substring(0, 2), time.substring(3, 5), time.substring(6, 8)).toLocaleString().substring(10, 15) + time.substring(time.length - 3)
@@ -109,7 +107,7 @@ class EditEventForm extends Component {
   state = {
     allEvents: [],
     selectedEvent: {
-      sportname: "HELLO",
+      sportname: "Soccer",
       time: "12:00:00",
       date: "2012-04-12",
       venue: "Carioca Arena 5"
@@ -165,7 +163,7 @@ class EditEventForm extends Component {
               required
               className={classes.textField}
               select
-              value={this.state.selectedEvent}
+              value={this.state.selectedEvent.sportname}
               onChange={this.handleChange("selectedEvent")}
             >
               {this.state.allEvents.map((event, key) => (
