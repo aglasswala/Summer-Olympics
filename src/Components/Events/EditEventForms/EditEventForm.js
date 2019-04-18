@@ -155,7 +155,7 @@ class EditEventForm extends Component {
               required
               className={classes.textField}
               select
-              value={this.state.selectedEvent.sportname}
+              value={this.state.selectedEvent}
               onChange={this.handleChange("selectedEvent")}
             >
               {this.state.allEvents.map((event, key) => (

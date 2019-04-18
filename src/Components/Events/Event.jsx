@@ -9,6 +9,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import BuyTicket from '../Tickets/BuyTicket'
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
+import MailIcon from '@material-ui/icons/Mail';
 import EditEventForm from './EditEventForms/EditEventForm'
 
 const styles = theme => ({
@@ -91,7 +94,8 @@ class Event extends Component {
         compEvents: [[]],
         awardEvents: [[]],
         autoEvents: [[]],
-        open: false
+        open: false,
+        notificationDialog: false
     }
 
     handleClickOpen = () => {
@@ -100,6 +104,14 @@ class Event extends Component {
 
     handleClose = () => {
       this.setState({ open: false });
+    };
+
+    handleNotificationOpen = () => {
+      this.setState({ notificationDialog: true });
+    };
+
+    handleNotificationClose = () => {
+      this.setState({ notificationDialog: false });
     };
 
     createInteval = () => {
@@ -131,15 +143,45 @@ class Event extends Component {
         const { classes } = this.props
         return (
             <Fragment>
-                <Grid container className={classes.gridContainer}>
+                <Grid className={classes.gridContainer}>
                     <Grid item className={classes.gridItem}>
-                        <BuyTicket />
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        {this.props.usertype !== 1 ? <CreateEvent /> : null}
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
+                        <Grid 
+                            container
+                            direction="row"
+                            justify="space-between"
+                            alignItems="center"
+                        >
+                            <Grid item>
+                                <Grid 
+                                    container
+                                    direction="row"
+                                    justify="center"
+                                    alignItems="center"
+                                    spacing={16}
+                                >
+                                    <Grid item>
+                                        <BuyTicket />
+                                    </Grid>
+                                    <Grid item>
+                                        {this.props.usertype !== 1 ? <CreateEvent /> : null}
+                                    </Grid>
+                                    <Grid item>
+                                        {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item>
+                                { this.props.usertype === 2 ? (
+                                    <div>
+                                        <IconButton className={classes.margin} onClick={this.handleNotificationOpen}>
+                                          <Badge badgeContent={4} color="primary">
+                                            <MailIcon />
+                                          </Badge>
+                                        </IconButton>
+                                    </div>
+                                ) : null }
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                         <div className={classes.card}>
@@ -211,6 +253,15 @@ class Event extends Component {
                   <DialogTitle>{"Edit an Event"}</DialogTitle>
                   <DialogContent>
                     <EditEventForm />
+                  </DialogContent>
+                </Dialog>
+                <Dialog
+                  open={this.state.notificationDialog}
+                  onClose={this.handleNotificationClose}
+                >
+                  <DialogTitle>{"Here's your notifications"}</DialogTitle>
+                  <DialogContent>
+                    {"notifications"}
                   </DialogContent>
                 </Dialog>
             </Fragment>
