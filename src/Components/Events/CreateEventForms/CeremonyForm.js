@@ -88,6 +88,10 @@ class CeremonyForm extends Component {
     venue: ""
   }
 
+  onTimeChange = (date) => {
+    this.setState({ date: date })
+  }
+
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
@@ -141,6 +145,9 @@ class CeremonyForm extends Component {
       .then(response => response.json())
       .then(result => {
         this.props.handleClose()
+      })
+      .catch (err => {
+            console.log(err);
       })
 
   }
@@ -242,7 +249,7 @@ class CeremonyForm extends Component {
             label="What date?"
             value={this.state.date}
             className={classes.textField}
-            onChange={this.handleChange("date")}
+            onChange={this.onTimeChange}
           />
         </span>
         <span className={classes.wrapper}>
