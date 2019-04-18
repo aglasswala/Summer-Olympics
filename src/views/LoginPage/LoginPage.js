@@ -43,8 +43,8 @@ const styles1 = theme => ({
 const MySnackbarContentWrapper = withStyles(styles1)(MySnackbarContent);
 
 function MySnackbarContent(props) {
-  const { classes, className, message, onClose, variant, ...other } = props;
-
+  
+  const { classes, className, message, handleClose, variant, ...other } = props;
   return (
     <SnackbarContent
       className={classes.error}
@@ -61,9 +61,8 @@ function MySnackbarContent(props) {
           aria-label="Close"
           color="inherit"
           className={classes.close}
-          onClick={onClose}
         >
-          <CloseIcon className={classes.icon} />
+          <CloseIcon className={classes.icon} onClick = {handleClose}/>
         </IconButton>,
       ]}
       {...other}
@@ -82,11 +81,12 @@ class LoginPage extends Component {
         this.setState({ open: true });
     };
 
-    handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
+    handleClose = () => {
         this.setState({ open: false });
+    };
+
+    handle = () => {
+      this.handleClose();
     };
 
     submit = (email, password) => {
@@ -138,12 +138,13 @@ class LoginPage extends Component {
                 }}
                 open={this.state.open}
                 autoHideDuration={6000}
-                onClose={this.handleClose}
+                // onClose={this.handleClose}
               >
-              <MySnackbarContentWrapper
+               <MySnackbarContentWrapper
                 variant="error"
                 className={classes.margin}
                 message="Invalid Credentials!"
+                handleClose = {this.handle}
               />
             </Snackbar>
         </Fragment>

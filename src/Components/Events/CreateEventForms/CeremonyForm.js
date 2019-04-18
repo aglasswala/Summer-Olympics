@@ -87,6 +87,9 @@ class CeremonyForm extends Component {
     date: new Date(),
     venue: ""
   }
+  onTimeChange = (date) => {
+    this.setState({ date: date })
+  }
 
   handleChange = name => event => {
     this.setState({
@@ -243,7 +246,7 @@ class CeremonyForm extends Component {
             label="What date?"
             value={this.state.date}
             className={classes.textField}
-            onChange={this.handleChange("date")}
+            onChange={this.onTimeChange}
           />
         </span>
         <span className={classes.wrapper}>
