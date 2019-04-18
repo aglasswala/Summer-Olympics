@@ -45,21 +45,14 @@ const fixingTime = (time) => {
 }
 
 const fixingDate = (date) => {
-  let newMonth;
-  const newDate = date.getMonth() + 1
+  let newMonth = date.getMonth() + 1;
   let newDay;
   let newYear = date.getFullYear().toString();
   
-  if(date.getMonth() < 10){
-    newMonth = "0"+ newDate.toString()
+  if(date.getMonth()  + 1 < 10){
+    newMonth = "0"+ newMonth.toString()
   } else {
-    newMonth = date.getMonth().toString();
-  }
-
-  if(date.getDate() < 10){
-    newDay = "0"+ date.getDate().toString();
-  } else {
-    newDay = date.getDate().toString();
+    newMonth = newMonth.toString();
   }
   return (newYear+"-"+newMonth+"-"+newDay);
 }
