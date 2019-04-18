@@ -31,9 +31,49 @@ const competitionFormstyles = {
   }
 }
 
+const fixingTime = (time) => {
+  let checktime = parseInt(time);
+    if (checktime < 12 && time.includes("AM")) {
+      return checktime+":00:00";
+    } else if (checktime === 12) {
+      return checktime = checktime.toString() + ":00:00";
+    } else {
+      checktime += 12;
+      checktime = checktime.toString() + ":00:00";
+      return checktime;
+    }
+}
+
+const fixingDate = (date) => {
+  let newMonth = date.getMonth() + 1;
+  let newDay;
+  let newYear = date.getFullYear().toString();
+  
+  if(date.getMonth()  + 1 < 10){
+    newMonth = "0"+ newMonth.toString()
+  } else {
+    newMonth = newMonth.toString();
+  }
+  
+  if(date.getDate() < 10){
+    newDay = "0"+ date.getDate().toString();
+  } else {
+    newDay = date.getDate().toString();
+  }
+  return (newYear+"-"+newMonth+"-"+newDay);
+}
+
+const filteredAthletes = (registeredAthletes, allAthletes) => {
+  let newAthletes = []
+  registeredAthletes.map(registeredAthlete => {
+    const filtered = allAthletes.filter(athlete => athlete.fname === registeredAthlete.fname && athlete.lname === registeredAthlete.lname)
+    return newAthletes.push(filtered[0].userid)
+  })
+  return newAthletes
+}
+
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
-const locations = ["Barra da Tijuca,  Rio de Janeiro, Brazil", "Barra Olympic Park in Rio de Janeiro, Brazil", "Deodoro, Rio de Janeiro, Brazil"]
-const timeSlots = [
+let timeSlots = [
           "8:00 AM",
           "9:00 AM",
           "10:00 AM",
@@ -49,10 +89,9 @@ const timeSlots = [
 class CompetitionForm extends Component {
 
   state = {
-    nameOfEvent: "",
+    sportname: "",
     time: "",
-    stadium: "",
-    location: "",
+    venue: "",
     date: new Date(),
     registeredAthletes: [],
     allAthletes: []
@@ -68,33 +107,58 @@ class CompetitionForm extends Component {
     });
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     fetch("http://localhost:3001/api/getAthletes")
       .then(response => response.json())
       .then(data => {
         this.setState({
-          allAthletes: data.athletes,
-          nameOfEvent: this.props.nameOfEvent
+          allAthletes: data.athletes
         })
+      })
+      .then(() => {
+        return fetch('http://localhost:3001/api/getCompEvents')
+          .then(response => response.json())
+      })
+      .then(result => {
+        console.log(result)
+        const set = new Set()
+        result.map(event => {
+          var date = new Date("February 04, 2011 " + event.time);
+          var options = {
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true
+          };
+          var timeString = date.toLocaleString('en-US', options);
+          set.add(timeString)
+        })
+        timeSlots = timeSlots.filter(time => !set.has(time))
       })
       .catch(err => console.log(err))
   }
 
   submit = (event) => {
     event.preventDefault();
-    const { nameOfEvent, time, stadium, location, date, registeredAthletes } = this.state
+    const { sportname, time, venue, date, registeredAthletes, allAthletes } = this.state
+    
+    //Edit here time. 
+    const newTime = fixingTime(time);
+    const newDate = fixingDate(date);
+
+    // Need to send athlete userids to the backend
+    const filteredRegisteredAthletes = filteredAthletes(registeredAthletes, allAthletes)
+
     fetch('http://localhost:3001/api/createCompetitionEvent', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            nameOfEvent,
-            time,
-            stadium, 
-            location,
-            date,
-            registeredAthletes,
+            sportname,
+            newTime,
+            venue,
+            newDate,
+            filteredRegisteredAthletes,
             createdBy: this.props.userId
         })
     })
@@ -111,6 +175,15 @@ class CompetitionForm extends Component {
     const { classes } = this.props
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <span className={classes.wrapper}>
+          <TextField
+            id="sportname"
+            onChange={this.handleChange("sportname")}
+            label="Event Name"
+            className={classes.textField}
+            required
+          />
+        </span>
         <span className={classes.wrapper}>
           <TextField
             margin="normal"
@@ -139,13 +212,13 @@ class CompetitionForm extends Component {
         </span>
         <span className={classes.wrapper}>
           <TextField 
-            id="stadium"
-            label="Stadium"
+            id="venue"
+            label="Venue"
             required
             className={classes.textField}
             select
-            value={this.state.stadium}
-            onChange={this.handleChange("stadium")}
+            value={this.state.venue}
+            onChange={this.handleChange("venue")}
             margin="normal"
           >
             {stadiums.map((stadium, key) => (
@@ -156,26 +229,8 @@ class CompetitionForm extends Component {
           </TextField>
         </span>
         <span className={classes.wrapper}>
-          <TextField 
-            id="location"
-            label="Location"
-            className={classes.textField}
-            select
-            required
-            value={this.state.location}
-            onChange={this.handleChange("location")}
-            margin="normal"
-          >
-            {locations.map((location, key) => (
-              <MenuItem key={key} value={location}>
-                {location}
-              </MenuItem>
-            ))}
-          </TextField>
-        </span>
-        <span className={classes.wrapper}>
         <FormControl className={classes.textField}>
-          <InputLabel htmlFor="select-multiple">Name</InputLabel>
+          <InputLabel htmlFor="select-multiple">What athletes are participating?</InputLabel>
             <Select
               multiple
               value={this.state.registeredAthletes}
@@ -185,14 +240,14 @@ class CompetitionForm extends Component {
             >
               {this.state.allAthletes.map((athlete, key) => (
                 <MenuItem key={key} value={athlete}>
-                  {athlete.firstName + " " + athlete.lastName}
+                  {athlete.fname + " " + athlete.lname}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
         </span>
         <span className={classes.wrapper}>
-          <Button onClick={this.submit} className={classes.button}>
+          <Button onClick={this.submit} className={classes.button} color="primary" variant="contained">
             Submit
           </Button>
         </span>
@@ -203,7 +258,7 @@ class CompetitionForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    userId: state.user._id
+    userId: state.user.userid
   }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react' 
+import React, { Component } from 'react' 
 import withStyles from "@material-ui/core/styles/withStyles";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
@@ -38,43 +38,58 @@ const tableStyles = theme => ({
     }
 })
 
-const EventTable = ({ ...props }) => {
-    const { classes, tableHead, tableData } = props
-    return (
-        <div className={classes.tableResponsive}>
-            <Table className={classes.table}>
-                <TableHead className={classes.tableHeaderColor}>
-                    <TableRow>
-                        {tableHead.map((prop, key) => {
-                            return (
-                                <TableCell
-                                    className={classes.tableCell + " " + classes.tableHeadCell}
-                                    key={key}
-                                >
-                                    {prop}
+class EventTable extends Component {
+
+    state = {
+      open: false
+    };
+
+    handleClickOpen = (evt) => {
+      this.setState({ open: true });
+    };
+
+    handleClose = () => {
+      this.setState({ open: false });
+    };
+
+    render() {
+        const { classes, tableHead, tableData } = this.props
+        return (
+            <div className={classes.tableResponsive}>
+                <Table className={classes.table}>
+                    <TableHead className={classes.tableHeaderColor}>
+                        <TableRow>
+                            {tableHead.map((prop, key) => {
+                                return (
+                                    <TableCell
+                                        className={classes.tableCell + " " + classes.tableHeadCell}
+                                        key={key}
+                                    >
+                                        {prop}
+                                    </TableCell>
+                                )
+                            })}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {tableData.map((prop, key) => {
+                        return (
+                          <TableRow key={key} onClick={() => this.handleClickOpen(prop)}>
+                            {prop.map((prop, key) => {
+                              return (
+                                <TableCell className={classes.tableCell} key={key}>
+                                  {prop}
                                 </TableCell>
-                            )
-                        })}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                  {tableData.map((prop, key) => {
-                    return (
-                      <TableRow key={key}>
-                        {prop.map((prop, key) => {
-                          return (
-                            <TableCell className={classes.tableCell} key={key}>
-                              {prop}
-                            </TableCell>
-                          );
-                        })}
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-            </Table>
-        </div>
-    )
+                              );
+                            })}
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                </Table>
+            </div>
+        )
+    }
 }
 
 export default withStyles(tableStyles)(EventTable)

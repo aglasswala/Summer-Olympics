@@ -1,7 +1,6 @@
 import React from 'react'
-import { Grid, Button, withStyles, Typography, IconButton, Toolbar, AppBar } from '@material-ui/core'
+import { Grid, Button, withStyles, Typography, Toolbar, AppBar } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
-import MenuIcon from '@material-ui/icons/Menu';
 
 const titlePageStyles = theme => ({
     wrapper: {
@@ -12,33 +11,27 @@ const titlePageStyles = theme => ({
     root: {
         flexGrow: 1,
       },
-      grow: {
-        flexGrow: 1,
-      },
-      menuButton: {
-        marginLeft: -12,
-        marginRight: 20,
-      },
+    grow: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginLeft: -12,
+      marginRight: 20,
+    },
 })
 
 const TitlePage = ({ ...props }) => {
     const { classes } = props
     return (
         <div>
-            <AppBar position="static">
+            <AppBar position="static" color="primary">
                 <Toolbar>
-                <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                    <MenuIcon />
-                </IconButton>
-                <Typography variant="h6" color="inherit" className={classes.grow}>
-                    News
-                </Typography>
-                <NavLink
-                        to='/login'
-                        style = {{textDecoration: "none"}}
-                >
-                    <Button style = {{color: "#FFFFFF", textDecoration: "none"}}>Login</Button>
-                </NavLink>
+                  <NavLink
+                          to='/login'
+                          style = {{textDecoration: "none"}}
+                  >
+                      <Button style = {{color: "#FFFFFF", textDecoration: "none"}}>Login</Button>
+                  </NavLink>
                 </Toolbar>
             </AppBar>
             <Grid container direction="column" justify="center" alignItems="center" style={{ minHeight: 'calc(100vh - 64px)' }}>
@@ -59,7 +52,7 @@ const TitlePage = ({ ...props }) => {
                         to='/register'
                     >
                         <span className={classes.wrapper}>
-                            <Button>
+                            <Button color="secondary" variant="outlined">
                                 Register
                             </Button>
                         </span>

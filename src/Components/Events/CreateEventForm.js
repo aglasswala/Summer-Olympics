@@ -38,7 +38,6 @@ const labelOptions = ["Competition", "Medal Ceremony", "Autograph Session"]
 class CreateEventForm extends Component {
 
   state = {
-    nameOfEvent: "",
     type: "",
   }
 
@@ -58,15 +57,6 @@ class CreateEventForm extends Component {
         >
           <span className={classes.wrapper}>
             <TextField
-              id="nameOfEvent"
-              onChange={this.onTypeChange("nameOfEvent")}
-              label="Event Name"
-              className={classes.textField}
-              required
-            />
-          </span>
-          <span className={classes.wrapper}>
-            <TextField
               label="What type of event?"
               id="type"
               select
@@ -75,7 +65,7 @@ class CreateEventForm extends Component {
               onChange={this.onTypeChange("type")}
               margin="normal"
             >
-                { this.props.userType !== "athlete" ?
+                { this.props.userType !== 2 ?
                     labelOptions.map((label, key) => (
                       <MenuItem key={key} value={label}>
                         {label}
@@ -89,9 +79,9 @@ class CreateEventForm extends Component {
             </TextField>
           </span>
 
-            {this.state.type === "Competition" ? <CompetitionForm {...this.state} handleClose={this.props.handleClose} /> : null}
-            {this.state.type === "Medal Ceremony" ? <CeremonyForm {...this.state} /> : null}
-            {this.state.type === "Autograph Session" ? <AutographForm {...this.state} /> : null}
+            {this.state.type === "Competition" ? <CompetitionForm handleClose={this.props.handleClose} /> : null}
+            {this.state.type === "Medal Ceremony" ? <CeremonyForm handleClose={this.props.handleClose} /> : null}
+            {this.state.type === "Autograph Session" ? <AutographForm handleClose={this.props.handleClose} /> : null}
 
         </form>
       </div>
@@ -101,7 +91,7 @@ class CreateEventForm extends Component {
 
 function mapStateToProps(state) {
   return {
-    userType: state.user.userType
+    userType: state.user.usertype
   }
 }
 

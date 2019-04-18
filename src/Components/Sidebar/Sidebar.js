@@ -18,7 +18,7 @@ const sidebarStyles = theme => ({
         textDecoration: "none",
         "&hover,&:focus,&:visited,&": {
             color: "#FFFFFF"
-        }
+        } 
     },
     itemLink: {
         width: "auto",
@@ -28,7 +28,6 @@ const sidebarStyles = theme => ({
         position: "relative",
         display: "block",
         padding: "10px 15px",
-        backgroundColor: "transparent",
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
         fontWeight: "300",
         lineHeight: "1.5em"
@@ -151,8 +150,8 @@ const sidebarStyles = theme => ({
 })
 
 const logoutUser = () => {
-  localStorage.removeItem("cool-jwt")
-  this.props.userLoggedOut()
+  localStorage.removeItem("cool-jwt");
+  window.location.href = '/';
 }
 
 
@@ -161,7 +160,7 @@ const Sidebar = ({...props}) => {
 
     const brand = (
         <div className={classes.logo}>
-          <a href="https://google.com" className={classes.logoLink}>
+          <a href="/dashboard" className={classes.logoLink}>
             <div className={classes.logoImage}>
               <img src={logo} alt="logo" className={classes.img} />
             </div>
@@ -225,20 +224,13 @@ const Sidebar = ({...props}) => {
                             />
                           </ListItem>
                         </NavLink>
-                        <NavLink
-                          to={"/"}
-                          exact
-                          className={classes.item}
-                          activeClassName="active"
-                        >
-                          <ListItem button className={classes.itemLink} onClick={() => localStorage.removeItem("cool-jwt")}>
-                            <ListItemText
-                              primary={"Logout"}
-                              className={classes.itemText}
-                              disableTypography={true}
-                            />
-                          </ListItem>
-                        </NavLink>
+                        <ListItem button className={classes.itemLink} onClick={logoutUser}>
+                          <ListItemText
+                            primary={"Logout"}
+                            className={classes.itemText}
+                            disableTypography={true}
+                          />
+                        </ListItem>
                       </List>
                     </div>
                     <div

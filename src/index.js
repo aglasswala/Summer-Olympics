@@ -2,11 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import thunk from 'redux-thunk';
 import decode from "jwt-decode";
 import { userLoggedIn } from './actions/user'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './reducers/rootReducer'
+import { createMuiTheme } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import App from './App'
 
@@ -30,10 +32,23 @@ if (localStorage.getItem("cool-jwt")) {
   .catch(err => console.log(err))
 }
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#336699'
+    },
+    secondary: {
+      main: '#61D095'
+    } // Indigo is probably a good match with pink
+  }
+})
+
 ReactDOM.render(
   <Router>
     <Provider store={store}>
-      <Route component={App} />
+      <MuiThemeProvider theme={theme}>
+        <Route component={App} />
+      </MuiThemeProvider>
     </Provider>
   </Router>
   , document.getElementById('root')

@@ -2,12 +2,13 @@ TODO:
 
 ( no particular order ) 
 
-- Fix memory leak in Events ( check console )
 - Updated register layout because it sucks
-- add validation to register inputs ( state === 2 )
-- normalize dates for the event page
-- Create env variables for db
+- Sort events by date and time
+- Create env variables for db and fetch calls // backend
 - Fix login validation close out button
+- Show only available times on Competition event schedule
+- Fix athletes view events time and date
+- Fix times and dates for viewing tickets tab
 
 // userType key
   Public users = 1
