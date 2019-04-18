@@ -81,7 +81,6 @@ const stringToLocal = (result) => {
   let temp = []
   for(let i = 0; i < result.length; i++) {
     const newTime = correctTime(result[i].time, result[i].date).trim()
-    console.log(typeof newTime)
     temp.push({
       eventid: result[i].eventid,
       sportname: result[i].sportname,
@@ -91,7 +90,6 @@ const stringToLocal = (result) => {
       userid: result[i].userid
     })
   }
-  console.log(temp)
   return temp
 }
 

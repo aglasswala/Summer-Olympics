@@ -120,6 +120,7 @@ class CompetitionForm extends Component {
           .then(response => response.json())
       })
       .then(result => {
+        console.log(result)
         const set = new Set()
         result.map(event => {
           var date = new Date("February 04, 2011 " + event.time);
