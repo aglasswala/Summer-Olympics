@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Button, withStyles, Typography, Toolbar, AppBar } from '@material-ui/core'
 import { NavLink } from 'react-router-dom'
+import logo from '../../images/riologo.png'
 
 const titlePageStyles = theme => ({
     wrapper: {
@@ -36,8 +37,8 @@ const TitlePage = ({ ...props }) => {
             </AppBar>
             <Grid container direction="column" justify="center" alignItems="center" style={{ minHeight: 'calc(100vh - 64px)' }}>
                 <Grid item>
-                    <span className={classes.wrapper}>
-                        Brand goes here with Rio Logo
+                    <span className={classes.wrapper} align="center">
+                        <img src={logo} alt="Rio 2016" width="50%" height="50%" object-fit="contain"/>
                     </span>
                 </Grid>
                 <Grid item>

@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { Grid, Typography, FormControl, InputLabel, Input, Button, TextField } from '@material-ui/core'
+import { Grid, Typography, FormControl, InputLabel, Input, Button, TextField, AppBar, Toolbar } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { userLoggedIn } from '../../actions/user'
 import { withStyles } from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem';
+import rings from '../../images/olympicrings.png'
 
 const styles = theme => ({
   wrapper: {
-    display: "block",
+    display: "flex",
     position: "relative",
     padding: "8.85px 13px"
   },
@@ -25,8 +26,8 @@ const styles = theme => ({
     width: "100%"
   },
   title: {
-    padding: 20
-  }
+    alignItems: "center"
+  },
 })
 const STATES = ["AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA","HI","ID","IL","IN",'IA',"KS","KY","LA","ME","MD","MA","MI","MN","MS", "MO","MT","NE","NV","NH","NJ","NM","NY","NC", "ND","OH","OK","OR","PA","RI", "SC","SD","TN","TX","UT","VT","VA","WA","WV","WI","WY"]
 
@@ -46,6 +47,7 @@ class Register extends Component {
     }
 
     
+
 
   onChange = (e) => this.setState({[e.target.name]: e.target.value})
 
@@ -78,31 +80,30 @@ class Register extends Component {
     })
   }
 
-
-  // TODO:
-  // 1. put first and last name on the same line
-  // 2. put address and city and zip on the same line
-
   render() {
     const { classes } = this.props
     return (
       <div>
+        <AppBar className={classes.title} position="static" color="primary">
+          <Toolbar>
+            <Typography style={{color: "white", font: "2em/1em Trade-Gothic-W-Cond-Bold,Arial,Helvetica,sans-serif"}}>
+              Rio Olympics 2016 Registration
+            </Typography>
+          </Toolbar>
+        </AppBar>
         <form
           className={classes.form}
           onSubmit={(e) => this.onSubmit(e)}
         >
-          <Grid container direction="column" justify="center" alignItems="stretch" style={{ minHeight: '100vh' }}>
-            <Grid item>
-              <Typography
-                variant="h5"
-                className={classes.title}
-              >
-                Sign up to see more
-              </Typography>
+          <Grid container direction="column" justify="center" alignItems="stretch" style={{ minHeight: '100vh'}}>
+            <Grid item xs={12} style={{marginTop: 20}}>
+              <span className={classes.wrapper} style={{marginLeft: 150}}>
+                <img src={rings} alt="Olympic Rings" width="70%" height="70%" object-fit="contain"/>
+              </span>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <span className={classes.wrapper}>
-                <FormControl required>
+                <FormControl fullWidth required style={{marginRight: 20}}>
                   <InputLabel> First Name </InputLabel>
                   <Input 
                       id="first_name" 
@@ -112,11 +113,7 @@ class Register extends Component {
                       onChange={this.onChange}
                   />
                 </FormControl>
-              </span>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <span className={classes.wrapper}>
-                <FormControl required>
+                <FormControl fullWidth required>
                   <InputLabel> Last Name </InputLabel>
                   <Input 
                       id="last_name" 
@@ -160,35 +157,43 @@ class Register extends Component {
             </Grid>
             <Grid item xs={12}>
               <span className={classes.wrapper}>
-                <FormControl fullWidth required>
-                  <InputLabel> Street </InputLabel>
+                <FormControl fullWidth required style={{marginRight: 20}}>
+                  <InputLabel> Home Address </InputLabel>
                   <Input 
-                      id="street" 
-                      name="street" 
+                      id="street"
+                      name="street"
                       type="text"
                       autoComplete="street"
                       autoFocus
                       onChange={this.onChange}
+                      className={classes.group}
                   />
                 </FormControl>
-              </span>
-            </Grid>
-            <Grid item xs={12}>
-              <span className={classes.wrapper}>
-                <FormControl fullWidth required>
+                <FormControl fullWidth required style={{marginRight: 20}}>
                   <InputLabel> City </InputLabel>
-                  <Input 
+                  <Input
                       id="city" 
                       name="city" 
                       type="text"
                       autoComplete="city"
                       autoFocus
                       onChange={this.onChange}
+                      className={classes.group}
+                  />
+                </FormControl>
+                <FormControl fullWidth required>
+                  <InputLabel> Zip </InputLabel>
+                  <Input 
+                      id="zip" 
+                      name="zip" 
+                      type="text"
+                      onChange={this.onChange}
+                      className={classes.group}
                   />
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={2}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
                   <TextField
@@ -216,19 +221,6 @@ class Register extends Component {
             <Grid item xs={12}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
-                  <InputLabel> Zip </InputLabel>
-                  <Input 
-                      id="zip" 
-                      name="zip" 
-                      type="text"
-                      onChange={this.onChange}
-                  />
-                </FormControl>
-              </span>
-            </Grid>
-            <Grid item xs={12}>
-              <span className={classes.wrapper}>
-                <FormControl fullWidth required>
                   <InputLabel> Phone Number </InputLabel>
                   <Input 
                       id="phoneNumber" 
@@ -242,7 +234,7 @@ class Register extends Component {
             <Grid item xs={12}>
               <span className={classes.wrapper}>
                 <FormControl fullWidth required>
-                  <InputLabel> Country oF Origin </InputLabel>
+                  <InputLabel> Country of Origin </InputLabel>
                   <Input 
                       id="countryOfOrigin" 
                       name="countryOfOrigin" 
@@ -252,7 +244,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} sm={6}>
               <span className={classes.wrapper}>
                 <Button type="submit" className={classes.textField} style={{height: "50px"}}>
                   Submit
