@@ -218,10 +218,10 @@ class Event extends Component {
                                           spacing={8}
                                         >
                                             <Grid item>
-                                                <Button variant="outlined" color="secondary" onClick={this.handleClickOpen}> Edit an Event </Button>
+                                                <Button color='inherit' onClick={this.handleClickOpen}> Edit an Event </Button>
                                             </Grid>
                                             <Grid item>
-                                                <Button variant="outlined" color="secondary" onClick={this.handleDeleteOpen}> Delete an Event </Button>
+                                                <Button color='inherit' onClick={this.handleDeleteOpen}> Delete an Event </Button>
                                             </Grid>
                                         </Grid>
                                     </Grid>
