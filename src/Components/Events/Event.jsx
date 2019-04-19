@@ -16,6 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MailIcon from '@material-ui/icons/Mail';
 import EditEventForm from './EditEventForms/EditEventForm'
 import DeleteEventForm from './EditEventForms/DeleteEventForm'
+import DeleteAutographForm from './EditEventForms/DeleteAutographForm'
 
 const styles = theme => ({
     gridContainer: {
@@ -99,7 +100,8 @@ class Event extends Component {
         autoEvents: [[]],
         open: false,
         notificationDialog: false,
-        deleteDialog: false
+        deleteDialog: false,
+        deleteAutographEvent: false
     }
 
     handleClickOpen = () => {
@@ -124,6 +126,14 @@ class Event extends Component {
 
     handleDeleteClose = () => {
       this.setState({ deleteDialog: false });
+    };
+
+    handleAutographDeleteOpen = () => {
+      this.setState({ deleteAutographEvent: true });
+    };
+
+    handleAutographDeleteClose = () => {
+      this.setState({ deleteAutographEvent: false });
     };
 
     createInteval = () => {
@@ -261,10 +271,36 @@ class Event extends Component {
                     <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                         <div className={classes.card}>
                             <div className={classes.cardHeader}>
-                                <h4 className={classes.cardTitleWhite}>Autograph sessions</h4>
-                                <p className={classes.cardCategoryWhite}>
-                                  Check out what athletes are signing autographs
-                                </p>
+                                <Grid
+                                  container
+                                  direction="row"
+                                  justify="space-between"
+                                  alignItems="center"
+                                >
+                                    <Grid item>
+                                        <h4 className={classes.cardTitleWhite}>Autograph sessions</h4>
+                                        <p className={classes.cardCategoryWhite}>
+                                          Check out what athletes are signing autographs
+                                        </p>
+                                    </Grid>
+                                    <Grid item>
+                                    {this.props.usertype !== 1 ? (
+                                        <Grid
+                                          container
+                                          direction="row"
+                                          justify="flex-end"
+                                          alignItems="center"
+                                          spacing={8}
+                                        >
+                                            <Grid item>
+                                                <Fab color="secondary" onClick={this.handleAutographDeleteOpen} size="small">
+                                                  <DeleteIcon />
+                                                </Fab>
+                                            </Grid>
+                                        </Grid>
+                                    ): null }
+                                    </Grid>
+                                </Grid>
                             </div>
                             <div className={classes.cardBody}>
                                 <EventTable 
@@ -300,6 +336,15 @@ class Event extends Component {
                   <DialogTitle>{"Delete an event"}</DialogTitle>
                   <DialogContent>
                     <DeleteEventForm handleDeleteClose={this.handleDeleteClose} />
+                  </DialogContent>
+                </Dialog>
+                <Dialog
+                  open={this.state.deleteAutographEvent}
+                  onClose={this.handleAutographDeleteClose}
+                >
+                  <DialogTitle>{"Delete an Autograph Session"}</DialogTitle>
+                  <DialogContent>
+                    <DeleteAutographForm handleAutographDeleteClose={this.handleAutographDeleteClose} />
                   </DialogContent>
                 </Dialog>
             </Fragment>
