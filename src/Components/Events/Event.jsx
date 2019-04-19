@@ -6,12 +6,14 @@ import ViewAthleteEvent from './ViewAthleteEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import BuyTicket from '../Tickets/BuyTicket'
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
+import MailIcon from '@material-ui/icons/Mail';
 import EditEventForm from './EditEventForms/EditEventForm'
+import DeleteEventForm from './EditEventForms/DeleteEventForm'
 
 const styles = theme => ({
     gridContainer: {
@@ -93,7 +95,9 @@ class Event extends Component {
         compEvents: [[]],
         awardEvents: [[]],
         autoEvents: [[]],
-        open: false
+        open: false,
+        notificationDialog: false,
+        deleteDialog: false
     }
 
     handleClickOpen = () => {
@@ -102,6 +106,22 @@ class Event extends Component {
 
     handleClose = () => {
       this.setState({ open: false });
+    };
+
+    handleNotificationOpen = () => {
+      this.setState({ notificationDialog: true });
+    };
+
+    handleNotificationClose = () => {
+      this.setState({ notificationDialog: false });
+    };
+
+    handleDeleteOpen = () => {
+      this.setState({ deleteDialog: true });
+    };
+
+    handleDeleteClose = () => {
+      this.setState({ deleteDialog: false });
     };
 
     createInteval = () => {
@@ -133,15 +153,45 @@ class Event extends Component {
         const { classes } = this.props
         return (
             <Fragment>
-                <Grid container className={classes.gridContainer}>
+                <Grid className={classes.gridContainer}>
                     <Grid item className={classes.gridItem}>
-                        <BuyTicket />
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        {this.props.usertype !== 1 ? <CreateEvent /> : null}
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
+                        <Grid 
+                            container
+                            direction="row"
+                            justify="space-between"
+                            alignItems="center"
+                        >
+                            <Grid item>
+                                <Grid 
+                                    container
+                                    direction="row"
+                                    justify="center"
+                                    alignItems="center"
+                                    spacing={16}
+                                >
+                                    <Grid item>
+                                        <BuyTicket />
+                                    </Grid>
+                                    <Grid item>
+                                        {this.props.usertype !== 1 ? <CreateEvent /> : null}
+                                    </Grid>
+                                    <Grid item>
+                                        {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item>
+                                { this.props.usertype === 2 ? (
+                                    <div>
+                                        <IconButton className={classes.margin} onClick={this.handleNotificationOpen}>
+                                          <Badge badgeContent={4} color="primary">
+                                            <MailIcon />
+                                          </Badge>
+                                        </IconButton>
+                                    </div>
+                                ) : null }
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                         <div className={classes.card}>
@@ -159,9 +209,22 @@ class Event extends Component {
                                         </p>
                                     </Grid>
                                     {this.props.usertype === 3 ? (
-                                        <Grid item>
-                                            <Button variant="contained" color="secondary" onClick={this.handleClickOpen}> Edit an Event </Button>
+                                    <Grid item>
+                                        <Grid
+                                          container
+                                          direction="row"
+                                          justify="flex-end"
+                                          alignItems="center"
+                                          spacing={8}
+                                        >
+                                            <Grid item>
+                                                <Button color='inherit' onClick={this.handleClickOpen}> Edit an Event </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button color='inherit' onClick={this.handleDeleteOpen}> Delete an Event </Button>
+                                            </Grid>
                                         </Grid>
+                                    </Grid>
                                     ) : null}
                                 </Grid>
                             </div>
@@ -213,6 +276,24 @@ class Event extends Component {
                   <DialogTitle>{"Edit an Event"}</DialogTitle>
                   <DialogContent>
                     <EditEventForm />
+                  </DialogContent>
+                </Dialog>
+                <Dialog
+                  open={this.state.notificationDialog}
+                  onClose={this.handleNotificationClose}
+                >
+                  <DialogTitle>{"Here's your notifications"}</DialogTitle>
+                  <DialogContent>
+                    {"notifications"}
+                  </DialogContent>
+                </Dialog>
+                <Dialog
+                  open={this.state.deleteDialog}
+                  onClose={this.handleDeleteClose}
+                >
+                  <DialogTitle>{"Delete an event"}</DialogTitle>
+                  <DialogContent>
+                    <DeleteEventForm handleDeleteClose={this.handleDeleteClose} />
                   </DialogContent>
                 </Dialog>
             </Fragment>

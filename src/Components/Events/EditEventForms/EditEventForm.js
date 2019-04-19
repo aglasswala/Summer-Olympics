@@ -1,7 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { withStyles, TextField, Button, MenuItem, FormControl, InputLabel, Select, Input } from '@material-ui/core'
-import DateFnsUtils from '@date-io/date-fns';
-import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
+import { withStyles, TextField, MenuItem } from '@material-ui/core'
 import { connect } from 'react-redux'
 
 const editEventFormStyles = {
@@ -45,46 +43,20 @@ const timeSlots = [
 
 const stadiums = ["Carioca Arena 1", "Carioca Arena 2", "Carioca Arena 3", "Olympic Aquatics Stadium", "Deodoro Olympic Whitewater Stadium"]
 
-const fixingDate = (date) => {
-  let newMonth = date.getMonth() + 1;
-  let newDay;
-  let newYear = date.getFullYear().toString();
-  
-  if(date.getMonth()  + 1 < 10){
-    newMonth = "0"+ newMonth.toString()
-  } else {
-    newMonth = newMonth.toString();
-  }
-  
-  if(date.getDate() < 10){
-    newDay = "0"+ date.getDate().toString();
-  } else {
-    newDay = date.getDate().toString();
-  }
-  return (newYear+"-"+newMonth+"-"+newDay);
-}
-
-const fixingTime = (time) => {
-  let checktime = parseInt(time);
-    if (checktime < 12 && time.includes("AM")) {
-      return checktime+":00:00";
-    } else if (checktime === 12) {
-      return checktime = checktime.toString() + ":00:00";
-    } else {
-      checktime += 12;
-      checktime = checktime.toString() + ":00:00";
-      return checktime;
-    }
-}
-
 const stringToLocal = (result) => {
   let temp = []
   for(let i = 0; i < result.length; i++) {
-    const newTime = correctTime(result[i].time, result[i].date).trim()
+    const date = new Date("February 04, 2011 " + result[i].time);
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    };
+    const timeString = date.toLocaleString('en-US', options);
     temp.push({
       eventid: result[i].eventid,
       sportname: result[i].sportname,
-      time: newTime,
+      time: timeString,
       date: result[i].date,
       venue: result[i].venue,
       userid: result[i].userid
@@ -93,39 +65,39 @@ const stringToLocal = (result) => {
   return temp
 }
 
-const correctTime = (time, date) => {
+// const correctTime = (time, date) => {
 
-  let newMonth = date.substring(5, 7);
-  let newDay = date.substring(8, 10);
-  let newYear = date.substring(0, 4);
-  let newTime;
+//   let newMonth = date.substring(5, 7);
+//   let newDay = date.substring(8, 10);
+//   let newYear = date.substring(0, 4);
+//   let newTime;
 
-  if(parseInt(time) < 12){
-     newTime = time.toLocaleString('en-GB') + " AM";
-  }
-  else {
-    newTime = time.toLocaleString('en-GB') + " PM";
-  }
-  const datevalue = parseInt(newDay);
-  if(parseInt(time) < 10) {
-    if(datevalue > 9){
-      return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(10, 15) + newTime.substring(8,11)).toString()
-    }
-    else {
-      return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(10, 14) + newTime.substring(8,11)).toString()
+//   if(parseInt(time) < 12){
+//      newTime = time.toLocaleString('en-GB') + " AM";
+//   }
+//   else {
+//     newTime = time.toLocaleString('en-GB') + " PM";
+//   }
+//   const datevalue = parseInt(newDay);
+//   if(parseInt(time) < 10) {
+//     if(datevalue > 9){
+//       return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(10, 15) + newTime.substring(8,11)).toString()
+//     }
+//     else {
+//       return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(10, 14) + newTime.substring(8,11)).toString()
 
-    }
-  }
- else {
-    if(datevalue > 9) {
-      return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(11, 15) + newTime.substring(8,11)).toString()
-    }
-    else {
-      return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(10, 15) + newTime.substring(8,11)).toString()
+//     }
+//   }
+//  else {
+//     if(datevalue > 9) {
+//       return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(11, 15) + newTime.substring(8,11)).toString()
+//     }
+//     else {
+//       return (new Date(newYear, (newMonth) - 1, newDay, newTime.substring(0, 2), newTime.substring(3, 5), newTime.substring(6, 8)).toLocaleString().substring(10, 15) + newTime.substring(8,11)).toString()
 
-    }  
-  }
-}
+//     }  
+//   }
+// }
 
 
 class EditEventForm extends Component {
@@ -158,7 +130,7 @@ class EditEventForm extends Component {
       .then(response => response.json())
       .then(result => {
         const newTime = stringToLocal(result)
-        return result
+        return newTime
       })
       .then(result => {
         this.setState({
@@ -176,6 +148,7 @@ class EditEventForm extends Component {
 
   render() {
     const { classes } = this.props
+    console.log(this.state)
     return (
       <Fragment>
         <form
@@ -189,7 +162,7 @@ class EditEventForm extends Component {
               required
               className={classes.textField}
               select
-              value={this.state.selectedEvent.sportname}
+              value={this.state.selectedEvent}
               onChange={this.handleChange("selectedEvent")}
             >
               {this.state.allEvents.map((event, key) => (

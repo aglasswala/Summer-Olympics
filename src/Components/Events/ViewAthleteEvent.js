@@ -16,7 +16,10 @@ const viewAthleteEventStyles = {
 class ViewAthleteEvent extends Component {
   state = {
     open: false,
-    registeredEvents: [[]]
+    registeredEvents: {
+      response: [[]],
+      ceremonyEvents: [[]]
+    }
   };
 
   componentDidMount() {
@@ -32,7 +35,7 @@ class ViewAthleteEvent extends Component {
     .then(response => response.json())
     .then(result => {
       this.setState({
-        registeredEvents: result.response
+        registeredEvents: result
       })
     })
     .catch(err => console.log(err))
@@ -55,14 +58,15 @@ class ViewAthleteEvent extends Component {
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
+          fullScreen
         >
           <DialogTitle> {"View my Events"}</DialogTitle>
-          {this.state.registeredEvents.length !== 0 ?
-            <DialogContent>
-              {this.state.registeredEvents.map((event, key) => (
+          {this.state.registeredEvents.response.length !== 0 ?
+            <DialogContent style={{minWidth: '50vw'}}>
+              {this.state.registeredEvents.response.map((event, key) => (
                 <ExpansionPanel key={key}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>{event[0]}</Typography>
+                    <Typography>{"Competition: " + event[0]}</Typography>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                     <List>
@@ -85,6 +89,33 @@ class ViewAthleteEvent extends Component {
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               ))}
+              {this.state.registeredEvents.ceremonyEvents.map((event, key) => (
+                <ExpansionPanel key={key}>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography>{ "Ceremony Event: "  + event[0]}</Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <List>
+                      <ListItem>
+                        <ListItemText>
+                          Event: {event[0]}
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText>
+                          Time: {event[2]}
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText>
+                          Date: {event[3]}
+                        </ListItemText>
+                      </ListItem>
+                    </List>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              ))}
+
             </DialogContent>
           : (
               <DialogContent>
