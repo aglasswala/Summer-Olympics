@@ -13,6 +13,7 @@ import Badge from '@material-ui/core/Badge';
 import IconButton from '@material-ui/core/IconButton';
 import MailIcon from '@material-ui/icons/Mail';
 import EditEventForm from './EditEventForms/EditEventForm'
+import DeleteEventForm from './EditEventForms/DeleteEventForm'
 
 const styles = theme => ({
     gridContainer: {
@@ -95,7 +96,8 @@ class Event extends Component {
         awardEvents: [[]],
         autoEvents: [[]],
         open: false,
-        notificationDialog: false
+        notificationDialog: false,
+        deleteDialog: false
     }
 
     handleClickOpen = () => {
@@ -112,6 +114,14 @@ class Event extends Component {
 
     handleNotificationClose = () => {
       this.setState({ notificationDialog: false });
+    };
+
+    handleDeleteOpen = () => {
+      this.setState({ deleteDialog: true });
+    };
+
+    handleDeleteClose = () => {
+      this.setState({ deleteDialog: false });
     };
 
     createInteval = () => {
@@ -199,9 +209,22 @@ class Event extends Component {
                                         </p>
                                     </Grid>
                                     {this.props.usertype === 3 ? (
-                                        <Grid item>
-                                            <Button variant="contained" color="secondary" onClick={this.handleClickOpen}> Edit an Event </Button>
+                                    <Grid item>
+                                        <Grid
+                                          container
+                                          direction="row"
+                                          justify="flex-end"
+                                          alignItems="center"
+                                          spacing={8}
+                                        >
+                                            <Grid item>
+                                                <Button variant="outlined" color="secondary" onClick={this.handleClickOpen}> Edit an Event </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button variant="outlined" color="secondary" onClick={this.handleDeleteOpen}> Delete an Event </Button>
+                                            </Grid>
                                         </Grid>
+                                    </Grid>
                                     ) : null}
                                 </Grid>
                             </div>
@@ -262,6 +285,15 @@ class Event extends Component {
                   <DialogTitle>{"Here's your notifications"}</DialogTitle>
                   <DialogContent>
                     {"notifications"}
+                  </DialogContent>
+                </Dialog>
+                <Dialog
+                  open={this.state.deleteDialog}
+                  onClose={this.handleDeleteClose}
+                >
+                  <DialogTitle>{"Delete an event"}</DialogTitle>
+                  <DialogContent>
+                    <DeleteEventForm />
                   </DialogContent>
                 </Dialog>
             </Fragment>
