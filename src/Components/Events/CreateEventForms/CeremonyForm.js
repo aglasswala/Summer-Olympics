@@ -30,7 +30,7 @@ const ceremonyFormStyles = {
   }
 }
 
-const timeSlots = [
+let timeSlots = [
           "5:30 PM",
           "6:00 PM",
           "6:30 PM",
@@ -84,9 +84,39 @@ class CeremonyForm extends Component {
     secondPlace: "",
     thirdPlace: "",
     time: "",
+    times: [
+      "5:30 PM",
+      "6:00 PM",
+      "6:30 PM",
+      "7:30 PM",
+      "8:00 PM",
+      "8:30 PM"
+    ],
     date: new Date(),
     venue: ""
   }
+
+  updateTimeSlots = (venue, date, timeSlots) => {
+    const set = new Set()
+    let newTimes = []
+    this.state.allEvents.map(event => {
+      if(event.date.substring(0, 10) === fixingDate(date) && event.venue === venue) {
+        console.log(event.time)
+        const newDate = new Date("February 04, 2011 " + event.time);
+        const options = {
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true
+        };
+        const timeString = newDate.toLocaleString('en-US', options);
+        return set.add(timeString)
+      }
+      return null
+    })
+    newTimes = timeSlots.filter(time => !set.has(time))
+    return newTimes
+  }
+
   onTimeChange = (date) => {
     this.setState({ date: date })
   }
@@ -150,13 +180,14 @@ class CeremonyForm extends Component {
         this.props.handleClose()
       })
       .catch (err => {
-            console.log(err);
+        console.log(err);
       })
 
   }
 
   render() {
     const { classes } = this.props
+    timeSlots = this.updateTimeSlots(this.state.venue, this.state.date, this.state.times)
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <span className={classes.wrapper}>

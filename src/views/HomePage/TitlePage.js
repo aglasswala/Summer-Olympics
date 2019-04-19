@@ -52,7 +52,7 @@ const TitlePage = ({ ...props }) => {
                         to='/register'
                     >
                         <span className={classes.wrapper}>
-                            <Button color="secondary" variant="outlined">
+                            <Button color="secondary" variant="contained">
                                 Register
                             </Button>
                         </span>

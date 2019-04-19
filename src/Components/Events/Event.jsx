@@ -2,6 +2,8 @@ import React, { Component, Fragment } from 'react'
 import { withStyles, Grid, Button } from '@material-ui/core'
 import { getEvents } from '../../actions/events'
 import CreateEvent from './CreateEvent'
+import DeleteIcon from '@material-ui/icons/Delete';
+import Fab from '@material-ui/core/Fab';
 import ViewAthleteEvent from './ViewAthleteEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
@@ -173,7 +175,7 @@ class Event extends Component {
                                         <BuyTicket />
                                     </Grid>
                                     <Grid item>
-                                        {this.props.usertype !== 1 ? <CreateEvent /> : null}
+                                        {this.props.usertype === 3 ? <Button color='inherit' onClick={this.handleClickOpen}> Edit an Event </Button> : null}
                                     </Grid>
                                     <Grid item>
                                         {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
@@ -208,7 +210,7 @@ class Event extends Component {
                                           Here's all competition events
                                         </p>
                                     </Grid>
-                                    {this.props.usertype === 3 ? (
+                                    {this.props.usertype !== 1 ? (
                                     <Grid item>
                                         <Grid
                                           container
@@ -218,10 +220,14 @@ class Event extends Component {
                                           spacing={8}
                                         >
                                             <Grid item>
-                                                <Button color='inherit' onClick={this.handleClickOpen}> Edit an Event </Button>
+                                                {this.props.usertype === 2 || this.props.usertype === 3 ? <CreateEvent /> : null}
                                             </Grid>
                                             <Grid item>
-                                                <Button color='inherit' onClick={this.handleDeleteOpen}> Delete an Event </Button>
+                                                {this.props.usertype === 3 ? (
+                                                    <Fab color="secondary" onClick={this.handleDeleteOpen} size="small">
+                                                      <DeleteIcon />
+                                                    </Fab>
+                                                ) : null}
                                             </Grid>
                                         </Grid>
                                     </Grid>

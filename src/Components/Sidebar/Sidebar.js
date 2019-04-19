@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, ListItem, ListItemText, Drawer, Hidden } from '@material-ui/core'
+import { List, ListItem, ListItemText, Drawer, Hidden, Grid } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { withStyles } from '@material-ui/core'
@@ -30,7 +30,7 @@ const sidebarStyles = theme => ({
         padding: "10px 15px",
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
         fontWeight: "300",
-        lineHeight: "1.5em"
+        lineHeight: "1.5em",
     },
     itemText: {
         fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -146,6 +146,15 @@ const sidebarStyles = theme => ({
         overflow: "auto",
         width: "260px",
         zIndex: "4"
+    },
+    activePro: {
+      position: "absolute",
+      width: "100%",
+      display: "block",
+      textDecoration: "none",
+      "&hover,&:focus,&:visited,&": {
+          color: "#FFFFFF"
+      } 
     }
 })
 
@@ -181,56 +190,82 @@ const Sidebar = ({...props}) => {
                 >
                     {brand}
                     <div className={classes.sidebarWrapper}>
-                      <List className={classes.list}> 
-                        <NavLink
-                          to={"/dashboard"}
-                          exact
-                          className={classes.item}
-                          activeClassName="active"
+                      <List className={classes.list}>
+                        <Grid
+                          container
+                          direction="column"
+                          justify="center"
+                          style={{height: "100%"}}
                         >
-                          <ListItem button className={classes.itemLink}>
-                            <ListItemText
-                              primary={"Events"}
-                              className={classes.itemText}
-                              disableTypography={true}
-                            />
-                          </ListItem>
-                        </NavLink>
-                        <NavLink
-                          to={"/dashboard/tickets"}
-                          exact
-                          className={classes.item}
-                          activeClassName="active"
-                        >
-                          <ListItem button className={classes.itemLink}>
-                            <ListItemText
-                              primary={"Tickets"}
-                              className={classes.itemText}
-                              disableTypography={true}
-                            />
-                          </ListItem>
-                        </NavLink>
-                        <NavLink
-                          to={"/dashboard/tickets"}
-                          exact
-                          className={classes.item}
-                          activeClassName="active"
-                        >
-                          <ListItem button className={classes.itemLink}>
-                            <ListItemText
-                              primary={"User Profile"}
-                              className={classes.itemText}
-                              disableTypography={true}
-                            />
-                          </ListItem>
-                        </NavLink>
-                        <ListItem button className={classes.itemLink} onClick={logoutUser}>
-                          <ListItemText
-                            primary={"Logout"}
-                            className={classes.itemText}
-                            disableTypography={true}
-                          />
-                        </ListItem>
+                          <Grid item>
+                            <NavLink
+                              to={"/dashboard"}
+                              exact
+                              className={classes.item}
+                              activeClassName="active"
+                            >
+                              <ListItem button className={classes.itemLink}>
+                                <ListItemText
+                                  primary={"Events"}
+                                  className={classes.itemText}
+                                  disableTypography={true}
+                                />
+                              </ListItem>
+                            </NavLink>
+                            <NavLink
+                              to={"/dashboard/tickets"}
+                              exact
+                              className={classes.item}
+                              activeClassName="active"
+                            >
+                              <ListItem button className={classes.itemLink}>
+                                <ListItemText
+                                  primary={"Tickets"}
+                                  className={classes.itemText}
+                                  disableTypography={true}
+                                />
+                              </ListItem>
+                            </NavLink>
+                            <NavLink
+                              to={"/dashboard/tickets"}
+                              exact
+                              className={classes.item}
+                              activeClassName="active"
+                            >
+                              <ListItem button className={classes.itemLink}>
+                                <ListItemText
+                                  primary={"User Profile"}
+                                  className={classes.itemText}
+                                  disableTypography={true}
+                                />
+                              </ListItem>
+                            </NavLink>
+                          </Grid>
+                          <Grid item>
+                            <Grid
+                              container
+                              direction="column"
+                              justify="flex-end"
+                            >
+                              <Grid item>
+                                <NavLink 
+                                  to={"/"}
+                                  exact
+                                  className={classes.activePro} 
+                                  activeClassName="active"
+                                >
+                                  <ListItem button className={classes.itemLink} onClick={logoutUser}>
+                                    <ListItemText
+                                      primary={"Logout"}
+                                      className={classes.itemText}
+                                      disableTypography={true}
+                                    />
+                                  </ListItem>
+                                </NavLink>
+                              </Grid>
+                            </Grid>
+                          </Grid>
+                        </Grid>
                       </List>
                     </div>
                     <div
