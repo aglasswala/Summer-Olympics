@@ -293,7 +293,7 @@ class Event extends Component {
                 >
                   <DialogTitle>{"Delete an event"}</DialogTitle>
                   <DialogContent>
-                    <DeleteEventForm />
+                    <DeleteEventForm handleDeleteClose={this.handleDeleteClose} />
                   </DialogContent>
                 </Dialog>
             </Fragment>

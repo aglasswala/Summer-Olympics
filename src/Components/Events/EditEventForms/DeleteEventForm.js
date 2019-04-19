@@ -99,7 +99,22 @@ class DeleteEventForm extends Component {
   }
 
   submit = (event) => {
-
+    event.preventDefault()
+    fetch('http://localhost:3001/api/deleteEvent', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        eventid: this.state.selectedEvent.eventid,
+        userid: this.props.userId
+      })
+    })
+    .then(response => response.json())
+    .then(result => {
+      this.props.handleDeleteClose()
+    })
+    .catch(err => console.log(err))
   }
 
   render() {
@@ -142,7 +157,7 @@ class DeleteEventForm extends Component {
           </span>
           <span className={classes.wrapper}>
             <Tooltip title="Every athlete registered will also be removed">
-              <Button color="primary" className={classes.button} variant="contained">
+              <Button color="primary" className={classes.button} variant="contained" onClick={this.submit} >
                 Submit
               </Button>
             </Tooltip>
