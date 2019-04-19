@@ -83,6 +83,7 @@ class CeremonyForm extends Component {
     firstPlace: "",
     secondPlace: "",
     thirdPlace: "",
+    allCeremonyEvents: [],
     time: "",
     times: [
       "5:30 PM",
@@ -99,9 +100,8 @@ class CeremonyForm extends Component {
   updateTimeSlots = (venue, date, timeSlots) => {
     const set = new Set()
     let newTimes = []
-    this.state.allEvents.map(event => {
+    this.state.allCeremonyEvents.map(event => {
       if(event.date.substring(0, 10) === fixingDate(date) && event.venue === venue) {
-        console.log(event.time)
         const newDate = new Date("February 04, 2011 " + event.time);
         const options = {
           hour: 'numeric',
@@ -148,6 +148,15 @@ class CeremonyForm extends Component {
           allAthletes: data.athletes
         })
       })
+      .then(() => {
+        return fetch('http://localhost:3001/api/getCereEvents')
+          .then(response => response.json())
+      })
+      .then(data => {
+        this.setState({
+          allCeremonyEvents: data
+        })
+      })
       .catch(err => {
         console.log(err)
       })
@@ -182,7 +191,6 @@ class CeremonyForm extends Component {
       .catch (err => {
         console.log(err);
       })
-
   }
 
   render() {

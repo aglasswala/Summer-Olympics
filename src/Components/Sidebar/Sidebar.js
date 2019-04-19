@@ -248,11 +248,8 @@ const Sidebar = ({...props}) => {
                               justify="flex-end"
                             >
                               <Grid item>
-                                <NavLink 
-                                  to={"/"}
-                                  exact
-                                  className={classes.activePro} 
-                                  activeClassName="active"
+                                <div
+                                  className={classes.activePro}
                                 >
                                   <ListItem button className={classes.itemLink} onClick={logoutUser}>
                                     <ListItemText
@@ -261,7 +258,7 @@ const Sidebar = ({...props}) => {
                                       disableTypography={true}
                                     />
                                   </ListItem>
-                                </NavLink>
+                                </div>
                               </Grid>
                             </Grid>
                           </Grid>
