@@ -102,7 +102,7 @@ class Event extends Component {
         notificationDialog: false,
         deleteDialog: false,
         deleteAutographEvent: false,
-        notifications: [{ body: "Nothing yet" }],
+        notifications: [],
         userid: ''
     }
 
