@@ -101,7 +101,8 @@ class Event extends Component {
         open: false,
         notificationDialog: false,
         deleteDialog: false,
-        deleteAutographEvent: false
+        deleteAutographEvent: false,
+        notifications: []
     }
 
     handleClickOpen = () => {
@@ -193,15 +194,13 @@ class Event extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item>
-                                { this.props.usertype === 2 ? (
-                                    <div>
-                                        <IconButton className={classes.margin} onClick={this.handleNotificationOpen}>
-                                          <Badge badgeContent={4} color="primary">
-                                            <MailIcon />
-                                          </Badge>
-                                        </IconButton>
-                                    </div>
-                                ) : null }
+                                <div>
+                                    <IconButton className={classes.margin} onClick={this.handleNotificationOpen}>
+                                      <Badge badgeContent={this.state.notifications.length} color="primary">
+                                        <MailIcon />
+                                      </Badge>
+                                    </IconButton>
+                                </div>
                             </Grid>
                         </Grid>
                     </Grid>
