@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { withStyles, Grid, Button } from '@material-ui/core'
+import { withStyles, Grid, Button, List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core'
 import { getEvents } from '../../actions/events'
 import CreateEvent from './CreateEvent'
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -102,7 +102,8 @@ class Event extends Component {
         notificationDialog: false,
         deleteDialog: false,
         deleteAutographEvent: false,
-        notifications: []
+        notifications: [{ body: "Nothing yet" }],
+        userid: ''
     }
 
     handleClickOpen = () => {
@@ -141,6 +142,29 @@ class Event extends Component {
          setInterval(this.refresh, 2000) // this causes a memory leak
     }
 
+    formatTime = time => {
+      const date = new Date("February 04, 2011 " + time);
+      const options = {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      };
+      const timeString = date.toLocaleString('en-US', options);
+      return timeString
+    }
+
+    deleteNotification = id => {
+      fetch('http://localhost:3001/api/deleteNotifications', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id
+        })
+      })
+    }
+
     refresh = () => {
         fetch("http://localhost:3001/api/events")
         .then(response => response.json())
@@ -149,12 +173,33 @@ class Event extends Component {
             this.setState({
                 compEvents: data.compEvents,
                 awardEvents: data.awardEvents,
-                autoEvents: data.autoEvents
+                autoEvents: data.autoEvents,
+                userid: this.props.userid
             })
         })
-        .catch(err => {
-            console.log(err)
+        .then(() => {
+          if(!!this.state.userid) {
+            fetch("http://localhost:3001/api/getNotifications", {
+              method: 'post',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                userid: this.props.userid
+              })
+            })
+            .then(response => response.json())
+            .then(result => {
+              this.setState({
+                notifications: result
+              })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+          }
         })
+        .catch(err => console.log(err))
     }
 
     componentDidMount() {
@@ -325,7 +370,23 @@ class Event extends Component {
                 >
                   <DialogTitle>{"Here's your notifications"}</DialogTitle>
                   <DialogContent>
-                    {"notifications"}
+                    <List>
+                      {this.state.notifications.length !== 0 ? this.state.notifications.map(notification => 
+                        <ListItem>
+                          <ListItemText
+                            primary={notification.body + ": "}
+                          />
+                          <ListItemText
+                            primary={notification.sportname + " at " + this.formatTime(notification.time)}
+                          />
+                          <ListItemSecondaryAction>
+                            <IconButton aria-label="Delete" onClick={() => this.deleteNotification(notification.notificationid)}>
+                              <DeleteIcon />
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      ) : <ListItem> <ListItemText primary="No new notifications, we'll send you some when we get any" /> </ListItem>}
+                    </List>
                   </DialogContent>
                 </Dialog>
                 <Dialog
@@ -358,7 +419,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
     return {
         events: state.events,
-        usertype: state.user.usertype
+        usertype: state.user.usertype,
+        userid: state.user.userid
     }
 };
 
