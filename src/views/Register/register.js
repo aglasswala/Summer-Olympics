@@ -243,11 +243,11 @@ class Register extends Component {
                 <FormControl fullWidth required style={{ marginRight: 20 }}>
                   <TextField
                     label="Country of Origin"
-                    id="countryOfOrigin"
+                    id="countryoforigin"
                     select
-                    name="countryOfOrigin"
+                    name="countryoforigin"
                     type="text"
-                    autoComplete="countryOfOrigin"
+                    autoComplete="countryoforigin"
                     autoFocus
                     value={this.state.countryOfOrigin}
                     onChange={this.onChange}
