@@ -89,7 +89,6 @@ class DeleteAutographEventForm extends Component {
         return newTime
       })
       .then(result => {
-        console.log(result)
         this.setState({
           allEvents: result
         })
