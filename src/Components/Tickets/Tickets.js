@@ -33,6 +33,17 @@ class Tickets extends Component {
     userTickets: [[]]
   }
 
+  formatTime = time => {
+    const date = new Date("February 04, 2011 " + time);
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    };
+    const timeString = date.toLocaleString('en-US', options);
+    return timeString
+  }
+
   componentDidMount = () => {
     const id = this.props.userid
     fetch('http://localhost:3001/api/getUserTickets', {
@@ -71,7 +82,7 @@ class Tickets extends Component {
                     </ListItem>
                     <ListItem>
                       <ListItemText>
-                        {ticket.time}
+                        {this.formatTime(ticket.time)}
                       </ListItemText>
                     </ListItem>
                     <ListItem>
