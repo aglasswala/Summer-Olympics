@@ -361,7 +361,7 @@ class Event extends Component {
                 >
                   <DialogTitle>{"Edit an Event"}</DialogTitle>
                   <DialogContent>
-                    <EditEventForm />
+                    <EditEventForm handleClose={this.handleClose} />
                   </DialogContent>
                 </Dialog>
                 <Dialog
@@ -371,8 +371,8 @@ class Event extends Component {
                   <DialogTitle>{"Here's your notifications"}</DialogTitle>
                   <DialogContent>
                     <List>
-                      {this.state.notifications.length !== 0 ? this.state.notifications.map(notification => 
-                        <ListItem>
+                      {this.state.notifications.length !== 0 ? this.state.notifications.map((notification, key) => 
+                        <ListItem key={key}>
                           <ListItemText
                             primary={notification.body + ": "}
                           />
