@@ -1,5 +1,7 @@
-import React, { Component, Fragment } from 'react'
-import { withStyles, TextField, MenuItem } from '@material-ui/core'
+import React, { Component } from 'react'
+import { withStyles, TextField, MenuItem, Button } from '@material-ui/core'
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import { connect } from 'react-redux'
 
 const editEventFormStyles = {
@@ -57,7 +59,7 @@ const stringToLocal = (result) => {
       eventid: result[i].eventid,
       sportname: result[i].sportname,
       time: timeString,
-      date: result[i].date,
+      date: new Date(result[i].date),
       venue: result[i].venue,
       userid: result[i].userid
     })
@@ -107,9 +109,11 @@ class EditEventForm extends Component {
     selectedEvent: {
       sportname: "Soccer",
       time: "12:00:00",
-      date: "2012-04-12",
+      date: new Date(),
       venue: "Carioca Arena 5"
-    }
+    },
+    allAthletes: [[]],
+    registeredAthletes: [],
   }
 
   handleSelectedEventChange = name => event => {
@@ -124,6 +128,9 @@ class EditEventForm extends Component {
     });
   }
 
+  onTimeChange = (date) => {
+    this.setState({ selectedEvent: { ...this.state.selectedEvent, date }})
+  }
 
   componentDidMount = () => {
     fetch('http://localhost:3001/api/getCompEvents')
@@ -137,20 +144,39 @@ class EditEventForm extends Component {
           allEvents: result
         })
       })
-      .catch(err => {
-        console.log(err)
+      .then(() => {
+        return fetch('http://localhost:3001/api/getAthletes')
+          .then(response => response.json())
       })
+      .then(athletes => {
+        this.setState({
+          allAthletes: athletes.athletes
+        })
+      })
+      .catch(err => console.log(err))
   }
 
   submit = (event) => {
-
+    fetch('http://localhost:3001/api/editEvent', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        selectedEvent: this.state.selectedEvent
+      })
+    })
+    .then(response => response.json())
+    .then(result => {
+      this.props.handleClose()
+    })
+    .catch(err => console.log(err))
   }
 
   render() {
     const { classes } = this.props
-    console.log(this.state)
     return (
-      <Fragment>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <form
           style={{width: "400px"}}
           className={classes.form}
@@ -208,8 +234,22 @@ class EditEventForm extends Component {
               ))}
             </TextField>
           </span>
+          <span className={classes.wrapper}>
+            <DatePicker
+              margin="normal"
+              label="What date?"
+              value={this.state.selectedEvent.date}
+              className={classes.textField}
+              onChange={this.onTimeChange}
+            />
+          </span>
+          <span className={classes.wrapper}>
+            <Button onClick={this.submit} className={classes.button} color="primary" variant="contained">
+              Submit
+            </Button>
+          </span>
         </form>
-      </Fragment>
+      </MuiPickersUtilsProvider>
     )
   }
 }

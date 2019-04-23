@@ -96,7 +96,8 @@ class CeremonyForm extends Component {
       "8:30 PM"
     ],
     date: new Date(),
-    venue: ""
+    venue: "",
+    count: 0
   }
 
   updateTimeSlots = (venue, date, timeSlots) => {
@@ -123,15 +124,18 @@ class CeremonyForm extends Component {
     this.setState({ date: date })
   }
 
-  onTimeChange = (date) => {
-    this.setState({ date: date })
-  }
-
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value,
     });
   };
+
+  handleAthleteChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
 
   componentDidMount = () => {
     fetch('http://localhost:3001/api/getCompEvents')
@@ -142,21 +146,21 @@ class CeremonyForm extends Component {
         })
       })
       .then(() => {
-        return fetch('http://localhost:3001/api/getAthletes')
-          .then(response => response.json())
-      })
-      .then(data => {
-        this.setState({
-          allAthletes: data.athletes
-        })
-      })
-      .then(() => {
         return fetch('http://localhost:3001/api/getCereEvents')
           .then(response => response.json())
       })
       .then(data => {
         this.setState({
           allCeremonyEvents: data
+        })
+      })
+      .then(() => {
+        return fetch('http://localhost:3001/api/getAthletes')
+                .then(response => response.json())
+      })
+      .then(athletes => {
+        this.setState({
+          allAthletes: athletes.athletes
         })
       })
       .catch(err => {
@@ -208,7 +212,7 @@ class CeremonyForm extends Component {
             className={classes.textField}
             select
             value={this.state.selectedEvent}
-            onChange={this.handleChange("selectedEvent")}
+            onChange={this.handleAthleteChange("selectedEvent")}
             margin="normal"
           >
             {this.state.allEvents.map((event, key) => (
