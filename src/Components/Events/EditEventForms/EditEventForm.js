@@ -168,7 +168,6 @@ class EditEventForm extends Component {
     })
     .then(response => response.json())
     .then(result => {
-      console.log("OH YEHA")
       this.props.handleClose()
     })
     .catch(err => console.log(err))
