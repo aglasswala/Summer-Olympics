@@ -163,6 +163,7 @@ class Event extends Component {
           id
         })
       })
+      .catch(err => console.log("Couldn't delete"))
     }
 
     refresh = () => {
