@@ -1,16 +1,28 @@
 import React, { Component } from 'react'
-import { Button, Dialog, DialogTitle, DialogContent, withStyles, List, ListItem, ListItemText } from '@material-ui/core'
+import PropTypes from 'prop-types';
+import { Button, Dialog, DialogTitle, DialogContent, withStyles, List, ListItem, ListItemText, AppBar, Toolbar, Slide, IconButton } from '@material-ui/core'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux'
 
 const viewAthleteEventStyles = {
   dialog: {
     width: "500px"
-  }
+  },
+  appBar: {
+    position: 'relative',
+  },
+  flex: {
+    flex: 1,
+  },
+};
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
 }
 
 class ViewAthleteEvent extends Component {
@@ -22,7 +34,7 @@ class ViewAthleteEvent extends Component {
     }
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     fetch('http://localhost:3001/api/getAthleteEvents', {
       method: 'post',
       headers: {
@@ -50,17 +62,30 @@ class ViewAthleteEvent extends Component {
   };
 
   render() {
+    const { classes } = this.props
     return (
       <div>
         <Button onClick={this.handleClickOpen}> 
           View my Events
         </Button>
         <Dialog
+          fullScreen
           open={this.state.open}
           onClose={this.handleClose}
-          fullScreen
+          TransitionComponent={Transition}
         >
-          <DialogTitle> {"View my Events"}</DialogTitle>
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+            <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={classes.flex} style={{marginLeft: "10px"}}>
+              My Events
+            </Typography>
+          </Toolbar>
+          </AppBar>
+
+          {/* <DialogTitle> {"View my Events"}</DialogTitle> */}
           {this.state.registeredEvents.response.length !== 0 ?
             <DialogContent style={{minWidth: '50vw'}}>
               {this.state.registeredEvents.response.map((event, key) => (
@@ -115,20 +140,23 @@ class ViewAthleteEvent extends Component {
                   </ExpansionPanelDetails>
                 </ExpansionPanel>
               ))}
-
             </DialogContent>
           : (
-              <DialogContent>
-                <Typography>
-                  There's no events your registered for, we'll notify you when you do
-                </Typography>
-              </DialogContent>
+            <DialogContent>
+              <Typography style={{marginTop: "20px", fontWeight: "bold"}}>
+                There are no events you are registered for, you will be notified when you do.
+              </Typography>
+            </DialogContent>
             )}
         </Dialog>
       </div>
     )
   }
 }
+
+ViewAthleteEvent.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 function mapStateToProps(state) {
   return {
