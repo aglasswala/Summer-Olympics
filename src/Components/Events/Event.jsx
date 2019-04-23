@@ -1,17 +1,22 @@
 import React, { Component, Fragment } from 'react'
-import { withStyles, Grid, Button } from '@material-ui/core'
+import { withStyles, Grid, Button, List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core'
 import { getEvents } from '../../actions/events'
 import CreateEvent from './CreateEvent'
+import DeleteIcon from '@material-ui/icons/Delete';
+import Fab from '@material-ui/core/Fab';
 import ViewAthleteEvent from './ViewAthleteEvent'
 import { connect } from 'react-redux'
 import EventTable from './EventTable'
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import BuyTicket from '../Tickets/BuyTicket'
+import Badge from '@material-ui/core/Badge';
+import IconButton from '@material-ui/core/IconButton';
+import MailIcon from '@material-ui/icons/Mail';
 import EditEventForm from './EditEventForms/EditEventForm'
+import DeleteEventForm from './EditEventForms/DeleteEventForm'
+import DeleteAutographForm from './EditEventForms/DeleteAutographForm'
 
 const styles = theme => ({
     gridContainer: {
@@ -93,7 +98,12 @@ class Event extends Component {
         compEvents: [[]],
         awardEvents: [[]],
         autoEvents: [[]],
-        open: false
+        open: false,
+        notificationDialog: false,
+        deleteDialog: false,
+        deleteAutographEvent: false,
+        notifications: [],
+        userid: ''
     }
 
     handleClickOpen = () => {
@@ -104,8 +114,55 @@ class Event extends Component {
       this.setState({ open: false });
     };
 
+    handleNotificationOpen = () => {
+      this.setState({ notificationDialog: true });
+    };
+
+    handleNotificationClose = () => {
+      this.setState({ notificationDialog: false });
+    };
+
+    handleDeleteOpen = () => {
+      this.setState({ deleteDialog: true });
+    };
+
+    handleDeleteClose = () => {
+      this.setState({ deleteDialog: false });
+    };
+
+    handleAutographDeleteOpen = () => {
+      this.setState({ deleteAutographEvent: true });
+    };
+
+    handleAutographDeleteClose = () => {
+      this.setState({ deleteAutographEvent: false });
+    };
+
     createInteval = () => {
          setInterval(this.refresh, 2000) // this causes a memory leak
+    }
+
+    formatTime = time => {
+      const date = new Date("February 04, 2011 " + time);
+      const options = {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      };
+      const timeString = date.toLocaleString('en-US', options);
+      return timeString
+    }
+
+    deleteNotification = id => {
+      fetch('http://localhost:3001/api/deleteNotifications', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id
+        })
+      })
     }
 
     refresh = () => {
@@ -116,12 +173,33 @@ class Event extends Component {
             this.setState({
                 compEvents: data.compEvents,
                 awardEvents: data.awardEvents,
-                autoEvents: data.autoEvents
+                autoEvents: data.autoEvents,
+                userid: this.props.userid
             })
         })
-        .catch(err => {
-            console.log(err)
+        .then(() => {
+          if(!!this.state.userid) {
+            fetch("http://localhost:3001/api/getNotifications", {
+              method: 'post',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                userid: this.props.userid
+              })
+            })
+            .then(response => response.json())
+            .then(result => {
+              this.setState({
+                notifications: result
+              })
+            })
+            .catch(err => {
+                console.log(err)
+            })
+          }
         })
+        .catch(err => console.log(err))
     }
 
     componentDidMount() {
@@ -133,15 +211,43 @@ class Event extends Component {
         const { classes } = this.props
         return (
             <Fragment>
-                <Grid container className={classes.gridContainer}>
+                <Grid className={classes.gridContainer}>
                     <Grid item className={classes.gridItem}>
-                        <BuyTicket />
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        {this.props.usertype !== 1 ? <CreateEvent /> : null}
-                    </Grid>
-                    <Grid item className={classes.gridItem}>
-                        {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
+                        <Grid 
+                            container
+                            direction="row"
+                            justify="space-between"
+                            alignItems="center"
+                        >
+                            <Grid item>
+                                <Grid 
+                                    container
+                                    direction="row"
+                                    justify="center"
+                                    alignItems="center"
+                                    spacing={16}
+                                >
+                                    <Grid item>
+                                        <BuyTicket />
+                                    </Grid>
+                                    <Grid item>
+                                        {this.props.usertype === 3 ? <Button color='inherit' onClick={this.handleClickOpen}> Edit an Event </Button> : null}
+                                    </Grid>
+                                    <Grid item>
+                                        {this.props.usertype === 2 ? <ViewAthleteEvent /> : null} 
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                            <Grid item>
+                                <div>
+                                    <IconButton className={classes.margin} onClick={this.handleNotificationOpen}>
+                                      <Badge badgeContent={this.state.notifications.length} color="primary">
+                                        <MailIcon />
+                                      </Badge>
+                                    </IconButton>
+                                </div>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                         <div className={classes.card}>
@@ -158,10 +264,27 @@ class Event extends Component {
                                           Here's all competition events
                                         </p>
                                     </Grid>
-                                    {this.props.usertype === 3 ? (
-                                        <Grid item>
-                                            <Button variant="contained" color="secondary" onClick={this.handleClickOpen}> Edit an Event </Button>
+                                    {this.props.usertype !== 1 ? (
+                                    <Grid item>
+                                        <Grid
+                                          container
+                                          direction="row"
+                                          justify="flex-end"
+                                          alignItems="center"
+                                          spacing={8}
+                                        >
+                                            <Grid item>
+                                                {this.props.usertype === 2 || this.props.usertype === 3 ? <CreateEvent /> : null}
+                                            </Grid>
+                                            <Grid item>
+                                                {this.props.usertype === 3 ? (
+                                                    <Fab color="secondary" onClick={this.handleDeleteOpen} size="small">
+                                                      <DeleteIcon />
+                                                    </Fab>
+                                                ) : null}
+                                            </Grid>
                                         </Grid>
+                                    </Grid>
                                     ) : null}
                                 </Grid>
                             </div>
@@ -192,10 +315,36 @@ class Event extends Component {
                     <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                         <div className={classes.card}>
                             <div className={classes.cardHeader}>
-                                <h4 className={classes.cardTitleWhite}>Autograph sessions</h4>
-                                <p className={classes.cardCategoryWhite}>
-                                  Check out what athletes are signing autographs
-                                </p>
+                                <Grid
+                                  container
+                                  direction="row"
+                                  justify="space-between"
+                                  alignItems="center"
+                                >
+                                    <Grid item>
+                                        <h4 className={classes.cardTitleWhite}>Autograph sessions</h4>
+                                        <p className={classes.cardCategoryWhite}>
+                                          Check out what athletes are signing autographs
+                                        </p>
+                                    </Grid>
+                                    <Grid item>
+                                    {this.props.usertype !== 1 ? (
+                                        <Grid
+                                          container
+                                          direction="row"
+                                          justify="flex-end"
+                                          alignItems="center"
+                                          spacing={8}
+                                        >
+                                            <Grid item>
+                                                <Fab color="secondary" onClick={this.handleAutographDeleteOpen} size="small">
+                                                  <DeleteIcon />
+                                                </Fab>
+                                            </Grid>
+                                        </Grid>
+                                    ): null }
+                                    </Grid>
+                                </Grid>
                             </div>
                             <div className={classes.cardBody}>
                                 <EventTable 
@@ -212,7 +361,50 @@ class Event extends Component {
                 >
                   <DialogTitle>{"Edit an Event"}</DialogTitle>
                   <DialogContent>
-                    <EditEventForm />
+                    <EditEventForm handleClose={this.handleClose} />
+                  </DialogContent>
+                </Dialog>
+                <Dialog
+                  open={this.state.notificationDialog}
+                  onClose={this.handleNotificationClose}
+                >
+                  <DialogTitle>{"Here's your notifications"}</DialogTitle>
+                  <DialogContent>
+                    <List>
+                      {this.state.notifications.length !== 0 ? this.state.notifications.map((notification, key) => 
+                        <ListItem key={key}>
+                          <ListItemText
+                            primary={notification.body + ": "}
+                          />
+                          <ListItemText
+                            primary={notification.sportname + " at " + this.formatTime(notification.time)}
+                          />
+                          <ListItemSecondaryAction>
+                            <IconButton aria-label="Delete" onClick={() => this.deleteNotification(notification.notificationid)}>
+                              <DeleteIcon />
+                            </IconButton>
+                          </ListItemSecondaryAction>
+                        </ListItem>
+                      ) : <ListItem> <ListItemText primary="No new notifications, we'll send you some when we get any" /> </ListItem>}
+                    </List>
+                  </DialogContent>
+                </Dialog>
+                <Dialog
+                  open={this.state.deleteDialog}
+                  onClose={this.handleDeleteClose}
+                >
+                  <DialogTitle>{"Delete an event"}</DialogTitle>
+                  <DialogContent>
+                    <DeleteEventForm handleDeleteClose={this.handleDeleteClose} />
+                  </DialogContent>
+                </Dialog>
+                <Dialog
+                  open={this.state.deleteAutographEvent}
+                  onClose={this.handleAutographDeleteClose}
+                >
+                  <DialogTitle>{"Delete an Autograph Session"}</DialogTitle>
+                  <DialogContent>
+                    <DeleteAutographForm handleAutographDeleteClose={this.handleAutographDeleteClose} />
                   </DialogContent>
                 </Dialog>
             </Fragment>
@@ -227,7 +419,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => {
     return {
         events: state.events,
-        usertype: state.user.usertype
+        usertype: state.user.usertype,
+        userid: state.user.userid
     }
 };
 

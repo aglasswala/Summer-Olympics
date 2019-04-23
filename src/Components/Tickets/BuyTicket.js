@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { withStyles, TextField, Button, DialogTitle, Dialog, Typography } from '@material-ui/core'
+import { withStyles, TextField, Button, DialogTitle, Dialog, Typography, Grid, Snackbar } from '@material-ui/core'
 import { connect } from 'react-redux'
 import MenuItem from '@material-ui/core/MenuItem';
 
@@ -37,8 +37,19 @@ class BuyTicket extends Component {
     selectedEvent: {
       sportname: "Select an Event"
     },
-    cost: 30.00
+    cost: 30.00,
+    snackBarOpen: false,
+    vertical: 'top',
+    horizontal: 'center',
   }
+
+  handleSnackBarClick = state => () => {
+    this.setState({ snackBarOpen: true, ...state });
+  };
+
+  handleSnackBarClose = () => {
+    this.setState({ snackBarOpen: false });
+  };
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -58,6 +69,17 @@ class BuyTicket extends Component {
       [name]: event.target.value,
     });
   };
+
+  formatTime = time => {
+    const date = new Date("February 04, 2011 " + time);
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true
+    };
+    const timeString = date.toLocaleString('en-US', options);
+    return timeString
+  }
 
   componentDidMount = () => {
     fetch('http://localhost:3001/api/getCompEvents')
@@ -88,11 +110,13 @@ class BuyTicket extends Component {
       .then(result => {
         this.handleClose()
       })
-      .catch(err => console.log("ERR "))
+      .then(this.handleSnackBarClick({ vertical: 'top', horizontal: 'center' }))
+      .catch(err => console.log("ERR"))
   }
 
   render() {
     const { classes } = this.props
+    const { vertical, horizontal, snackBarOpen } = this.state
     return (
       <Fragment>
         <Button 
@@ -121,7 +145,19 @@ class BuyTicket extends Component {
             >
               {this.state.allEvents.map((event, key) => (
                 <MenuItem key={key} value={event}>
-                  {event.sportname + " " + event.time}
+                  <Grid 
+                      container
+                      direction="row"
+                      justify="space-between"
+                      alignItems="center"
+                  >
+                    <Grid item>
+                      {event.sportname}
+                    </Grid>
+                    <Grid item>
+                      {this.formatTime(event.time)}
+                    </Grid>
+                  </Grid>
                 </MenuItem>
               ))}
             </TextField>
@@ -136,12 +172,31 @@ class BuyTicket extends Component {
                     select
                     value={this.state.cost}
                     onChange={this.handleChange("cost")}
+                    fullWidth
                   >
                     <MenuItem value={30.00}>
-                      $30.00
+                      <Grid
+                        container
+                        direction="row"
+                        justify="flex-end"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                            $30.00
+                        </Grid>
+                      </Grid>
                     </MenuItem>
                     <MenuItem value={0}>
-                      $0
+                      <Grid
+                        container
+                        direction="row"
+                        justify="flex-end"
+                        alignItems="center"
+                      >
+                        <Grid item>
+                          $0
+                        </Grid>
+                      </Grid>
                     </MenuItem>
                   </TextField>
                 </Fragment>
@@ -157,6 +212,15 @@ class BuyTicket extends Component {
             </Button>
           </span>
         </Dialog>
+        <Snackbar
+          anchorOrigin={{ vertical, horizontal }}
+          open={snackBarOpen}
+          onClose={this.handleSnackBarClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Success! Checkout the Tickets tab to see your new ticket</span>}
+        />
       </Fragment>
     )
   }

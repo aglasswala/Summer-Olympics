@@ -1,25 +1,39 @@
 import React, { Component } from 'react'
-import { Button, Dialog, DialogTitle, DialogContent, withStyles, List, ListItem, ListItemText } from '@material-ui/core'
+import { Button, Dialog, DialogContent, withStyles, List, ListItem, ListItemText, AppBar, Toolbar, Slide, IconButton } from '@material-ui/core'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux'
 
 const viewAthleteEventStyles = {
   dialog: {
     width: "500px"
-  }
+  },
+  appBar: {
+    position: 'relative',
+  },
+  flex: {
+    flex: 1,
+  },
+};
+
+function Transition(props) {
+  return <Slide direction="up" {...props} />;
 }
 
 class ViewAthleteEvent extends Component {
   state = {
     open: false,
-    registeredEvents: [[]]
+    registeredEvents: {
+      response: [[]],
+      ceremonyEvents: [[]]
+    }
   };
 
-  componentDidMount() {
+  componentDidMount = () => {
     fetch('http://localhost:3001/api/getAthleteEvents', {
       method: 'post',
       headers: {
@@ -32,7 +46,7 @@ class ViewAthleteEvent extends Component {
     .then(response => response.json())
     .then(result => {
       this.setState({
-        registeredEvents: result.response
+        registeredEvents: result
       })
     })
     .catch(err => console.log(err))
@@ -47,22 +61,61 @@ class ViewAthleteEvent extends Component {
   };
 
   render() {
+    const { classes } = this.props
     return (
       <div>
         <Button onClick={this.handleClickOpen}> 
           View my Events
         </Button>
         <Dialog
+          fullScreen
           open={this.state.open}
           onClose={this.handleClose}
+          TransitionComponent={Transition}
         >
-          <DialogTitle> {"View my Events"}</DialogTitle>
-          {this.state.registeredEvents.length !== 0 ?
-            <DialogContent>
-              {this.state.registeredEvents.map((event, key) => (
+          <AppBar className={classes.appBar}>
+            <Toolbar>
+            <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" color="inherit" className={classes.flex} style={{marginLeft: "10px"}}>
+              My Events
+            </Typography>
+          </Toolbar>
+          </AppBar>
+
+          {this.state.registeredEvents.response.length !== 0 ?
+            <DialogContent style={{minWidth: '50vw'}}>
+              {this.state.registeredEvents.response.map((event, key) => (
                 <ExpansionPanel key={key}>
                   <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>{event[0]}</Typography>
+                    <Typography>{"Competition: " + event[0]}</Typography>
+                  </ExpansionPanelSummary>
+                  <ExpansionPanelDetails>
+                    <List>
+                      <ListItem>
+                        <ListItemText>
+                          Event: {event[0]}
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText>
+                          Time: {event[2]}
+                        </ListItemText>
+                      </ListItem>
+                      <ListItem>
+                        <ListItemText>
+                          Date: {event[3]}
+                        </ListItemText>
+                      </ListItem>
+                    </List>
+                  </ExpansionPanelDetails>
+                </ExpansionPanel>
+              ))}
+              {this.state.registeredEvents.ceremonyEvents.map((event, key) => (
+                <ExpansionPanel key={key}>
+                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                    <Typography>{ "Ceremony Event: "  + event[0]}</Typography>
                   </ExpansionPanelSummary>
                   <ExpansionPanelDetails>
                     <List>
@@ -87,11 +140,11 @@ class ViewAthleteEvent extends Component {
               ))}
             </DialogContent>
           : (
-              <DialogContent>
-                <Typography>
-                  There's no events your registered for, we'll notify you when you do
-                </Typography>
-              </DialogContent>
+            <DialogContent>
+              <Typography style={{marginTop: "20px", fontWeight: "bold"}}>
+                There are no events you are registered for, you will be notified when you do.
+              </Typography>
+            </DialogContent>
             )}
         </Dialog>
       </div>
