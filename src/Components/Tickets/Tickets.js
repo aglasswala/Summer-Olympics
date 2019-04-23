@@ -104,29 +104,10 @@ const compEventsArrayify = (response) => {
           response[i].sportname,
           response[i].venue,
           formatTime(response[i].time),
-          changeAMPMto24Hours(new Date(response[i].date))
+          new Date(response[i].date).toString().substring(4,15)
       ])
   }
   return newData
-}
-
-const changeAMPMto24Hours = (date) => {
-  let newMonth = date.getMonth() + 1;
-  let newDay;
-  let newYear = date.getFullYear().toString();
-  
-  if(date.getMonth()  + 1 < 10){
-    newMonth = "0"+ newMonth.toString()
-  } else {
-    newMonth = newMonth.toString();
-  }
-  
-  if(date.getDate() < 10){
-    newDay = "0"+ date.getDate().toString();
-  } else {
-    newDay = date.getDate().toString();
-  }
-  return (newYear+"-"+newMonth+"-"+newDay);
 }
 
 class Tickets extends Component {
