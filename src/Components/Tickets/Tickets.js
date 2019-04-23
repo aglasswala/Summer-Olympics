@@ -4,9 +4,6 @@ import { withStyles, Grid, Button } from '@material-ui/core';
 import BuyTicket from '../Tickets/BuyTicket';
 import EventTable from '../../Components/Events/EventTable';
 
-
-
-
 const ticketStyles = theme =>({
   bullet: {
     display: 'inline-block',
@@ -88,18 +85,48 @@ cardBody: {
 },
 });
 
+const formatTime = time => {
+  const date = new Date("February 04, 2011 " + time);
+  const options = {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true
+  };
+  const timeString = date.toLocaleString('en-US', options);
+  return timeString
+}
+
+
 const compEventsArrayify = (response) => {
   let newData = []
   for(let i = 0; i < response.length; i++) {
       newData.push([
           response[i].sportname,
           response[i].venue,
-          response[i].time,
-          response[i].date
+          formatTime(response[i].time),
+          changeAMPMto24Hours(new Date(response[i].date))
       ])
   }
-  console.log(response, newData)
   return newData
+}
+
+const changeAMPMto24Hours = (date) => {
+  let newMonth = date.getMonth() + 1;
+  let newDay;
+  let newYear = date.getFullYear().toString();
+  
+  if(date.getMonth()  + 1 < 10){
+    newMonth = "0"+ newMonth.toString()
+  } else {
+    newMonth = newMonth.toString();
+  }
+  
+  if(date.getDate() < 10){
+    newDay = "0"+ date.getDate().toString();
+  } else {
+    newDay = date.getDate().toString();
+  }
+  return (newYear+"-"+newMonth+"-"+newDay);
 }
 
 class Tickets extends Component {
@@ -121,7 +148,6 @@ class Tickets extends Component {
     })
       .then(response => response.json())
       .then(response => {
-        console.log(response)
         this.setState({
           userTickets: compEventsArrayify(response)
         })
