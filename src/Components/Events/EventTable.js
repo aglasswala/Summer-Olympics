@@ -72,6 +72,7 @@ class EventTable extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
+                      {console.log(tableData)}
                       {tableData.map((prop, key) => {
                         return (
                           <TableRow key={key} onClick={() => this.handleClickOpen(prop)}>
