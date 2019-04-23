@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
-import { Button, Dialog, DialogTitle, DialogContent, withStyles, List, ListItem, ListItemText, AppBar, Toolbar, Slide, IconButton } from '@material-ui/core'
+import { Button, Dialog, DialogContent, withStyles, List, ListItem, ListItemText, AppBar, Toolbar, Slide, IconButton } from '@material-ui/core'
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -85,7 +84,6 @@ class ViewAthleteEvent extends Component {
           </Toolbar>
           </AppBar>
 
-          {/* <DialogTitle> {"View my Events"}</DialogTitle> */}
           {this.state.registeredEvents.response.length !== 0 ?
             <DialogContent style={{minWidth: '50vw'}}>
               {this.state.registeredEvents.response.map((event, key) => (
@@ -153,10 +151,6 @@ class ViewAthleteEvent extends Component {
     )
   }
 }
-
-ViewAthleteEvent.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
 
 function mapStateToProps(state) {
   return {
