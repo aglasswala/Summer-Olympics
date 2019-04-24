@@ -1,8 +1,20 @@
 import React, { Component } from 'react'
-import { Route, Switch } from 'react-router-dom'
 import Dashboard from './views/DashboardPage/Dashboard'
 import HomePage from './views/HomePage/HomePage'
 
+import {
+    Route,
+    Switch,
+    Redirect
+} from 'react-router-dom'
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route {...rest} 
+        render={(props) => (
+      localStorage.getItem('cool-jwt') ? ( <Component {...props} />)
+        : <Redirect strict to={{pathname: "/home", state: {from: props.location}}}/>
+    )} />
+  );
 class App extends Component {
 
     componentDidMount() {
@@ -13,12 +25,12 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                <Switch>
-                    <Route path="/dashboard" component={Dashboard} />
-                    <Route component={HomePage} />
-                </Switch>
-            </div>
+                <div>
+                    <Switch>
+                        <PrivateRoute path="/dashboard" component={Dashboard} />
+                        <Route component={HomePage} />
+                    </Switch>
+                </div>
         )
     }
 }
