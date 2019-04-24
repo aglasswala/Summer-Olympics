@@ -101,7 +101,7 @@ class LoginPage extends Component {
             })
         })
             .then(response => response.json())
-            .then(result => {
+            .then(result => { 
                 this.props.userLoggedIn(result.user)
                 localStorage.setItem('cool-jwt', result.userToken)
                 this.props.history.push('/dashboard')
