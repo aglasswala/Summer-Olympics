@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { Grid, Typography, FormControl, InputLabel, Input, Button, TextField, AppBar, Toolbar } from '@material-ui/core'
+import { withStyles,Grid, Typography, FormControl, InputLabel, Input, Button, TextField, AppBar, Toolbar,Snackbar } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { userLoggedIn } from '../../actions/user'
-import { withStyles } from '@material-ui/core'
 import MenuItem from '@material-ui/core/MenuItem'
 import rings from '../../images/olympicrings.png'
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const styles = theme => ({
   wrapper: {
@@ -65,14 +66,29 @@ class Register extends Component {
     zip: "",
     state: "",
     phoneNumber: "",
-    countryOfOrigin: ""
+    countryOfOrigin: "",
+    open: false
   }
+
+  handleClick = () => {
+    this.setState({ open: true });
+  };
+
+ handleClose = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  this.setState({ open: false });
+ };
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value })
 
   onSubmit = (e) => {
     e.preventDefault()
     const { firstName, lastName, email, password, street, city, zip, state, phoneNumber, countryOfOrigin } = this.state
+    
+  if(countryOfOrigin.length !== 0 && state.length !== 0) {
     fetch('http://localhost:3001/api/register', {
       method: 'post',
       headers: {
@@ -97,6 +113,9 @@ class Register extends Component {
         localStorage.setItem('cool-jwt', data.token)
         this.props.history.push('/dashboard')
       })
+  }else {
+    this.handleClick()
+  }
   }
 
 
@@ -278,6 +297,30 @@ class Register extends Component {
                   Submit
                 </Button>
               </span>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                open={this.state.open}
+                autoHideDuration={6000}
+                onClose={this.handleClose}
+                ContentProps={{
+                  'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">Make sure to fill out all the fields</span>}
+                action={[
+                  <IconButton
+                  key="close"
+                  aria-label="Close"
+                  color="inherit"
+                  className={classes.close}
+                  onClick={this.handleClose}
+                  >
+                <CloseIcon />
+                </IconButton>,
+                ]}
+                />
             </Grid>
           </Grid>
         </form>
