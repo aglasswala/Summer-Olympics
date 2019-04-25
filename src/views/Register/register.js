@@ -33,8 +33,8 @@ const styles = theme => ({
 const STATES = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", 'IA', "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", 
 "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
 
-const COUNTRIES = ["Abkhazia","Afghanistan","Albania","Algeria","American Samoa (U.S.)","Andorra","Angola","Anguilla (UK)","Antigua and Barbuda","Argentina","Armenia",
-"Aruba (Netherlands)","Australia","Austria","Azerbaijan","The Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda (UK)","Bhutan","Bolivia",
+const COUNTRIES = ["Afghanistan","Albania","Algeria","Argentina",
+"Aruba (Netherlands)","Australia","Austria", "Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda (UK)","Bhutan","Bolivia",
 "Bosnia and Herzegovina","Botswana","Brazil","British Virgin Islands (UK)","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde",
 "Cayman Islands (UK)","Central African Republic","Chad","Chile","China","Christmas Island","Cocos (Keeling) Islands (Australia)","Colombia","Comoros","Congo",
 "Cook Islands (NZ)","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","East Timor","Ecuador","Egypt",
@@ -67,9 +67,6 @@ class Register extends Component {
     phoneNumber: "",
     countryOfOrigin: ""
   }
-
-
-
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value })
 
@@ -105,6 +102,7 @@ class Register extends Component {
 
   render() {
     const { classes } = this.props
+    console.log(this.state)
     return (
       <div>
         <AppBar className={classes.title} position="static" color="primary">
@@ -243,9 +241,9 @@ class Register extends Component {
                 <FormControl fullWidth required style={{ marginRight: 20 }}>
                   <TextField
                     label="Country of Origin"
-                    id="countryoforigin"
+                    id="countryOfOrigin"
                     select
-                    name="countryoforigin"
+                    name="countryOfOrigin"
                     type="text"
                     autoComplete="countryoforigin"
                     autoFocus
