@@ -35,7 +35,7 @@ class BuyTicket extends Component {
     open: false,
     allEvents: [],
     selectedEvent: {
-      sportname: "Select an Event"
+      sportname: ""
     },
     cost: 30.00,
     snackBarOpen: false,
@@ -94,6 +94,10 @@ class BuyTicket extends Component {
 
   submit = () => {
     const userid = this.props.userId
+    const event = this.state.selectedEvent.sportname
+
+
+  if(event.length !== 0){
     fetch('http://localhost:3001/api/buyTickets', {
       method: 'post',
       headers: {
@@ -112,7 +116,10 @@ class BuyTicket extends Component {
       })
       .then(this.handleSnackBarClick({ vertical: 'top', horizontal: 'center' }))
       .catch(err => console.log("ERR"))
+  } else {
+    console.log("Suck on these")
   }
+}
 
   render() {
     const { classes } = this.props

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { withStyles, TextField, Button } from '@material-ui/core'
+import { withStyles, TextField,  Button, Snackbar } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
@@ -85,9 +87,19 @@ class AutographForm extends Component {
     selectedAthlete: {},
     time: "",
     date: new Date(),
-    venue: ""
+    venue: "",
+    open: false
   }
-
+  handleClick = () => {
+    this.setState({ open: true });
+  };
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+ 
+    this.setState({ open: false });
+   };
   componentDidMount = () => {
     if(this.props.userType === 3) {
       fetch("http://localhost:3001/api/getAthletes")
@@ -119,24 +131,28 @@ class AutographForm extends Component {
     const newDate = fixingDate(date);
 
     const athleteUserId = this.props.userType === 3 ? selectedAthlete.userid : this.props.userId
-
-    fetch('http://localhost:3001/api/createAutographEvent', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        athleteUserId,
-        newTime,
-        newDate,
-        venue
+    if(time.length !== 0 && venue.length !== 0 && athleteUserId.length !== 0) {
+      fetch('http://localhost:3001/api/createAutographEvent', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          athleteUserId,
+          newTime,
+          newDate,
+          venue
+        })
       })
-    })
       .then(response => response.json())
       .then(result => {
         this.props.handleClose()
       })
       .catch(err => console.log(err))
+    }
+    else {
+      this.handleClick()
+    }
   }
 
   render() {
@@ -211,6 +227,30 @@ class AutographForm extends Component {
             Submit
           </Button>
         </span>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Make sure to fill out all the fields</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </MuiPickersUtilsProvider>
     )
   }
