@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react'
 import { withStyles, TextField, Button, DialogTitle, Dialog, Typography, Grid, Snackbar } from '@material-ui/core'
 import { connect } from 'react-redux'
 import MenuItem from '@material-ui/core/MenuItem';
-
 const buyTicketStyles = {
   wrapper: {
     display: "inline-block",
@@ -33,6 +32,7 @@ class BuyTicket extends Component {
 
   state = {
     open: false,
+    secondsnack: false,
     allEvents: [],
     selectedEvent: {
       sportname: ""
@@ -55,9 +55,19 @@ class BuyTicket extends Component {
     this.setState({ open: true });
   };
 
+  SecondSnackOpen = () => {
+    this.setState({ secondsnack: true });
+  };
+
+  SecondSnackClose = () => {
+    this.setState({ secondsnack: false });
+  };
+
   handleClose = () => {
     this.setState({ open: false });
   };
+
+  
 
 
   onTimeChange = (date) => {
@@ -113,17 +123,18 @@ class BuyTicket extends Component {
       .then(response => response.json())
       .then(result => {
         this.handleClose()
+        this.SecondSnackClose()
       })
       .then(this.handleSnackBarClick({ vertical: 'top', horizontal: 'center' }))
       .catch(err => console.log("ERR"))
   } else {
-    console.log("Suck on these")
+    this.SecondSnackOpen()
   }
 }
 
   render() {
     const { classes } = this.props
-    const { vertical, horizontal, snackBarOpen } = this.state
+    const { vertical, horizontal, snackBarOpen, secondsnack} = this.state
     return (
       <Fragment>
         <Button 
@@ -228,6 +239,20 @@ class BuyTicket extends Component {
           }}
           message={<span id="message-id">Success! Checkout the Tickets tab to see your new ticket</span>}
         />
+
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={secondsnack}
+          onClose={this.SecondSnackClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Please select an Event!</span>}
+        />
+
       </Fragment>
     )
   }
