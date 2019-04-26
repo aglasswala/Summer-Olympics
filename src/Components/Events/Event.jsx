@@ -17,6 +17,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import EditEventForm from './EditEventForms/EditEventForm'
 import DeleteEventForm from './EditEventForms/DeleteEventForm'
 import DeleteAutographForm from './EditEventForms/DeleteAutographForm'
+import DeleteCeremonyForm from './EditEventForms/DeleteCeremonyForm'
 
 const styles = theme => ({
     gridContainer: {
@@ -102,6 +103,7 @@ class Event extends Component {
         notificationDialog: false,
         deleteDialog: false,
         deleteAutographEvent: false,
+        deleteCeremonyEvent: false,
         notifications: [],
         userid: ''
     }
@@ -134,10 +136,18 @@ class Event extends Component {
       this.setState({ deleteAutographEvent: true });
     };
 
+
     handleAutographDeleteClose = () => {
       this.setState({ deleteAutographEvent: false });
     };
 
+    handleCeremonyDeleteOpen = () => {
+      this.setState({ deleteCeremonyEvent: true });
+    };
+
+    handleCeremonyDeleteClose = () => {
+      this.setState({ deleteCeremonyEvent: false });
+    };
     createInteval = () => {
          setInterval(this.refresh, 2000) // this causes a memory leak
     }
@@ -298,12 +308,38 @@ class Event extends Component {
                         </div>
                     </Grid>
                     <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
-                        <div className={classes.card}>
+                        <div className={classes.card}>                  
                             <div className={classes.cardHeader}>
+                            <Grid
+                                  container
+                                  direction="row"
+                                  justify="space-between"
+                                  alignItems="center"
+                                >
+                            <Grid item>
                                 <h4 className={classes.cardTitleWhite}>Award Ceremonies</h4>
                                 <p className={classes.cardCategoryWhite}>
                                   Here's all the awards ceremonies on going
                                 </p>
+                            </Grid>
+                            <Grid item>
+                                    {this.props.usertype > 2 ? (
+                                        <Grid
+                                          container
+                                          direction="row"
+                                          justify="flex-end"
+                                          alignItems="center"
+                                          spacing={8}
+                                        >
+                                            <Grid item>
+                                                <Fab color="secondary" onClick={this.handleCeremonyDeleteOpen} size="small">
+                                                  <DeleteIcon />
+                                                </Fab>
+                                            </Grid>
+                                        </Grid>
+                                    ): null }
+                                    </Grid>
+                                  </Grid>
                             </div>
                             <div className={classes.cardBody}>
                                 <EventTable 
@@ -311,8 +347,11 @@ class Event extends Component {
                                     tableData={this.state.awardEvents}
                                 />
                             </div>
+                            
                         </div>
+                        
                     </Grid>
+                  
                     <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                         <div className={classes.card}>
                             <div className={classes.cardHeader}>
@@ -390,6 +429,7 @@ class Event extends Component {
                     </List>
                   </DialogContent>
                 </Dialog>
+
                 <Dialog
                   open={this.state.deleteDialog}
                   onClose={this.handleDeleteClose}
@@ -399,6 +439,18 @@ class Event extends Component {
                     <DeleteEventForm handleDeleteClose={this.handleDeleteClose} />
                   </DialogContent>
                 </Dialog>
+                
+                <Dialog
+                  open={this.state.deleteCeremonyEvent}
+                  onClose={this.handleCeremonyDeleteClose}
+                >
+                  <DialogTitle>{"Delete a Ceremony Event"}</DialogTitle>
+                  <DialogContent>
+                    <DeleteCeremonyForm handleCeremonyDeleteClose={this.handleCeremonyDeleteClose} />
+                  </DialogContent>
+                </Dialog>
+
+                
                 <Dialog
                   open={this.state.deleteAutographEvent}
                   onClose={this.handleAutographDeleteClose}
