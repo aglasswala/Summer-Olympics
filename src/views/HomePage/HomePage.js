@@ -45,6 +45,7 @@ const HomePage = ({...props}) => {
               <Switch>
                 <Route exact path="/login" component={LoginPage} />
                 <Route exact path="/register" component={Register} />
+                <Route exact path="/home" component={TitlePage} />
                 <Route component={TitlePage} />
               </Switch>
             </Drawer>

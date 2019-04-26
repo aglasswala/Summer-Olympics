@@ -3,6 +3,7 @@ import { Grid, Typography, FormControl, InputLabel, Input, Button, TextField, Ap
 import { connect } from 'react-redux'
 import { userLoggedIn } from '../../actions/user'
 import { withStyles } from '@material-ui/core'
+import { NavLink } from 'react-router-dom'
 import MenuItem from '@material-ui/core/MenuItem'
 import rings from '../../images/olympicrings.png'
 
@@ -107,11 +108,15 @@ class Register extends Component {
     const { classes } = this.props
     return (
       <div>
-        <AppBar className={classes.title} position="static" color="primary">
+        <AppBar position="static" color="primary">
           <Toolbar>
-            <Typography style={{ color: "white", font: "2em/1em Trade-Gothic-W-Cond-Bold,Arial,Helvetica,sans-serif" }}>
-              Rio Olympics 2016 Registration
-            </Typography>
+          <NavLink
+            to='/home'
+                  style = {{textDecoration: "none"}}
+          >
+              <Button style = {{color: "#FFFFFF", textDecoration: "none"}}>Home</Button>      
+          </NavLink>
+
           </Toolbar>
         </AppBar>
         <form
@@ -120,6 +125,9 @@ class Register extends Component {
         >
           <Grid container direction="column" justify="center" alignItems="stretch" style={{ minHeight: '50vh' }}>
             <Grid item xs={12} style={{ marginTop: 20 }}>
+            <Typography style={{ textAlign: "center", color: "black", font: "2em/1em Trade-Gothic-W-Cond-Bold,Arial,Helvetica,sans-serif", marginBottom: "10px" }}>
+              Rio Olympics 2016 Registration
+            </Typography>
               <span className={classes.wrapper} align="center" style={{ marginLeft: 150 }}>
                 <img src={rings} alt="Olympic Rings" width="70%" height="70%" object-fit="contain" />
               </span>
@@ -274,7 +282,7 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <span className={classes.wrapper}>
                 <Button type="submit" className={classes.textField} style={{ height: "50px" }}>
                   Submit
