@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
-import { withStyles, TextField, MenuItem, Button, Grid } from '@material-ui/core'
+import { withStyles, TextField, MenuItem, Button, Grid , Snackbar , IconButton} from '@material-ui/core'
 import Tooltip from '@material-ui/core/Tooltip'
+import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux'
 
 const deleteAutographEventStyles = {
@@ -51,11 +52,21 @@ const stringToLocal = (result) => {
   return temp
 }
 
+//ReUsable code.
+function isEmpty(obj) {
+  for(var key in obj) {
+      if(obj.hasOwnProperty(key))
+          return false;
+  }
+  return true;
+}
+
 class DeleteAutographEventForm extends Component {
 
   state = {
     allEvents: [],
-    selectedEvent: {}
+    selectedEvent: {},
+    open: false
   }
 
   handleSelectedEventChange = name => event => {
@@ -69,6 +80,18 @@ class DeleteAutographEventForm extends Component {
       [name]: event.target.value 
     });
   }
+
+  handleClick = () => {
+    this.setState({ open: true });
+  };
+
+ handleClose = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  this.setState({ open: false });
+ };
 
   formatTime = time => {
     const date = new Date("February 04, 2011 " + time);
@@ -100,6 +123,9 @@ class DeleteAutographEventForm extends Component {
 
   submit = (event) => {
     event.preventDefault()
+    const test = this.state.selectedEvent
+
+    if(!isEmpty(test)){
     fetch('http://localhost:3001/api/deleteAutographEvents', {
       method: 'post',
       headers: {
@@ -115,7 +141,10 @@ class DeleteAutographEventForm extends Component {
       this.props.handleAutographDeleteClose()
     })
     .catch(err => console.log(err))
+  } else {
+    this.handleClick()
   }
+}
 
   render() {
     const { classes } = this.props
@@ -162,6 +191,30 @@ class DeleteAutographEventForm extends Component {
               </Button>
             </Tooltip>
           </span>
+          <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Please select an event to delete!</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
         </form>
       </Fragment>
     )
