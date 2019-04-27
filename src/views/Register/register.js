@@ -296,7 +296,7 @@ class Register extends Component {
   }else {
     this.handleClick()
   }
-  }
+}
 
 
   render() {
