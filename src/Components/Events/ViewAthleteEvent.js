@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux'
 
-const viewAthleteEventStyles = {
+const viewAthleteEventStyles = theme => ({
   dialog: {
     width: "500px"
   },
@@ -18,7 +18,7 @@ const viewAthleteEventStyles = {
   flex: {
     flex: 1,
   },
-};
+})
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;

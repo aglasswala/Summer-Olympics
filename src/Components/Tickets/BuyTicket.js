@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react'
 import { withStyles, TextField, Button, DialogTitle, Dialog, Typography, Grid, Snackbar } from '@material-ui/core'
 import { connect } from 'react-redux'
 import MenuItem from '@material-ui/core/MenuItem';
+
 const buyTicketStyles = {
   wrapper: {
     display: "inline-block",
