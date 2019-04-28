@@ -208,7 +208,7 @@ class CompetitionForm extends Component {
               this.props.handleClose();
           })
           .catch(err => {
-              console.log(err + "SDFSDFSD");
+              console.log(err + "");
           })
     } else {
       this.handleClick()

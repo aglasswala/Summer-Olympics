@@ -234,6 +234,11 @@ const COUNTRIES = [
 "Zimbabwe"
 ]
 
+const formatNumber = (phoneNumber) => {
+  const num = phoneNumber.replace(/[- )(]/g,'').trim()
+  console.log(num);
+  return num;
+}
 class Register extends Component {
 
   state = {
@@ -244,7 +249,7 @@ class Register extends Component {
     street: "",
     city: "",
     zip: "",
-    state: "",
+    state: "NA",
     phoneNumber: "",
     countryOfOrigin: "",
     open: false
@@ -266,7 +271,8 @@ class Register extends Component {
 
   onSubmit = (e) => {
     e.preventDefault()
-    const { firstName, lastName, email, password, street, city, zip, state, phoneNumber, countryOfOrigin } = this.state
+    const { firstName, lastName, email, password, street, city, zip, state, countryOfOrigin } = this.state
+    const phoneNumber = formatNumber(this.state.phoneNumber);
     
   if(countryOfOrigin.length !== 0 && state.length !== 0) {
     fetch('http://localhost:3001/api/register', {
@@ -289,6 +295,7 @@ class Register extends Component {
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data)
         this.props.userLoggedIn(data.user)
         localStorage.setItem('cool-jwt', data.token)
         this.props.history.push('/dashboard')
@@ -420,10 +427,12 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+           
+            <Grid item xs={12}> 
               <span className={classes.wrapper}>
+              {this.state.countryOfOrigin === "United States" ? (
                 <FormControl fullWidth required style={{ marginRight: 20 }}>
-                  <TextField
+                  <TextField 
                     label="State"
                     id="state"
                     select
@@ -444,6 +453,7 @@ class Register extends Component {
                     }
                   </TextField>
                 </FormControl>
+                ) : null}
                 <FormControl fullWidth required style={{ marginRight: 20 }}>
                   <TextField
                     label="Country of Origin"
