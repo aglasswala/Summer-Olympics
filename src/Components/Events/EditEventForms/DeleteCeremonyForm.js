@@ -50,17 +50,6 @@ const stringToLocal = (result) => {
   }
   return temp
 }
-
-//ReUsable code.
-function isEmpty(obj) {
-  for(var key in obj) {
-      if(obj.hasOwnProperty(key))
-          return false;
-  }
-  return true;
-}
-
-
 class DeleteCeremonyForm extends Component {
 
   state = {
@@ -124,9 +113,7 @@ class DeleteCeremonyForm extends Component {
   submit = (event) => {
 
   event.preventDefault()
-  const test = this.state.selectedEvent
-
-  if(!isEmpty(test)){
+  if(this.state.selectedEvent.eventid){
     fetch('http://localhost:3001/api/deleteCeremonyEvents', {
       method: 'post',
       headers: {
