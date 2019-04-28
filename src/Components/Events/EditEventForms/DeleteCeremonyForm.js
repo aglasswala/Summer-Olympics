@@ -41,7 +41,7 @@ const stringToLocal = (result) => {
     };
     const timeString = date.toLocaleString('en-US', options);
     temp.push({
-      eventid: result[i].eventid,
+      eventid: result[i].ceremonyid,
       sportname: result[i].sportname,
       time: timeString,
       date: result[i].date,
@@ -140,6 +140,7 @@ class DeleteCeremonyForm extends Component {
     .then(response => response.json())
     .then(result => {
       this.props.handleCeremonyDeleteClose()
+      console.log(result)
     })
     .catch(err => console.log(err))
   } else {
