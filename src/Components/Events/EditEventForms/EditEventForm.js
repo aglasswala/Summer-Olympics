@@ -72,7 +72,7 @@ class EditEventForm extends Component {
   state = {
     allEvents: [],
     selectedEvent: {
-      sportname: "Soccer",
+      sportname: "",
       time: "12:00:00",
       date: new Date(),
       venue: "Carioca Arena 5"
@@ -147,6 +147,7 @@ class EditEventForm extends Component {
           className={classes.form}
         > 
           <span className={classes.wrapper}>
+         {this.state.selectedEvent.sportname === "" ? (
             <TextField
               id="selectedEvent"
               label="Select an Event to edit"
@@ -157,11 +158,12 @@ class EditEventForm extends Component {
               onChange={this.handleChange("selectedEvent")}
             >
               {this.state.allEvents.map((event, key) => (
-                <MenuItem key={key} value={event}>
+                <MenuItem key={key} value={event}>             
                   {event.sportname}
                 </MenuItem>
               ))}
             </TextField>
+            ) : null}
           </span>
           <span className={classes.wrapper}>
             <TextField 
