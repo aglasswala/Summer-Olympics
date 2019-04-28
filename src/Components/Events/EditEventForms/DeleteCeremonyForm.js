@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from 'react'
-import { withStyles, TextField, MenuItem, Button, Grid , Snackbar , IconButton} from '@material-ui/core'
-import Tooltip from '@material-ui/core/Tooltip'
+import { withStyles, TextField, MenuItem, Button, Grid,Snackbar,IconButton } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close';
+import Tooltip from '@material-ui/core/Tooltip'
 import { connect } from 'react-redux'
 
-const deleteAutographEventStyles = {
+const deleteCeremonyStyles = {
   wrapper: {
     display: "inline-block",
     position: "relative",
@@ -41,18 +41,17 @@ const stringToLocal = (result) => {
     };
     const timeString = date.toLocaleString('en-US', options);
     temp.push({
-      eventid: result[i].autographeventsid,
-      name: result[i].fname + ' ' + result[i].lname,
+      eventid: result[i].ceremonyid,
+      sportname: result[i].sportname,
       time: timeString,
       date: result[i].date,
-      venue: result[i].venue,
-      userid: result[i].userid
+      venue: result[i].venue
     })
   }
   return temp
 }
 
-class DeleteAutographEventForm extends Component {
+class DeleteCeremonyForm extends Component {
 
   state = {
     allEvents: [],
@@ -79,7 +78,7 @@ class DeleteAutographEventForm extends Component {
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
-    }
+  }
 
     this.setState({ open: false });
   };
@@ -96,7 +95,7 @@ class DeleteAutographEventForm extends Component {
   }
 
   componentDidMount = () => {
-    fetch('http://localhost:3001/api/getAutographEvents')
+    fetch('http://localhost:3001/api/getCereEvents')
       .then(response => response.json())
       .then(result => {
         const newTime = stringToLocal(result)
@@ -113,9 +112,10 @@ class DeleteAutographEventForm extends Component {
   }
 
   submit = (event) => {
-    event.preventDefault()
-    if(this.state.selectedEvent.eventid){
-    fetch('http://localhost:3001/api/deleteAutographEvents', {
+  event.preventDefault()
+
+  if(this.state.selectedEvent.eventid){
+    fetch('http://localhost:3001/api/deleteCeremonyEvents', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -127,7 +127,7 @@ class DeleteAutographEventForm extends Component {
     })
     .then(response => response.json())
     .then(result => {
-      this.props.handleAutographDeleteClose()
+      this.props.handleCeremonyDeleteClose()
     })
     .catch(err => console.log(err))
   } else {
@@ -163,7 +163,7 @@ class DeleteAutographEventForm extends Component {
                       alignItems="center"
                   >
                     <Grid item>
-                      {event.name}
+                      {event.sportname}
                     </Grid>
                     <Grid item>
                       {this.formatTime(event.time)}
@@ -174,7 +174,7 @@ class DeleteAutographEventForm extends Component {
             </TextField>
           </span>
           <span className={classes.wrapper}>
-            <Tooltip title="Everyone will be notified of the cancelled event">
+            <Tooltip title="There will be no notification for this">
               <Button color="primary" className={classes.button} variant="contained" onClick={this.submit} >
                 Submit
               </Button>
@@ -216,4 +216,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, null)(withStyles(deleteAutographEventStyles)(DeleteAutographEventForm))
+export default connect(mapStateToProps, null)(withStyles(deleteCeremonyStyles)(DeleteCeremonyForm))

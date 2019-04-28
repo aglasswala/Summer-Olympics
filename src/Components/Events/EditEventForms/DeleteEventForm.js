@@ -52,16 +52,6 @@ const stringToLocal = (result) => {
   return temp
 }
 
-//ReUsable code.
-function isEmpty(obj) {
-  for(var key in obj) {
-      if(obj.hasOwnProperty(key))
-          return false;
-  }
-  return true;
-}
-
-
 class DeleteEventForm extends Component {
 
   state = {
@@ -86,13 +76,13 @@ class DeleteEventForm extends Component {
     this.setState({ open: true });
   };
 
- handleClose = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
-  this.setState({ open: false });
- };
+    this.setState({ open: false });
+  };
 
   formatTime = time => {
     const date = new Date("February 04, 2011 " + time);
@@ -123,11 +113,8 @@ class DeleteEventForm extends Component {
   }
 
   submit = (event) => {
-
   event.preventDefault()
-  const test = this.state.selectedEvent
-
-  if(!isEmpty(test)){
+  if(this.state.selectedEvent.eventid){
     fetch('http://localhost:3001/api/deleteEvent', {
       method: 'post',
       headers: {
