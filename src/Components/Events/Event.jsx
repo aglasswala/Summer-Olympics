@@ -148,6 +148,7 @@ class Event extends Component {
     handleCeremonyDeleteClose = () => {
       this.setState({ deleteCeremonyEvent: false });
     };
+
     createInteval = () => {
          setInterval(this.refresh, 2000) // this causes a memory leak
     }
@@ -173,6 +174,7 @@ class Event extends Component {
           id
         })
       })
+      .then(response => response.json())
       .catch(err => console.log("Couldn't delete"))
     }
 
