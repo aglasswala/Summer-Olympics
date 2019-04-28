@@ -50,6 +50,7 @@ const stringToLocal = (result) => {
   }
   return temp
 }
+
 class DeleteCeremonyForm extends Component {
 
   state = {
@@ -74,13 +75,13 @@ class DeleteCeremonyForm extends Component {
     this.setState({ open: true });
   };
 
- handleClose = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
   }
 
-  this.setState({ open: false });
- };
+    this.setState({ open: false });
+  };
 
   formatTime = time => {
     const date = new Date("February 04, 2011 " + time);
@@ -111,8 +112,8 @@ class DeleteCeremonyForm extends Component {
   }
 
   submit = (event) => {
-
   event.preventDefault()
+
   if(this.state.selectedEvent.eventid){
     fetch('http://localhost:3001/api/deleteCeremonyEvents', {
       method: 'post',
@@ -127,7 +128,6 @@ class DeleteCeremonyForm extends Component {
     .then(response => response.json())
     .then(result => {
       this.props.handleCeremonyDeleteClose()
-      console.log(result)
     })
     .catch(err => console.log(err))
   } else {

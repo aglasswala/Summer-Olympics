@@ -76,13 +76,13 @@ class DeleteEventForm extends Component {
     this.setState({ open: true });
   };
 
- handleClose = (event, reason) => {
-  if (reason === 'clickaway') {
-    return;
-  }
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
 
-  this.setState({ open: false });
- };
+    this.setState({ open: false });
+  };
 
   formatTime = time => {
     const date = new Date("February 04, 2011 " + time);
@@ -113,7 +113,6 @@ class DeleteEventForm extends Component {
   }
 
   submit = (event) => {
-
   event.preventDefault()
   if(this.state.selectedEvent.eventid){
     fetch('http://localhost:3001/api/deleteEvent', {
