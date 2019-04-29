@@ -160,7 +160,7 @@ const sidebarStyles = theme => ({
 
 const logoutUser = () => {
   localStorage.removeItem("cool-jwt");
-  window.location.href = '/home';
+  window.location.href = '/Summer-Olympics/';
 }
 
 
