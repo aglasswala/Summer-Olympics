@@ -21,6 +21,13 @@ const styles = theme => ({
         padding: 20,
         margin: 10
     },
+    overlay: {
+      background: theme.palette.primary.main,
+      height: "50px",
+      padding: "40px",
+      marginTop: "-75px",
+      borderRadius: "6px"
+    }
 })
 
 const styles1 = theme => ({
@@ -101,7 +108,7 @@ class LoginPage extends Component {
             })
         })
             .then(response => response.json())
-            .then(result => {
+            .then(result => { 
                 this.props.userLoggedIn(result.user)
                 localStorage.setItem('cool-jwt', result.userToken)
                 this.props.history.push('/dashboard')
@@ -122,7 +129,7 @@ class LoginPage extends Component {
             >
                 <Grid item xs sm={8} md={8} lg={8}>
                     <Paper className={classes.paper}>
-                        <Typography variant="display1" className={classes.headerSignin}>
+                        <Typography variant="display1" color="inherit" className={classes.headerSignin}>
                             Sign In
                         </Typography>
                         <LoginForm

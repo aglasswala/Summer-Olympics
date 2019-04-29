@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { withStyles, TextField, Select, Input, InputLabel, FormControl, Button } from '@material-ui/core'
+import { withStyles, TextField, Select, Input, InputLabel, FormControl, Button, Snackbar } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux'
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
@@ -108,8 +110,22 @@ class CompetitionForm extends Component {
           "4:00 PM",
           "5:00 PM"
     ],
-    allEvents: []
+    allEvents: [],
+    open: false
   }
+
+  handleClick = () => {
+     this.setState({ open: true });
+   };
+
+  handleClose = (event, reason) => {
+   if (reason === 'clickaway') {
+     return;
+   }
+
+   this.setState({ open: false });
+  };
+
 
   updateTimeSlots = (venue, date, timeSlots) => {
     const set = new Set()
@@ -172,27 +188,32 @@ class CompetitionForm extends Component {
     // Need to send athlete userids to the backend
     const filteredRegisteredAthletes = filteredAthletes(registeredAthletes, allAthletes)
 
-    fetch('http://localhost:3001/api/createCompetitionEvent', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            sportname,
-            newTime,
-            venue,
-            newDate,
-            filteredRegisteredAthletes,
-            createdBy: this.props.userId
-        })
-    })
-        .then(response => response.json())
-        .then(result => {
-            this.props.handleClose();
-        })
-        .catch(err => {
-            console.log(err);
-        })
+    if(time.length !== 0 && venue.length !== 0 && registeredAthletes.length !== 0 && sportname.length !== 0) {
+      fetch('http://localhost:3001/api/createCompetitionEvent', {
+          method: 'post',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              sportname,
+              newTime,
+              venue,
+              newDate,
+              filteredRegisteredAthletes,
+              createdBy: this.props.userId
+          })
+      })
+          .then(response => response.json())
+          .then(result => {
+              this.props.handleClose();
+          })
+          .catch(err => {
+              console.log(err + "");
+          })
+    } else {
+      this.handleClick()
+    }
+
   }
 
   render() {
@@ -276,6 +297,30 @@ class CompetitionForm extends Component {
             Submit
           </Button>
         </span>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Make sure to fill out all the fields</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </MuiPickersUtilsProvider>
     )
   }

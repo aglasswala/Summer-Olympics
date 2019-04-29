@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { Grid, Typography, FormControl, InputLabel, Input, Button, TextField, AppBar, Toolbar } from '@material-ui/core'
+import { withStyles, Grid, Typography, FormControl, InputLabel, Input, Button, TextField, AppBar, Toolbar,Snackbar } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { userLoggedIn } from '../../actions/user'
-import { withStyles } from '@material-ui/core'
+import { NavLink } from 'react-router-dom'
 import MenuItem from '@material-ui/core/MenuItem'
 import rings from '../../images/olympicrings.png'
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const styles = theme => ({
   wrapper: {
@@ -33,26 +35,210 @@ const styles = theme => ({
 const STATES = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", 'IA', "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", 
 "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
 
-const COUNTRIES = ["Abkhazia","Afghanistan","Albania","Algeria","American Samoa (U.S.)","Andorra","Angola","Anguilla (UK)","Antigua and Barbuda","Argentina","Armenia",
-"Aruba (Netherlands)","Australia","Austria","Azerbaijan","The Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda (UK)","Bhutan","Bolivia",
-"Bosnia and Herzegovina","Botswana","Brazil","British Virgin Islands (UK)","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Canada","Cape Verde",
-"Cayman Islands (UK)","Central African Republic","Chad","Chile","China","Christmas Island","Cocos (Keeling) Islands (Australia)","Colombia","Comoros","Congo",
-"Cook Islands (NZ)","Costa Rica","Cote d'Ivoire","Croatia","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","East Timor","Ecuador","Egypt",
-"El Salvador","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia","Falkland Islands (UK)","Faroe Islands (Denmark)","Fiji","Finland","France","French Polynesia","Gabon",
-"Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam (U.S.)","Guatemala","Guernsey","Guinea","Guinea - Bissau","Guyana","Haiti","Honduras","Hong Kong",
-"Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man (UK)","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kiribati",
-"North Korea","South Korea","Kosovo","Kosovo","Kuwait","Kyrgyzstan","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia",
-"Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Marshall Islands","Martinique","Mauritania","Mauritius","Mayotte","Mexico","Micronesia","Moldova","Monaco","Mongolia",
-"Montenegro","Montserrat","Morocco","Mozambique","Myanmar","Nagorno - Karabakh","Namibia","Nauru","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand",
-"Nicaragua","Niger","Nigeria","Niue","Norfolk Island","Turkish Republic of Northern Cyprus","Northern Mariana","Norway","Oman","Pakistan","Palau","Palestine","Panama",
-"Papua New Guinea","Paraguay","Peru","Philippines","Pitcairn Islands","Poland","Portugal","Puerto Rico","Qatar","Romania","Russia","Rwanda","Saint Barthelemy","Saint Helena",
-"Saint Kitts and Nevis","Saint Lucia","Saint Martin","Saint Pierre and Miquelon","Saint Vincent and the Grenadines","Samoa","San Marino","Sao Tome and Principe","Saudi Arabia",
-"Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","Somaliland","South Africa","South Ossetia","Spain","Sri Lanka","Sudan",
-"Suriname","Svalbard","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor - Leste","Togo","Tokelau","Tonga","Transnistria Pridnestrovie",
-"Trinidad and Tobago","Tristan da Cunha","Tunisia","Turkey","Turkmenistan","Turks and Caicos Islands","Tuvalu","Uganda","Ukraine","United Arab Emirates","United Kingdom",
-"United States of America","Uruguay","Uzbekistan","Vanuatu","Vatican City","Venezuela","Vietnam","British Virgin Islands","Isle of Man","US Virgin Islands","Wallis and Futuna",
-"Western Sahara","Yemen","Zambia","Zimbabwe"]
+const COUNTRIES = [
+"Afghanistan",
+"Albania",
+"Algeria",
+"Andorra",
+"Angola",
+"Antigua & Deps",
+"Argentina",
+"Armenia",
+"Australia",
+"Austria",
+"Azerbaijan",
+"Bahamas",
+"Bahrain",
+"Bangladesh",
+"Barbados",
+"Belarus",
+"Belgium",
+"Belize",
+"Benin",
+"Bhutan",
+"Bolivia",
+"Bosnia Herzegovina",
+"Botswana",
+"Brazil",
+"Brunei",
+"Bulgaria",
+"Burkina",
+"Burundi",
+"Cambodia",
+"Cameroon",
+"Canada",
+"Cape Verde",
+"Central African Rep",
+"Chad",
+"Chile",
+"China",
+"Colombia",
+"Comoros",
+"Congo",
+"Congo {Democratic Rep}",
+"Costa Rica",
+"Croatia",
+"Cuba",
+"Cyprus",
+"Czech Republic",
+"Denmark",
+"Djibouti",
+"Dominica",
+"Dominican Republic",
+"East Timor",
+"Ecuador",
+"Egypt",
+"El Salvador",
+"Equatorial Guinea",
+"Eritrea",
+"Estonia",
+"Ethiopia",
+"Fiji",
+"Finland",
+"France",
+"Gabon",
+"Gambia",
+"Georgia",
+"Germany",
+"Ghana",
+"Greece",
+"Grenada",
+"Guatemala",
+"Guinea",
+"Guinea-Bissau",
+"Guyana",
+"Haiti",
+"Honduras",
+"Hungary",
+"Iceland",
+"India",
+"Indonesia",
+"Iran",
+"Iraq",
+"Ireland {Republic}",
+"Israel",
+"Italy",
+"Ivory Coast",
+"Jamaica",
+"Japan",
+"Jordan",
+"Kazakhstan",
+"Kenya",
+"Kiribati",
+"Korea North",
+"Korea South",
+"Kosovo",
+"Kuwait",
+"Kyrgyzstan",
+"Laos",
+"Latvia",
+"Lebanon",
+"Lesotho",
+"Liberia",
+"Libya",
+"Liechtenstein",
+"Lithuania",
+"Luxembourg",
+"Macedonia",
+"Madagascar",
+"Malawi",
+"Malaysia",
+"Maldives",
+"Mali",
+"Malta",
+"Marshall Islands",
+"Mauritania",
+"Mauritius",
+"Mexico",
+"Micronesia",
+"Moldova",
+"Monaco",
+"Mongolia",
+"Montenegro",
+"Morocco",
+"Mozambique",
+"Myanmar, {Burma}",
+"Namibia",
+"Nauru",
+"Nepal",
+"Netherlands",
+"New Zealand",
+"Nicaragua",
+"Niger",
+"Nigeria",
+"Norway",
+"Oman",
+"Pakistan",
+"Palau",
+"Panama",
+"Papua New Guinea",
+"Paraguay",
+"Peru",
+"Philippines",
+"Poland",
+"Portugal",
+"Qatar",
+"Romania",
+"Russian Federation",
+"Rwanda",
+"St Kitts & Nevis",
+"St Lucia",
+"Saint Vincent & the Grenadines",
+"Samoa",
+"San Marino",
+"Sao Tome & Principe",
+"Saudi Arabia",
+"Senegal",
+"Serbia",
+"Seychelles",
+"Sierra Leone",
+"Singapore",
+"Slovakia",
+"Slovenia",
+"Solomon Islands",
+"Somalia",
+"South Africa",
+"South Sudan",
+"Spain",
+"Sri Lanka",
+"Sudan",
+"Suriname",
+"Swaziland",
+"Sweden",
+"Switzerland",
+"Syria",
+"Taiwan",
+"Tajikistan",
+"Tanzania",
+"Thailand",
+"Togo",
+"Tonga",
+"Trinidad & Tobago",
+"Tunisia",
+"Turkey",
+"Turkmenistan",
+"Tuvalu",
+"Uganda",
+"Ukraine",
+"United Arab Emirates",
+"United Kingdom",
+"United States",
+"Uruguay",
+"Uzbekistan",
+"Vanuatu",
+"Vatican City",
+"Venezuela",
+"Vietnam",
+"Yemen",
+"Zambia",
+"Zimbabwe"
+]
 
+const formatNumber = (phoneNumber) => {
+  const num = phoneNumber.replace(/[- )(]/g,'').trim()
+  console.log(num);
+  return num;
+}
 class Register extends Component {
 
   state = {
@@ -63,19 +249,32 @@ class Register extends Component {
     street: "",
     city: "",
     zip: "",
-    state: "",
+    state: "NA",
     phoneNumber: "",
-    countryOfOrigin: ""
+    countryOfOrigin: "",
+    open: false
   }
 
+  handleClick = () => {
+    this.setState({ open: true });
+  };
 
+ handleClose = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
 
+  this.setState({ open: false });
+ };
 
   onChange = (e) => this.setState({ [e.target.name]: e.target.value })
 
   onSubmit = (e) => {
     e.preventDefault()
-    const { firstName, lastName, email, password, street, city, zip, state, phoneNumber, countryOfOrigin } = this.state
+    const { firstName, lastName, email, password, street, city, zip, state, countryOfOrigin } = this.state
+    const phoneNumber = formatNumber(this.state.phoneNumber);
+    
+  if(countryOfOrigin.length !== 0 && state.length !== 0) {
     fetch('http://localhost:3001/api/register', {
       method: 'post',
       headers: {
@@ -96,22 +295,31 @@ class Register extends Component {
     })
       .then(response => response.json())
       .then(data => {
+        console.log(data)
         this.props.userLoggedIn(data.user)
         localStorage.setItem('cool-jwt', data.token)
         this.props.history.push('/dashboard')
       })
+  }else {
+    this.handleClick()
   }
+}
 
 
   render() {
     const { classes } = this.props
+    console.log(this.state)
     return (
       <div>
-        <AppBar className={classes.title} position="static" color="primary">
+        <AppBar position="static" color="primary">
           <Toolbar>
-            <Typography style={{ color: "white", font: "2em/1em Trade-Gothic-W-Cond-Bold,Arial,Helvetica,sans-serif" }}>
-              Rio Olympics 2016 Registration
-            </Typography>
+          <NavLink
+            to='/home'
+                  style = {{textDecoration: "none"}}
+          >
+              <Button style = {{color: "#FFFFFF", textDecoration: "none"}}>Home</Button>      
+          </NavLink>
+
           </Toolbar>
         </AppBar>
         <form
@@ -120,6 +328,9 @@ class Register extends Component {
         >
           <Grid container direction="column" justify="center" alignItems="stretch" style={{ minHeight: '50vh' }}>
             <Grid item xs={12} style={{ marginTop: 20 }}>
+            <Typography style={{ textAlign: "center", color: "black", font: "2em/1em Trade-Gothic-W-Cond-Bold,Arial,Helvetica,sans-serif", marginBottom: "10px" }}>
+              Rio Olympics 2016 Registration
+            </Typography>
               <span className={classes.wrapper} align="center" style={{ marginLeft: 150 }}>
                 <img src={rings} alt="Olympic Rings" width="70%" height="70%" object-fit="contain" />
               </span>
@@ -216,10 +427,12 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12}>
+           
+            <Grid item xs={12}> 
               <span className={classes.wrapper}>
+              {this.state.countryOfOrigin === "United States" ? (
                 <FormControl fullWidth required style={{ marginRight: 20 }}>
-                  <TextField
+                  <TextField 
                     label="State"
                     id="state"
                     select
@@ -240,12 +453,13 @@ class Register extends Component {
                     }
                   </TextField>
                 </FormControl>
+                ) : null}
                 <FormControl fullWidth required style={{ marginRight: 20 }}>
                   <TextField
                     label="Country of Origin"
-                    id="countryoforigin"
+                    id="countryOfOrigin"
                     select
-                    name="countryoforigin"
+                    name="countryOfOrigin"
                     type="text"
                     autoComplete="countryoforigin"
                     autoFocus
@@ -274,12 +488,36 @@ class Register extends Component {
                 </FormControl>
               </span>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12}>
               <span className={classes.wrapper}>
                 <Button type="submit" className={classes.textField} style={{ height: "50px" }}>
                   Submit
                 </Button>
               </span>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                open={this.state.open}
+                autoHideDuration={6000}
+                onClose={this.handleClose}
+                ContentProps={{
+                  'aria-describedby': 'message-id',
+                }}
+                message={<span id="message-id">Make sure to fill out all the fields</span>}
+                action={[
+                  <IconButton
+                  key="close"
+                  aria-label="Close"
+                  color="inherit"
+                  className={classes.close}
+                  onClick={this.handleClose}
+                  >
+                <CloseIcon />
+                </IconButton>,
+                ]}
+                />
             </Grid>
           </Grid>
         </form>

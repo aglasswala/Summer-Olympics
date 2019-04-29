@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { withStyles, TextField, Button, MenuItem } from '@material-ui/core'
+import { withStyles, TextField, Button, MenuItem, Snackbar, IconButton } from '@material-ui/core'
+import CloseIcon from '@material-ui/icons/Close';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, DatePicker } from 'material-ui-pickers';
 import { connect } from 'react-redux'
@@ -97,7 +98,8 @@ class CeremonyForm extends Component {
     ],
     date: new Date(),
     venue: "",
-    count: 0
+    count: 0,
+    open: false
   }
 
   updateTimeSlots = (venue, date, timeSlots) => {
@@ -128,6 +130,18 @@ class CeremonyForm extends Component {
     this.setState({
       [name]: event.target.value,
     });
+  };
+
+  handleClick = () => {
+     this.setState({ open: true });
+   };
+
+  handleClose = (event, reason) => {
+   if (reason === 'clickaway') {
+     return;
+   }
+
+   this.setState({ open: false });
   };
 
   handleAthleteChange = name => event => {
@@ -174,29 +188,33 @@ class CeremonyForm extends Component {
     const newTime = fixingTime(time)
     const newDate = fixingDate(date)
 
-    fetch('http://localhost:3001/api/createCeremonyEvent', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        selectedEvent,
-        firstPlace,
-        secondPlace,
-        thirdPlace,
-        newTime,
-        newDate,
-        venue,
-        createdBy: this.props.userId
+    if(selectedEvent.sportname !== 0 && firstPlace.length !== 0 && secondPlace.length !== 0 && thirdPlace.length !== 0 & time.length !== 0 && venue.length !== 0) {
+      fetch('http://localhost:3001/api/createCeremonyEvent', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          selectedEvent,
+          firstPlace,
+          secondPlace,
+          thirdPlace,
+          newTime,
+          newDate,
+          venue,
+          createdBy: this.props.userId
+        })
       })
-    })
-      .then(response => response.json())
-      .then(result => {
-        this.props.handleClose()
-      })
-      .catch (err => {
-        console.log(err);
-      })
+        .then(response => response.json())
+        .then(result => {
+          this.props.handleClose()
+        })
+        .catch (err => {
+          console.log(err);
+        }) 
+    } else {
+      this.handleClick()
+    }
   }
 
   render() {
@@ -323,6 +341,30 @@ class CeremonyForm extends Component {
             Submit
           </Button>
         </span>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Make sure to fill out all the fields</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </MuiPickersUtilsProvider>
     )
   }

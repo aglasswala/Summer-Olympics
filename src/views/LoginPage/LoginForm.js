@@ -98,6 +98,8 @@ class LoginForm extends Component {
                     <Button
                         className={classes.button}
                         type="submit"
+                        variant="contained"
+                        color="primary"
                     >
                         Submit
                     </Button>
