@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { Button, Dialog, DialogContent, withStyles, List, ListItem, ListItemText, AppBar, Toolbar, Slide, IconButton } from '@material-ui/core'
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import { Button, Dialog, DialogContent, withStyles, AppBar, Toolbar, Slide, Grid, IconButton } from '@material-ui/core'
+// import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+// import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+// import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux'
+import EventTable from '../../Components/Events/EventTable'
 
 const viewAthleteEventStyles = theme => ({
   dialog: {
@@ -18,8 +19,75 @@ const viewAthleteEventStyles = theme => ({
   flex: {
     flex: 1,
   },
+  gridContainer: {
+    margin: "0 -15px !important",
+    width: "unset"
+  },
+  gridItem: {
+      padding: "0 15px !important"
+  },
+  card: {
+      border: "0",
+      marginBottom: "30px",
+      marginTop: "30px",
+      borderRadius: "6px",
+      color: "rgba(0, 0, 0, 0.87)",
+      background: "#fff",
+      width: "100%",
+      boxShadow: "0 1px 4px 0 rgba(0, 0, 0, 0.14)",
+      position: "relative",
+      display: "flex",
+      flexDirection: "column",
+      minWidth: "0",
+      wordWrap: "break-word",
+      fontSize: ".875rem"
+  },  
+  cardHeader: {
+      padding: "0.75rem 1.25rem",
+      marginBottom: "0",
+      borderBottom: "none",
+      zIndex: "3 !important",
+      "&:first-child": {
+        borderRadius: "calc(.25rem - 1px) calc(.25rem - 1px) 0 0"
+      },
+      color: "#FFFFFF",
+      background: theme.palette.primary.main,
+      boxShadow:
+        "0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2)"
+  },
+  cardCategoryWhite: {
+    "&,& a,& a:hover,& a:focus": {
+      color: "rgba(255,255,255,.62)",
+      margin: "0",
+      fontSize: "14px",
+      marginTop: "0",
+      marginBottom: "0"
+    },
+    "& a,& a:hover,& a:focus": {
+      color: "#FFFFFF"
+    }
+  },
+  cardTitleWhite: {
+    color: "#FFFFFF",
+    marginTop: "0px",
+    minHeight: "auto",
+    fontWeight: "300",
+    fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
+    marginBottom: "3px",
+    textDecoration: "none",
+    "& small": {
+      color: "#777",
+      fontSize: "65%",
+      fontWeight: "400",
+      lineHeight: "1"
+    }
+  },
+  cardBody: {
+      padding: "0.9375rem 20px",
+      flex: "1 1 auto",
+      position: "relative"
+  }
 })
-
 function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
@@ -84,61 +152,113 @@ class ViewAthleteEvent extends Component {
           </Toolbar>
           </AppBar>
 
-          {this.state.registeredEvents.response.length !== 0 ?
-            <DialogContent style={{minWidth: '50vw', paddingTop: '20px'}}>
-              {this.state.registeredEvents.response.map((event, key) => (
-                <ExpansionPanel key={key}>
-                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>{"Competition: " + event[0]}</Typography>
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <List>
-                      <ListItem>
-                        <ListItemText>
-                          Event: {event[0]}
-                        </ListItemText>
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText>
-                          Time: {event[2]}
-                        </ListItemText>
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText>
-                          Date: {event[3]}
-                        </ListItemText>
-                      </ListItem>
-                    </List>
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
-              ))}
-              {this.state.registeredEvents.ceremonyEvents.map((event, key) => (
-                <ExpansionPanel key={key}>
-                  <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                    <Typography>{ "Ceremony Event: "  + event[0]}</Typography>
-                  </ExpansionPanelSummary>
-                  <ExpansionPanelDetails>
-                    <List>
-                      <ListItem>
-                        <ListItemText>
-                          Event: {event[0]}
-                        </ListItemText>
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText>
-                          Time: {event[2]}
-                        </ListItemText>
-                      </ListItem>
-                      <ListItem>
-                        <ListItemText>
-                          Date: {event[3]}
-                        </ListItemText>
-                      </ListItem>
-                    </List>
-                  </ExpansionPanelDetails>
-                </ExpansionPanel>
-              ))}
-            </DialogContent>
+          {this.state.registeredEvents.response.length !== 0 || this.state.registeredEvents.ceremonyEvents.length !== 0  ?
+            // <DialogContent style={{minWidth: '50vw', paddingTop: '20px'}}>
+            //   {this.state.registeredEvents.response.map((event, key) => (
+            //     <ExpansionPanel key={key}>
+            //       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            //         <Typography>{"Competition: " + event[0]}</Typography>
+            //       </ExpansionPanelSummary>
+            //       <ExpansionPanelDetails>
+            //         <List>
+            //           <ListItem>
+            //             <ListItemText>
+            //               Event: {event[0]}
+            //             </ListItemText>
+            //           </ListItem>
+            //           <ListItem>
+            //             <ListItemText>
+            //               Time: {event[2]}
+            //             </ListItemText>
+            //           </ListItem>
+            //           <ListItem>
+            //             <ListItemText>
+            //               Date: {event[3]}
+            //             </ListItemText>
+            //           </ListItem>
+            //         </List>
+            //       </ExpansionPanelDetails>
+            //     </ExpansionPanel>
+            //   ))}
+            //   {this.state.registeredEvents.ceremonyEvents.map((event, key) => (
+            //     <ExpansionPanel key={key}>
+            //       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            //         <Typography>{ "Ceremony Event: "  + event[0]}</Typography>
+            //       </ExpansionPanelSummary>
+            //       <ExpansionPanelDetails>
+            //         <List>
+            //           <ListItem>
+            //             <ListItemText>
+            //               Event: {event[0]}
+            //             </ListItemText>
+            //           </ListItem>
+            //           <ListItem>
+            //             <ListItemText>
+            //               Time: {event[2]}
+            //             </ListItemText>
+            //           </ListItem>
+            //           <ListItem>
+            //             <ListItemText>
+            //               Date: {event[3]}
+            //             </ListItemText>
+            //           </ListItem>
+            //         </List>
+            //       </ExpansionPanelDetails>
+            //     </ExpansionPanel>
+            //   ))}
+            // </DialogContent>
+            <div>
+              <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
+                  <div className={classes.card}>
+                      <div className={classes.cardHeader}>
+                          <Grid
+                            container
+                            direction="row"
+                            justify="space-between"
+                            alignItems="center"
+                          >
+                              <Grid item>
+                                  <h4 className={classes.cardTitleWhite}>Competition Events</h4>
+                                  <p className={classes.cardCategoryWhite}>
+                                    Here's all your Competition Events
+                                  </p>
+                              </Grid>
+                          </Grid>
+                      </div>
+                      <div className={classes.cardBody}>
+                          <EventTable 
+                              tableHead={["Event", "Stadium", "Time", "Date"]}
+                              tableData={this.state.registeredEvents.response}
+                          />
+                      </div>
+                  </div>
+              </Grid>
+              <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
+                  <div className={classes.card}>
+                      <div className={classes.cardHeader}>
+                          <Grid
+                            container
+                            direction="row"
+                            justify="space-between"
+                            alignItems="center"
+                          >
+                              <Grid item>
+                                  <h4 className={classes.cardTitleWhite}>Ceremony Events</h4>
+                                  <p className={classes.cardCategoryWhite}>
+                                    Here's all your Ceremony Events
+                                  </p>
+                              </Grid>
+                          </Grid>
+                      </div>
+                      <div className={classes.cardBody}>
+                          <EventTable 
+                              tableHead={["Event", "Stadium", "Time", "Date"]}
+                              tableData={this.state.registeredEvents.ceremonyEvents}
+                          />
+                      </div>
+                  </div>
+              </Grid>
+            </div>
           : (
             <DialogContent>
               <Typography style={{marginTop: "20px", fontWeight: "bold"}}>
