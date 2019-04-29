@@ -413,7 +413,7 @@ class Register extends Component {
                   />
                 </FormControl>
                 <FormControl fullWidth required>
-                  <InputLabel> Zip </InputLabel>
+                  <InputLabel> Zip/Postal Code </InputLabel>
                   <Input
                     id="zip"
                     name="zip"

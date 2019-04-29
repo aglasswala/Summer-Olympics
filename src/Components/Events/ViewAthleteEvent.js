@@ -84,7 +84,7 @@ class ViewAthleteEvent extends Component {
           </Toolbar>
           </AppBar>
 
-          {this.state.registeredEvents.response.length !== 0 ?
+          {this.state.registeredEvents.response.length !== 0 ? 
             <DialogContent style={{minWidth: '50vw', paddingTop: '20px'}}>
               {this.state.registeredEvents.response.map((event, key) => (
                 <ExpansionPanel key={key}>
