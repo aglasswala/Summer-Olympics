@@ -227,7 +227,7 @@ const Sidebar = ({...props}) => {
                               </ListItem>
                             </NavLink>
                             <NavLink
-                              to={"/dashboard/tickets"}
+                              to={"/dashboard/userprofile"}
                               exact
                               className={classes.item}
                               activeClassName="active"
