@@ -236,7 +236,6 @@ const COUNTRIES = [
 
 const formatNumber = (phoneNumber) => {
   const num = phoneNumber.replace(/[- )(]/g,'').trim()
-  console.log(num);
   return num;
 }
 class Register extends Component {
@@ -295,7 +294,6 @@ class Register extends Component {
     })
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         this.props.userLoggedIn(data.user)
         localStorage.setItem('cool-jwt', data.token)
         this.props.history.push('/dashboard')
@@ -308,7 +306,6 @@ class Register extends Component {
 
   render() {
     const { classes } = this.props
-    console.log(this.state)
     return (
       <div>
         <AppBar position="static" color="primary">
