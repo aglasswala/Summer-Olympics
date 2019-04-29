@@ -44,7 +44,7 @@ const TitlePage = ({ ...props }) => {
                 <Grid item>
                     <span className={classes.wrapper}>
                         <Typography>
-                            Main content will go here ( Basically a couple words on what this application does )
+                        Discover Great Events or Create Your Own & Sell Tickets!
                         </Typography>
                     </span>
                 </Grid>
