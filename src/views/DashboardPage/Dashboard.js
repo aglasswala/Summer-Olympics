@@ -6,7 +6,7 @@ import Sidebar from '../../Components/Sidebar/Sidebar'
 import Event from '../../Components/Events/Event'
 import Tickets from '../../Components/Tickets/Tickets'
 import dashboardRoutes from '../../routes/dashboardRoutes.jsx'
-import logo from '../../images/reactlogo.png'
+import logo from '../../images/BrazilFlag.jpg'
 import image from '../../images/sidebar-2.jpg'
 
 const dashboardStyles = theme => ({
