@@ -91,7 +91,7 @@ const sidebarStyles = theme => ({
         }
     },
     logoLink: {
-        fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+        fontFamily: '"Georgia", "Arial", "Helvetica", sans-serif',
         textTransform: "uppercase",
         padding: "5px 0",
         display: "block",
@@ -173,7 +173,7 @@ const Sidebar = ({...props}) => {
             <div className={classes.logoImage}>
               <img src={logo} alt="logo" className={classes.img} />
             </div>
-            Rio Olympics 2020
+            Rio Olympics 2016
           </a>
         </div>
     )
@@ -227,7 +227,7 @@ const Sidebar = ({...props}) => {
                               </ListItem>
                             </NavLink>
                             <NavLink
-                              to={"/dashboard/tickets"}
+                              to={"/dashboard/userprofile"}
                               exact
                               className={classes.item}
                               activeClassName="active"
