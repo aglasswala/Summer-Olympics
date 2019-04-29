@@ -8,6 +8,7 @@ import Tickets from '../../Components/Tickets/Tickets'
 import dashboardRoutes from '../../routes/dashboardRoutes.jsx'
 import logo from '../../images/BrazilFlag.jpg'
 import image from '../../images/sidebar-2.jpg'
+import UserProfile from '../HomePage/UserProfile'
 
 const dashboardStyles = theme => ({
     wrapper: {
@@ -55,6 +56,7 @@ class Dashboard extends Component {
                             <Switch>
                                 <Route exact path="/dashboard" component={Event} />
                                 <Route exact path="/dashboard/tickets" component={Tickets} />
+                                <Route exact path="/dashboard/userprofile" component={UserProfile} />
                             </Switch>
                         </div>
                     </div>

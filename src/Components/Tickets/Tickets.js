@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { withStyles, Grid, Button } from '@material-ui/core';
-import BuyTicket from '../Tickets/BuyTicket';
+import { withStyles, Grid } from '@material-ui/core';
 import EventTable from '../../Components/Events/EventTable';
 
 const ticketStyles = theme =>({
@@ -152,31 +151,6 @@ class Tickets extends Component {
     return (
         <div>
             <Grid className={classes.gridContainer}>
-                    <Grid item className={classes.gridItem}>
-                        <Grid 
-                            container
-                            direction="row"
-                            justify="space-between"
-                            alignItems="center"
-                        >
-                            <Grid item>
-                                <Grid 
-                                    container
-                                    direction="row"
-                                    justify="center"
-                                    alignItems="center"
-                                    spacing={16}
-                                >
-                                    <Grid item>
-                                        <BuyTicket />
-                                    </Grid>
-                                    <Grid item>
-                                        {this.props.usertype === 3 ? <Button color='inherit' onClick={this.handleClickOpen}> Edit an Event </Button> : null}
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
                     <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                         <div className={classes.card}>
                             <div className={classes.cardHeader}>

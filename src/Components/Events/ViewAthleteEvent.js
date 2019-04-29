@@ -147,7 +147,6 @@ class ViewAthleteEvent extends Component {
             </Typography>
           </Toolbar>
           </AppBar>
-
           {this.state.registeredEvents.response.length !== 0 || this.state.registeredEvents.ceremonyEvents.length !== 0  ?
             <div>
               <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>

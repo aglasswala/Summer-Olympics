@@ -5,8 +5,11 @@ import LoginPage from '../LoginPage/LoginPage'
 import Register from '../Register/register'
 import TitlePage from './TitlePage'
 import BackgroundSlider from 'react-background-slider'
-import image1 from '../../images/rio1.png'
-import image2 from '../../images/rio1.jpg'
+import image1 from '../../images/rio1.jpg'
+import image2 from '../../images/rio2.jpg'
+import image3 from '../../images/rio3.jpg'
+import image4 from '../../images/rio4.jpg'
+import image5 from '../../images/rio5.jpg'
 
 const homepageStyles = theme => ({
     drawerPaper: {
@@ -32,7 +35,7 @@ const HomePage = ({...props}) => {
     return (
         <div>
           <BackgroundSlider
-            images={[image1, image2]}
+            images={[image1, image2, image3, image4, image5]}
             duration={4} transition={2} />
             <Drawer
                 anchor="left"
