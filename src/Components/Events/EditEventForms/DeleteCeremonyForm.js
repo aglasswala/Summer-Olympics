@@ -95,7 +95,7 @@ class DeleteCeremonyForm extends Component {
   }
 
   componentDidMount = () => {
-    fetch('http://localhost:3001/api/getCereEvents')
+    fetch('https://summer-olympics.herokuapp.com/api/getCereEvents')
       .then(response => response.json())
       .then(result => {
         const newTime = stringToLocal(result)
@@ -115,7 +115,7 @@ class DeleteCeremonyForm extends Component {
   event.preventDefault()
 
   if(this.state.selectedEvent.eventid){
-    fetch('http://localhost:3001/api/deleteCeremonyEvents', {
+    fetch('https://summer-olympics.herokuapp.com/api/deleteCeremonyEvents', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'

@@ -8,7 +8,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         : <Redirect strict to={{pathname: "/home", state: {from: props.location}}}/>
     )} />
   )
-                                         
+
 class App extends Component {
 
     componentDidMount() {

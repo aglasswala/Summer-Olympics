@@ -129,7 +129,7 @@ class Tickets extends Component {
 
   componentDidMount = () => {
     const id = this.props.userid
-    fetch('http://localhost:3001/api/getUserTickets', {
+    fetch('https://summer-olympics.herokuapp.com/api/getUserTickets', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'

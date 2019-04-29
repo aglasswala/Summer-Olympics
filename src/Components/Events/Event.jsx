@@ -165,7 +165,7 @@ class Event extends Component {
     }
 
     deleteNotification = id => {
-      fetch('http://localhost:3001/api/deleteNotifications', {
+      fetch('https://summer-olympics.herokuapp.com/api/deleteNotifications', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
@@ -179,7 +179,7 @@ class Event extends Component {
     }
 
     refresh = () => {
-        fetch("http://localhost:3001/api/events")
+        fetch("https://summer-olympics.herokuapp.com/api/events")
         .then(response => response.json())
         .then(data => {
             this.props.getEvents(data)
@@ -192,7 +192,7 @@ class Event extends Component {
         })
         .then(() => {
           if(!!this.state.userid) {
-            fetch("http://localhost:3001/api/getNotifications", {
+            fetch("https://summer-olympics.herokuapp.com/api/getNotifications", {
               method: 'post',
               headers: {
                 'Content-Type': 'application/json'

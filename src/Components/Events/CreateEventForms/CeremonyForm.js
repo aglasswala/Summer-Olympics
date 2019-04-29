@@ -152,7 +152,7 @@ class CeremonyForm extends Component {
 
 
   componentDidMount = () => {
-    fetch('http://localhost:3001/api/getCompEvents')
+    fetch('https://summer-olympics.herokuapp.com/api/getCompEvents')
       .then(response => response.json())
       .then(result => {
         this.setState({
@@ -160,7 +160,7 @@ class CeremonyForm extends Component {
         })
       })
       .then(() => {
-        return fetch('http://localhost:3001/api/getCereEvents')
+        return fetch('https://summer-olympics.herokuapp.com/api/getCereEvents')
           .then(response => response.json())
       })
       .then(data => {
@@ -169,7 +169,7 @@ class CeremonyForm extends Component {
         })
       })
       .then(() => {
-        return fetch('http://localhost:3001/api/getAthletes')
+        return fetch('https://summer-olympics.herokuapp.com/api/getAthletes')
                 .then(response => response.json())
       })
       .then(athletes => {
@@ -189,7 +189,7 @@ class CeremonyForm extends Component {
     const newDate = fixingDate(date)
 
     if(selectedEvent.sportname !== 0 && firstPlace.length !== 0 && secondPlace.length !== 0 && thirdPlace.length !== 0 & time.length !== 0 && venue.length !== 0) {
-      fetch('http://localhost:3001/api/createCeremonyEvent', {
+      fetch('https://summer-olympics.herokuapp.com/api/createCeremonyEvent', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'

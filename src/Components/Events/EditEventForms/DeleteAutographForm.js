@@ -96,7 +96,7 @@ class DeleteAutographEventForm extends Component {
   }
 
   componentDidMount = () => {
-    fetch('http://localhost:3001/api/getAutographEvents')
+    fetch('https://summer-olympics.herokuapp.com/api/getAutographEvents')
       .then(response => response.json())
       .then(result => {
         const newTime = stringToLocal(result)
@@ -115,7 +115,7 @@ class DeleteAutographEventForm extends Component {
   submit = (event) => {
     event.preventDefault()
     if(this.state.selectedEvent.eventid){
-    fetch('http://localhost:3001/api/deleteAutographEvents', {
+    fetch('https://summer-olympics.herokuapp.com/api/deleteAutographEvents', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'

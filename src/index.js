@@ -16,7 +16,7 @@ const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk
 
 if (localStorage.getItem("cool-jwt")) {
   const payload = decode(localStorage.getItem("cool-jwt"))
-  fetch('http://localhost:3001/api/getUser', {
+  fetch('https://summer-olympics.herokuapp.com/api/getUser', {
     method: 'post',
     headers: {
         'Content-Type': 'application/json'
