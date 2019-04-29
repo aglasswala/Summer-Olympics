@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Dialog, DialogContent, withStyles, AppBar, Toolbar, Slide, Grid, IconButton } from '@material-ui/core'
-// import ExpansionPanel from '@material-ui/core/ExpansionPanel';
-// import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-// import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-// import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CloseIcon from '@material-ui/icons/Close';
 import { connect } from 'react-redux'
 import EventTable from '../../Components/Events/EventTable'
@@ -153,60 +149,6 @@ class ViewAthleteEvent extends Component {
           </AppBar>
 
           {this.state.registeredEvents.response.length !== 0 || this.state.registeredEvents.ceremonyEvents.length !== 0  ?
-            // <DialogContent style={{minWidth: '50vw', paddingTop: '20px'}}>
-            //   {this.state.registeredEvents.response.map((event, key) => (
-            //     <ExpansionPanel key={key}>
-            //       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            //         <Typography>{"Competition: " + event[0]}</Typography>
-            //       </ExpansionPanelSummary>
-            //       <ExpansionPanelDetails>
-            //         <List>
-            //           <ListItem>
-            //             <ListItemText>
-            //               Event: {event[0]}
-            //             </ListItemText>
-            //           </ListItem>
-            //           <ListItem>
-            //             <ListItemText>
-            //               Time: {event[2]}
-            //             </ListItemText>
-            //           </ListItem>
-            //           <ListItem>
-            //             <ListItemText>
-            //               Date: {event[3]}
-            //             </ListItemText>
-            //           </ListItem>
-            //         </List>
-            //       </ExpansionPanelDetails>
-            //     </ExpansionPanel>
-            //   ))}
-            //   {this.state.registeredEvents.ceremonyEvents.map((event, key) => (
-            //     <ExpansionPanel key={key}>
-            //       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            //         <Typography>{ "Ceremony Event: "  + event[0]}</Typography>
-            //       </ExpansionPanelSummary>
-            //       <ExpansionPanelDetails>
-            //         <List>
-            //           <ListItem>
-            //             <ListItemText>
-            //               Event: {event[0]}
-            //             </ListItemText>
-            //           </ListItem>
-            //           <ListItem>
-            //             <ListItemText>
-            //               Time: {event[2]}
-            //             </ListItemText>
-            //           </ListItem>
-            //           <ListItem>
-            //             <ListItemText>
-            //               Date: {event[3]}
-            //             </ListItemText>
-            //           </ListItem>
-            //         </List>
-            //       </ExpansionPanelDetails>
-            //     </ExpansionPanel>
-            //   ))}
-            // </DialogContent>
             <div>
               <Grid item className={classes.gridItem} xs={12} sm={12} md={12}>
                   <div className={classes.card}>
