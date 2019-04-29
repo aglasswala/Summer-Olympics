@@ -89,7 +89,7 @@ class EditEventForm extends Component {
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value 
+      [name]: event.target.value
     });
   }
 
@@ -139,6 +139,7 @@ class EditEventForm extends Component {
   }
 
   render() {
+    console.log(this.state.selectedEvent)
     const { classes } = this.props
     return (
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -179,7 +180,7 @@ class EditEventForm extends Component {
                   {stadium}
                 </MenuItem>
               ))}
-            </TextField>
+            </TextField> 
           </span>
           <span className={classes.wrapper}>
             <TextField
