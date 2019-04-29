@@ -238,6 +238,28 @@ class UserProfile extends Component {
                     </FormControl>
                   </Grid>
                   <Grid item className={classes.gridItem} xs={12} sm={12} md={6}>
+                    {this.state.countryoforigin === "United States" ? (
+                      <FormControl fullWidth required style={{ marginRight: 20 }}>
+                        <TextField
+                          label="State"
+                          id="state"
+                          select
+                          name="state"
+                          value={this.state.state}
+                          type="text"
+                          autoComplete="state"
+                          onChange={this.handleChange("state")}
+                          autoFocus
+                        >
+                          {STATES.map((states, key) => (
+                            <MenuItem key={key} value={states}>
+                              {states}
+                            </MenuItem>
+                          ))
+                          }
+                        </TextField>
+                      </FormControl>
+                    ) : null }
                     <FormControl fullWidth required style={{ marginRight: 20 }}>
                       <TextField
                         label="Country of Origin"
@@ -254,28 +276,7 @@ class UserProfile extends Component {
                           <MenuItem key={key} value={countryOfOrigin}>
                             {countryOfOrigin}
                           </MenuItem>
-                        ))
-                        }
-                      </TextField>
-                    </FormControl>
-                  </Grid>
-                  <Grid item className={classes.gridItem} xs={12} sm={12} md={6}>
-                    <FormControl fullWidth required style={{ marginRight: 20 }}>
-                      <TextField 
-                        label="State"
-                        id="state"
-                        select
-                        name="state"
-                        value={this.state.state}
-                        type="text"
-                        autoComplete="state"
-                        onChange={this.handleChange("state")}
-                        autoFocus
-                      >
-                        {STATES.map((states, key) => (
-                          <MenuItem key={key} value={states}>
-                            {states}
-                          </MenuItem>
+
                         ))
                         }
                       </TextField>
