@@ -91,7 +91,7 @@ const sidebarStyles = theme => ({
         }
     },
     logoLink: {
-        fontFamily: '"HelveticaNeueW", "Arial", "Helvetica", sans-serif',
+        fontFamily: '"Georgia", "Arial", "Helvetica", sans-serif',
         textTransform: "uppercase",
         padding: "5px 0",
         display: "block",
