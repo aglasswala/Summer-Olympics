@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/Summer-Olympics/precache-manifest.bef8328020dc9cf682c617de027d4a2f.js"
+  "/Summer-Olympics/precache-manifest.11b109377c28a68d6a3be50d27405f94.js"
 );
 
 workbox.clientsClaim();
