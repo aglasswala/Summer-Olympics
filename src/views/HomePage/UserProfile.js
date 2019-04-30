@@ -157,7 +157,6 @@ class UserProfile extends Component {
   }
 
   submit = (e) => {
-    e.preventDefault()
     const newState = this.state.countryoforigin !== "United States" ? ("NA"): this.state.state
     const stateVali = this.handleme()
     const phoneNumber = formatNumber(this.state.phonenumber);
