@@ -115,10 +115,11 @@ class UserProfile extends Component {
       [name]: event.target.value,
     });
   };
+  
   submit = (e) => {
     e.preventDefault()
     const newState = this.state.countryoforigin !== "United States" ? ("NA"): this.state.state
-    console.log(newState)
+
     fetch('http://localhost:3001/api/updateProfile', {
       method: 'post',
       headers: {
