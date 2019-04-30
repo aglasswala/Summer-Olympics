@@ -48,7 +48,6 @@ const userProfileStyles = theme => ({
     borderBottom: "none",
     background: theme.palette.primary.main,
     zIndex: "3 !important",
-    margin: "0 15px",
     position: "relative",
     color: theme.palette.primary.main,
     "&:first-child": {
@@ -278,7 +277,6 @@ class UserProfile extends Component {
                           <MenuItem key={key} value={countryOfOrigin}>
                             {countryOfOrigin}
                           </MenuItem>
-
                         ))
                         }
                       </TextField>
