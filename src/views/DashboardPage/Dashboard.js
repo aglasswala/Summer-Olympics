@@ -9,6 +9,7 @@ import dashboardRoutes from '../../routes/dashboardRoutes.jsx'
 import logo from '../../images/BrazilFlag.jpg'
 import image from '../../images/sidebar-2.jpg'
 import UserProfile from '../HomePage/UserProfile'
+import Medalists from '../HomePage/Medalists'
 
 const dashboardStyles = theme => ({
     wrapper: {
@@ -57,6 +58,7 @@ class Dashboard extends Component {
                                 <Route exact path="/dashboard" component={Event} />
                                 <Route exact path="/dashboard/tickets" component={Tickets} />
                                 <Route exact path="/dashboard/userprofile" component={UserProfile} />
+                                <Route exact path="/dashboard/medalists" component={Medalists} />
                             </Switch>
                         </div>
                     </div>
