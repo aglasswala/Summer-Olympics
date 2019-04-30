@@ -83,7 +83,7 @@ class Medalists extends Component {
   }
 
   componentDidMount() {
-    fetch("https://summer-olympics.herokuapp.com//api/getAllMedalists")
+    fetch("https://summer-olympics.herokuapp.com/api/getAllMedalists")
       .then(response => response.json())
       .then(result => this.setState({ allCereEvents: result }))
       .catch(err => {
