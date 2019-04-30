@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withStyles, Grid, Button, List, ListItem, ListItemText, ListItemSecondaryAction } from '@material-ui/core'
+import { withStyles, Grid } from '@material-ui/core'
 import EventTable from '../../Components/Events/EventTable'
 
 const styles = theme => ({
@@ -82,10 +82,10 @@ class Medalists extends Component {
     allCereEvents: []
   }
 
-  componentDidMount = () => {
-    fetch('http:localhost:3001/api/getMedalists')
+  componentDidMount() {
+    fetch("http://localhost:3001/api/getAllMedalists")
       .then(response => response.json())
-      .then(result => console.log(result))
+      .then(result => this.setState({ allCereEvents: result }))
       .catch(err => {
         console.log(err)
       })
@@ -114,7 +114,10 @@ class Medalists extends Component {
                               </Grid>
                           </div>
                           <div className={classes.cardBody}>
-                              
+                              <EventTable
+                                tableHead={["Event", "First Place", "Second Place", "Third Place", "Time of Event"]}
+                                tableData={this.state.allCereEvents}
+                              />
                           </div>
                       </div>
                   </Grid>
