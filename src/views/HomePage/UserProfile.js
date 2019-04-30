@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { withStyles, InputLabel, Grid, Input, FormControl, MenuItem, TextField, Button } from '@material-ui/core'
+import { withStyles, InputLabel, Grid, Input, FormControl, MenuItem, TextField, Button, IconButton,Snackbar } from '@material-ui/core'
 import { connect } from 'react-redux'
+import CloseIcon from '@material-ui/icons/Close';
 
 const userProfileStyles = theme => ({
   cardCategoryWhite: {
@@ -44,19 +45,17 @@ const userProfileStyles = theme => ({
     fontSize: ".875rem"
   },
   cardHeader: {
+    padding: "0.75rem 1.25rem",
     marginBottom: "0",
     borderBottom: "none",
-    background: theme.palette.primary.main,
     zIndex: "3 !important",
-    margin: "0 15px",
-    position: "relative",
-    color: theme.palette.primary.main,
     "&:first-child": {
       borderRadius: "calc(.25rem - 1px) calc(.25rem - 1px) 0 0"
     },
-    borderRadius: "10px",
-    marginTop: "-20px",
-    padding: "15px"
+    color: "#FFFFFF",
+    background: theme.palette.primary.main,
+    boxShadow:
+      "0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2)"
   },
   cardBody: {
     padding: "0.9375rem 20px",
@@ -79,6 +78,13 @@ const userProfileStyles = theme => ({
   }
 });
 
+
+const formatNumber = (phoneNumber) => {
+  const num = phoneNumber.replace(/[- )(]/g,'').trim()
+  return num;
+}
+
+
 const STATES = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", 'IA', "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", 
 "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
 
@@ -98,6 +104,8 @@ const COUNTRIES=["Afghanistan","Albania","Algeria","Andorra","Angola","Antigua &
 class UserProfile extends Component {
 
   state = {
+    open: false,
+    secondSnack: false,
     userid: this.props.userid,
     firstname: this.props.firstName,
     lastname: this.props.lastName,
@@ -116,28 +124,71 @@ class UserProfile extends Component {
     });
   };
 
+  handleClick = () => {
+    this.setState({ open: true });
+  }
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+ 
+    this.setState({ open: false });
+   };
+
+  secondSnackClick = () => {
+    this.setState({ secondSnack: true });
+  }
+
+  secondSnackClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+ 
+    this.setState({ secondSnack: false });
+   };
+  
+  handleme = () => {
+    if(this.state.countryoforigin === "United States" && this.state.state.length === 2 && this.state.state === "NA"){
+      return ""
+    }
+    else
+      return this.state.state
+  }
+
   submit = (e) => {
     e.preventDefault()
-    fetch('http://localhost:3001/api/updateProfile', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userid: this.state.userid,
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
-        city: this.state.city,
-        street: this.state.street,
-        state: this.state.state,
-        zip: this.state.zip,
-        phonenumber: this.state.phonenumber,
-        email: this.state.email,
-        countryoforigin: this.state.countryoforigin
+    const newState = this.state.countryoforigin !== "United States" ? ("NA"): this.state.state
+    const stateVali = this.handleme()
+    const phoneNumber = formatNumber(this.state.phonenumber);
+
+    if(stateVali.length !== 0 && this.state.firstname.length !== 0 && this.state.lastname.length !== 0 && this.state.city.length !== 0 && this.state.email.length !== 0 && this.state.zip.length !== 0 && this.state.phonenumber.length !== 0 && this.state.street.length !== 0) {
+      fetch('http://localhost:3001/api/updateProfile', {
+        method: 'post',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userid: this.state.userid,
+          firstname: this.state.firstname,
+          lastname: this.state.lastname,
+          city: this.state.city,
+          street: this.state.street,
+          state: newState,
+          zip: this.state.zip,
+          phonenumber: phoneNumber,
+          email: this.state.email,
+          countryoforigin: this.state.countryoforigin
+        })
       })
-    })
-    .then(response => response.json())
-    .catch(err => console.log(err))
+      .then(response => response.json())
+      .then (() => {
+        this.secondSnackClick()
+      })
+      .catch(err => console.log(err))
+    } else {
+      this.handleClick()
+    }
   }
 
   render() {
@@ -237,7 +288,7 @@ class UserProfile extends Component {
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item className={classes.gridItem} xs={12} sm={12} md={6}>
+                  <Grid item className={classes.gridItem} xs={12} sm={12} md={3}>
                     {this.state.countryoforigin === "United States" ? (
                       <FormControl fullWidth required style={{ marginRight: 20 }}>
                         <TextField
@@ -260,6 +311,8 @@ class UserProfile extends Component {
                         </TextField>
                       </FormControl>
                     ) : null }
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={8}>
                     <FormControl fullWidth required style={{ marginRight: 20 }}>
                       <TextField
                         label="Country of Origin"
@@ -276,7 +329,6 @@ class UserProfile extends Component {
                           <MenuItem key={key} value={countryOfOrigin}>
                             {countryOfOrigin}
                           </MenuItem>
-
                         ))
                         }
                       </TextField>
@@ -329,10 +381,59 @@ class UserProfile extends Component {
             </div>
           </Grid>
         </Grid>
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={this.state.open}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Make sure to fill out all the fields</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.handleClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
+        <Snackbar
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={this.state.secondSnack}
+          autoHideDuration={6000}
+          onClose={this.secondSnackClose}
+          ContentProps={{
+            'aria-describedby': 'message-id',
+          }}
+          message={<span id="message-id">Your profile has been updated!</span>}
+          action={[
+            <IconButton
+              key="close"
+              aria-label="Close"
+              color="inherit"
+              className={classes.close}
+              onClick={this.secondSnackClose}
+            >
+              <CloseIcon />
+            </IconButton>,
+          ]}
+        />
       </form>
     )
   }
 }
+
 
 function mapStateToProps(state) {
   return {
