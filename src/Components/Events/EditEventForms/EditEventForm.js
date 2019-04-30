@@ -98,7 +98,7 @@ class EditEventForm extends Component {
   }
 
   componentDidMount = () => {
-    fetch('http://localhost:3001/api/getCompEvents')
+    fetch('https://summer-olympics.herokuapp.com/api/getCompEvents')
       .then(response => response.json())
       .then(result => {
         const newTime = stringToLocal(result)
@@ -110,7 +110,7 @@ class EditEventForm extends Component {
         })
       })
       .then(() => {
-        return fetch('http://localhost:3001/api/getAthletes')
+        return fetch('https://summer-olympics.herokuapp.com/api/getAthletes')
           .then(response => response.json())
       })
       .then(athletes => {
@@ -122,7 +122,7 @@ class EditEventForm extends Component {
   }
 
   submit = (event) => {
-    fetch('http://localhost:3001/api/editEvent', {
+    fetch('https://summer-olympics.herokuapp.com/api/editEvent', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'

@@ -97,7 +97,7 @@ class LoginPage extends Component {
     };
 
     submit = (email, password) => {
-        fetch('http://localhost:3001/api/login', {
+        fetch('https://summer-olympics.herokuapp.com/api/login', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json'

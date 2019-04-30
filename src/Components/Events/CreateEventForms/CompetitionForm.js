@@ -158,7 +158,7 @@ class CompetitionForm extends Component {
   };
 
   componentDidMount = () => {
-    fetch("http://localhost:3001/api/getAthletes")
+    fetch("https://summer-olympics.herokuapp.com/api/getAthletes")
       .then(response => response.json())
       .then(data => {
         this.setState({
@@ -166,7 +166,7 @@ class CompetitionForm extends Component {
         })
       })
       .then(() => {
-        return fetch('http://localhost:3001/api/getCompEvents')
+        return fetch('https://summer-olympics.herokuapp.com/api/getCompEvents')
           .then(response => response.json())
       })
       .then(events => {
@@ -189,7 +189,7 @@ class CompetitionForm extends Component {
     const filteredRegisteredAthletes = filteredAthletes(registeredAthletes, allAthletes)
 
     if(time.length !== 0 && venue.length !== 0 && registeredAthletes.length !== 0 && sportname.length !== 0) {
-      fetch('http://localhost:3001/api/createCompetitionEvent', {
+      fetch('https://summer-olympics.herokuapp.com/api/createCompetitionEvent', {
           method: 'post',
           headers: {
               'Content-Type': 'application/json'

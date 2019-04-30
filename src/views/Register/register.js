@@ -274,7 +274,7 @@ class Register extends Component {
     const phoneNumber = formatNumber(this.state.phoneNumber);
     
   if(countryOfOrigin.length !== 0 && state.length !== 0) {
-    fetch('http://localhost:3001/api/register', {
+    fetch('https://summer-olympics.herokuapp.com/api/register', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'

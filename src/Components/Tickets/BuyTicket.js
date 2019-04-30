@@ -67,10 +67,7 @@ class BuyTicket extends Component {
   handleClose = () => {
     this.setState({ open: false });
   };
-
   
-
-
   onTimeChange = (date) => {
     this.setState({ date: date })
   }
@@ -93,7 +90,7 @@ class BuyTicket extends Component {
   }
 
   componentDidMount = () => {
-    fetch('http://localhost:3001/api/getCompEvents')
+    fetch('https://summer-olympics.herokuapp.com/api/getCompEvents')
       .then(response => response.json())
       .then(result => {
         this.setState({
@@ -109,7 +106,7 @@ class BuyTicket extends Component {
 
 
   if(event.length !== 0){
-    fetch('http://localhost:3001/api/buyTickets', {
+    fetch('https://summer-olympics.herokuapp.com/api/buyTickets', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'

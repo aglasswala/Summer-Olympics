@@ -98,7 +98,7 @@ class ViewAthleteEvent extends Component {
   };
 
   componentDidMount = () => {
-    fetch('http://localhost:3001/api/getAthleteEvents', {
+    fetch('https://summer-olympics.herokuapp.com/api/getAthleteEvents', {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
