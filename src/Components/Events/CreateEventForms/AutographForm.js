@@ -132,7 +132,7 @@ class AutographForm extends Component {
 
     const athleteUserId = this.props.userType === 3 ? selectedAthlete.userid : this.props.userId
     if(time.length !== 0 && venue.length !== 0 && athleteUserId.length !== 0) {
-      fetch('http://localhost:3001/api/createAutographEvent', {
+      fetch('https://summer-olympics.herokuapp.com/api/createAutographEvent', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
