@@ -45,18 +45,17 @@ const userProfileStyles = theme => ({
     fontSize: ".875rem"
   },
   cardHeader: {
+    padding: "0.75rem 1.25rem",
     marginBottom: "0",
     borderBottom: "none",
-    background: theme.palette.primary.main,
     zIndex: "3 !important",
-    position: "relative",
-    color: theme.palette.primary.main,
     "&:first-child": {
       borderRadius: "calc(.25rem - 1px) calc(.25rem - 1px) 0 0"
     },
-    borderRadius: "10px",
-    marginTop: "-20px",
-    padding: "15px"
+    color: "#FFFFFF",
+    background: theme.palette.primary.main,
+    boxShadow:
+      "0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2)"
   },
   cardBody: {
     padding: "0.9375rem 20px",
@@ -289,7 +288,7 @@ class UserProfile extends Component {
                       />
                     </FormControl>
                   </Grid>
-                  <Grid item className={classes.gridItem} xs={12} sm={12} md={6}>
+                  <Grid item className={classes.gridItem} xs={12} sm={12} md={3}>
                     {this.state.countryoforigin === "United States" ? (
                       <FormControl fullWidth required style={{ marginRight: 20 }}>
                         <TextField
@@ -312,6 +311,8 @@ class UserProfile extends Component {
                         </TextField>
                       </FormControl>
                     ) : null }
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={8}>
                     <FormControl fullWidth required style={{ marginRight: 20 }}>
                       <TextField
                         label="Country of Origin"
