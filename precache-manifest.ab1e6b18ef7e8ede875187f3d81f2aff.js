@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/Summer-Olympics/static/media/rio1.97b3fd73.jpg"
   },
   {
-    "revision": "11f1d3a94fb7be506fb4",
-    "url": "/Summer-Olympics/static/js/main.473456cd.chunk.js"
+    "revision": "b0e01812bf1f9bcb6970",
+    "url": "/Summer-Olympics/static/js/main.0c94f3fe.chunk.js"
   },
   {
     "revision": "407181ad1f14c03497ef8cb455ec2c1b",
@@ -40,11 +40,11 @@ self.__precacheManifest = [
     "url": "/Summer-Olympics/static/media/rio4.e88f66bb.jpg"
   },
   {
-    "revision": "d1ce6803188a8c72d69b",
-    "url": "/Summer-Olympics/static/js/2.74ce46ef.chunk.js"
+    "revision": "62aaddce98bdecf8d879",
+    "url": "/Summer-Olympics/static/js/2.724e26d5.chunk.js"
   },
   {
-    "revision": "a9a18bca93cfc15b32bb6c1330a8c0c3",
+    "revision": "e35bb23694a210e6c801d2e4696c3924",
     "url": "/Summer-Olympics/index.html"
   }
 ];
