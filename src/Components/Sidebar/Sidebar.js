@@ -227,6 +227,20 @@ const Sidebar = ({...props}) => {
                               </ListItem>
                             </NavLink>
                             <NavLink
+                              to={"/dashboard/medalists"}
+                              exact
+                              className={classes.item}
+                              activeClassName="active"
+                            >
+                              <ListItem button className={classes.itemLink}>
+                                <ListItemText
+                                  primary={"Medalists"}
+                                  className={classes.itemText}
+                                  disableTypography={true}
+                                />
+                              </ListItem>
+                            </NavLink>
+                            <NavLink
                               to={"/dashboard/userprofile"}
                               exact
                               className={classes.item}
