@@ -102,7 +102,7 @@ class AutographForm extends Component {
    };
   componentDidMount = () => {
     if(this.props.userType === 3) {
-      fetch("http://localhost:3001/api/getAthletes")
+      fetch("https://aglasswala.github.io/Summer-Olympics/api/getAthletes")
         .then(response => response.json())
         .then(data => {
           this.setState({
