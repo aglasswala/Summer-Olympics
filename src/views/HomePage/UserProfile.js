@@ -163,7 +163,7 @@ class UserProfile extends Component {
     const phoneNumber = formatNumber(this.state.phonenumber);
 
     if(stateVali.length !== 0 && this.state.firstname.length !== 0 && this.state.lastname.length !== 0 && this.state.city.length !== 0 && this.state.email.length !== 0 && this.state.zip.length !== 0 && this.state.phonenumber.length !== 0 && this.state.street.length !== 0) {
-      fetch('http://localhost:3001/api/updateProfile', {
+      fetch('https://summer-olympics.herokuapp.com/api/updateProfile', {
         method: 'post',
         headers: {
           'Content-Type': 'application/json'
