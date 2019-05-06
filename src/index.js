@@ -9,7 +9,7 @@ import { userLoggedIn } from './actions/user'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './reducers/rootReducer'
 import { createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import App from './App'
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
