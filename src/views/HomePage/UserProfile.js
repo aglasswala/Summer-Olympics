@@ -416,7 +416,7 @@ class UserProfile extends Component {
           ContentProps={{
             'aria-describedby': 'message-id',
           }}
-          message={<span id="message-id">Your profile has been updated!</span>}
+          message={<span id="message-id">Your profile has been updated! Please log out and log back in to see your changes</span>}
           action={[
             <IconButton
               key="close"
